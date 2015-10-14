@@ -12,7 +12,7 @@ import org.apache.log4j.PropertyConfigurator;
 /**
  * Simple front end entry point for the whitespace program interpreter, using
  * System.in and System.out for user interaction.
- * 
+ * This has been modified! 
  * Example usage: <br/>
  * java uk.ac.glasgow.senotes.whitespace.Main DEFAULT testset/default/helloworld.ws
  * 
