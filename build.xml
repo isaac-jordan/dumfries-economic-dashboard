@@ -115,13 +115,14 @@
 		depends="compile"
 		name="test"
 	>
-    <formatter type="xml">
 		<junit>
 
 			<classpath
 				 refid="project.classpath"
 			/>
-
+            
+            
+            <formatter type="xml" />
 			<test
 				name="uk.ac.glasgow.whitespace4j.test.InterpreterTestCase"
 			/>
