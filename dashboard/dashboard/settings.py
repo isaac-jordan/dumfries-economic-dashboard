@@ -1,4 +1,5 @@
 # Django settings for dashboard project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -19,6 +20,8 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+PWD = os.path.dirname(os.path.realpath(__file__ ))
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
@@ -107,9 +110,7 @@ ROOT_URLCONF = 'dashboard.urls'
 WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PWD, "templates"),
 )
 
 INSTALLED_APPS = (
@@ -120,10 +121,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
