@@ -6,7 +6,9 @@
         <meta charset="utf-8">
         <title>Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+        <link href="{% static "css/ng-sortable.css" %}" rel="stylesheet">
+        <link href="{% static "css/ng-sortable.style.css" %}" rel="stylesheet">
         <link href="{% static "css/styles.css" %}" rel="stylesheet">
         <!--[if lt IE 9]>
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -89,19 +91,46 @@
                     </nav>
                 </div>
                 <!-- /top nav -->
-              
+                
+              {% verbatim %}
                 <div class="padding">
-                    <div class="full col-sm-9">
+                    <div class="full col-sm-9" ng-app="app" ng-controller="AppController">
                       
-                        <!-- content -->                      
+                        <!-- content -->
+                        <ul data-as-sortable data-ng-model="sortableList">
+                                    <li ng-repeat="item in sortableList" data-as-sortable-item>
+                                        <div data-as-sortable-item-handle>
+                                            index: {{$index}} | id: {{item.id}} | title: {{item.title}}
+                                        </div>
+                                    </li>
+                                </ul>
                         <div class="row">
-                          Sup
+                          <div class="col-sm-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Header</div>
+                            </div>
+                          </div>
                          </div>
-                         
-                        
-                      
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Graph One</div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Graph Three</div>
+                            </div>
+                          </div>
+                         </div>
                     </div>
                 </div>
+                {% endverbatim %}
             </div>
           
         </div>
@@ -112,18 +141,22 @@
         <script src="{% static "js/jquery-1.11.3.js" %}"></script>
         <script src="{% static "js/bootstrap.js" %}"></script>
         <script>
-            
-$(document).ready(function(){/* off-canvas sidebar toggle */
-
-$('[data-toggle=offcanvas]').click(function() {
-    $(this).toggleClass('visible-xs text-center');
-    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
-    $('.row-offcanvas').toggleClass('active');
-    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
-    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
-    $('#btnShow').toggle();
-});
-});
+            /* off-canvas sidebar toggle */
+            $(document).ready(function(){
+                $('[data-toggle=offcanvas]').click(function() {
+                    $(this).toggleClass('visible-xs text-center');
+                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                    $('.row-offcanvas').toggleClass('active');
+                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                    $('#btnShow').toggle();
+                });
+            });
         </script>
+        <script src="{% static "js/angular.js" %}"></script>
+        <script src="{% static "js/angular-route.js" %}"></script>
+        <script src="{% static "js/ng-sortable.js" %}"></script>
+        <script src="{% static "js/dashboard.js" %}"></script>
+        <script src="{% static "js/draggable-controller.js" %}"></script>
     </body>
 </html>

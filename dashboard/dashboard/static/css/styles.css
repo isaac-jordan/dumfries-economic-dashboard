@@ -165,3 +165,12 @@ hr {
     padding-left:3px;
   }
 }
+
+
+
+ul.graph-grid {
+    -webkit-columns: 100px 3; /* Chrome, Safari, Opera */
+    -moz-columns: 100px 3; /* Firefox */
+    columns: 100px 3;
+    column-gap: 40px;
+}
