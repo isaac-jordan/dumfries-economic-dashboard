@@ -28,6 +28,9 @@ app.controller('draggableGridController', function ($scope) {
   }, {
     name: 'Crime 8',
     dataset: 'some link'
+  }, {
+    name: 'Crime 9',
+    dataset: 'some link'
   }];
 
   $scope.sortableOptions = {
