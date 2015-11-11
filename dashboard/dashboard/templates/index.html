@@ -14,7 +14,7 @@
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body ng-app="dashboard">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -94,16 +94,16 @@
                 
               {% verbatim %}
                 <div class="padding">
-                    <div class="full col-sm-9" ng-app="app" ng-controller="AppController">
+                    <div class="full col-sm-9" ng-controller="draggableGridController">
                       
                         <!-- content -->
-                        <ul data-as-sortable data-ng-model="sortableList">
-                                    <li ng-repeat="item in sortableList" data-as-sortable-item>
-                                        <div data-as-sortable-item-handle>
-                                            index: {{$index}} | id: {{item.id}} | title: {{item.title}}
-                                        </div>
-                                    </li>
-                                </ul>
+                        <ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
+                            <li ng-repeat="item in items" as-sortable-item class="as-sortable-item">
+                                <div as-sortable-item-handle class="as-sortable-item-handle" style="height:50px;">
+                                    <div>Graph: {{item.name}}, Link: {{item.dataset}}</div>
+                                </div>
+                            </li>
+                        </ul>
                         <div class="row">
                           <div class="col-sm-12">
                             <div class="panel panel-default">
