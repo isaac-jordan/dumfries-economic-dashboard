@@ -2,4 +2,4 @@
 /*global angular */
 'use strict';
 
-var app = angular.module('app', ['ngRoute', 'as.sortable']);
+var app = angular.module('dashboard', ['ngRoute', 'as.sortable']);
