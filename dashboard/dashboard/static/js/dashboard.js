@@ -29,7 +29,7 @@ app.config(function($routeProvider) {
 app.controller('mainController', function($scope) {
     // create a message to display in our view
     
-    $scope.message = 'Everyone come and see how good I look!';
+    $scope.message = 'Welcome to the Dumfries Dashboard!';
 });
 
 app.controller('aboutController', function($scope) {
@@ -42,29 +42,29 @@ app.controller('contactController', function($scope) {
 
 app.controller('draggableGridController', function ($scope) {
     $scope.widgets = [{
-        name: 'Crime 1',
+        name: 'Crime',
         type: "bar",
-        id: "crime1",
-        dataset: [5,3,8,3],
+        id: "crime",
+        dataset: [32,13,45,13,12],
         size: {
             x: 1,
             y: 1
         },
         position: [0, 0]
     }, {
-        name: 'Crime 2',
+        name: 'Employment Nature',
         type: "bar",
-        id: "crime2",
-        dataset: [4, 8, 15, 16, 23, 42],
+        id: "employment-nature",
+        dataset: [5,3,8,3],
         size: {
             x: 1,
             y: 1
         },
         position: [0, 1]
     }, {
-        name: 'Crime 3',
+        name: 'Unemployment',
         type: "bar",
-        id: "crime3",
+        id: "unemployment",
         dataset: [4, 8, 15, 16, 23, 42],
         size: {
             x: 1,
@@ -72,59 +72,9 @@ app.controller('draggableGridController', function ($scope) {
         },
         position: [0, 2]
     }, {
-        name: 'Crime 4',
-        type: "bar",
-        id: "crime4",
-        dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 1,
-            y: 1
-        },
-        position: [1, 0]
-    }, {
-        name: 'Crime 5',
-        type: "bar",
-        id: "crime5",
-        dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 1,
-            y: 1
-        },
-        position: [1, 1]
-    }, {
-        name: 'Crime 6',
-        type: "bar",
-        id: "crime6",
-        dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 1,
-            y: 1
-        },
-        position: [1, 2]
-    }, {
-        name: 'Crime 7',
-        type: "bar",
-        id: "crime7",
-        dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 1,
-            y: 1
-        },
-        position: [2, 0]
-    }, {
-        name: 'Crime 8',
-        type: "bar",
-        id: "crime8",
-        dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 1,
-            y: 1
-        },
-        position: [2, 1]
-    }, {
-        name: 'Crime 9',
+        name: 'GDP Per Head (£)',
         type: "line",
-        id: "crime9",
+        id: "gdp",
         dataset: [{
                 y: "152",
                 x: "2000"
@@ -146,9 +96,75 @@ app.controller('draggableGridController', function ($scope) {
             }],
         size: {
             x: 1,
-            y: 2
+            y: 1
         },
-        position: [2, 2]
+        position: [1, 0]
+    }, {
+        name: 'Employment Rate',
+        type: "line",
+        id: "employment-rate",
+        dataset: [{
+                y: "152",
+                x: "2000"
+            }, {
+                y: "189",
+                x: "2002"
+            }, {
+                y: "179",
+                x: "2004"
+            }, {
+                y: "199",
+                x: "2006"
+            }, {
+                y: "134",
+                x: "2008"
+            }, {
+                y: "176",
+                x: "2010"
+            }],
+        size: {
+            x: 1,
+            y: 1
+        },
+        position: [1, 1]
+    }, {
+        name: 'Claimant Count Numbers',
+        type: "bar",
+        id: "claimant",
+        dataset: [4, 8, 15, 16, 23, 42],
+        size: {
+            x: 1,
+            y: 1
+        },
+        position: [1, 2]
+    },{
+        name: 'House Prices (£1000)',
+        type: "line",
+        id: "house-prices",
+        dataset: [{
+                y: "152",
+                x: "2000"
+            }, {
+                y: "189",
+                x: "2002"
+            }, {
+                y: "179",
+                x: "2004"
+            }, {
+                y: "199",
+                x: "2006"
+            }, {
+                y: "134",
+                x: "2008"
+            }, {
+                y: "176",
+                x: "2010"
+            }],
+        size: {
+            x: 1,
+            y: 1
+        },
+        position: [2, 0]
     }];
     
     $scope.gridsterOpts = {
