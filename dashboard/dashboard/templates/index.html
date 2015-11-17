@@ -74,27 +74,22 @@
                     </form>
                     <ul class="nav navbar-nav">
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                          <li><a href="">More</a></li>
-                        </ul>
-                      </li>
-                    </ul>
                     <ul>
                     </ul>
                     </nav>
                 </div>
                 <!-- /top nav -->
-                
+
               {% verbatim %}
                 <div class="padding">
                     <div class="full col-sm-9" ng-controller="draggableGridController">
+                        <div class="row">
+                  <div class="col-sm-12">
+                      <div class="panel panel-default">
+                          <div class="panel-body">Header</div>
+                      </div>
+                  </div>
+              </div>
                       
                         <!-- content -->
                         <ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
@@ -108,30 +103,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">Header</div>
-                            </div>
-                          </div>
-                         </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">Graph One</div>
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="panel panel-default">
 
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="panel panel-default">
-                                <div class="panel-body">Graph Three</div>
-                            </div>
-                          </div>
-                         </div>
                     </div>
                 </div>
                 {% endverbatim %}
