@@ -2,8 +2,7 @@
  * Created by lewis on 12/11/15.
  */
 
-(function () {
-
+function drawGraph1() {
     var data = [4, 8, 15, 16, 23, 42];
 
     var width = 200,
@@ -37,7 +36,7 @@
         .text(function (d) {
             return d;
         });
-})();
+}
 
 /* other graphs, TODO: figure out how to insert into different divs
 

@@ -1,6 +1,6 @@
 /*jshint*/
 /* global app */
-'use strict';
+/*'use strict';
 
 app.controller('draggableGridController', function ($scope) {
 
@@ -36,4 +36,4 @@ app.controller('draggableGridController', function ($scope) {
   $scope.sortableOptions = {
     
   };
-});
+});*/

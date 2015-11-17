@@ -1,0 +1,27 @@
+{% verbatim %}
+<div class="padding">
+    <div class="full col-sm-9" ng-controller="draggableGridController">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">{{ message }}</div>
+                </div>
+            </div>
+        </div>
+        <ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
+            <li ng-repeat="item in items" as-sortable-item class="as-sortable-item">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="height: 35px;">
+                        {{item.name}}
+                        <span as-sortable-item-handle class="glyphicon glyphicon-move pull-right"></span>
+                    </div>
+                    <div class="panel-body"><svg class="chart"></svg></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    drawGraph1();
+</script>
+{% endverbatim %}

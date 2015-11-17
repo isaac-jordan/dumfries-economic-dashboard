@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-<html lang="en">
+<html lang="en" ng-app="dashboard">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -14,7 +14,7 @@
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body ng-app="dashboard">
+    <body ng-controller="mainController">
 <div class="wrapper">
     <div class="box">
         <div class="row row-offcanvas row-offcanvas-left">
@@ -28,23 +28,23 @@
                 </ul>
                
                 <ul class="nav hidden-xs" id="lg-menu">
-                    <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
-                    <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
+                    <li class="active"><a href="#/"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
+                    <li><a href="/savedconfigs"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
+                    <li><a href="#about"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
                 </ul>
                 <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                     <li>
-                      <a href=""><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
+                      <a href="/admin"><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
                     </li>
                 </ul>
               
                 <!-- tiny only nav-->
-              <ul class="nav visible-xs" id="xs-menu">
+              <!--<ul class="nav visible-xs" id="xs-menu">
                     <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
                     <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
                     <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
                     <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-                </ul>
+                </ul>-->
               
             </div>
             <!-- /sidebar -->
@@ -80,33 +80,10 @@
                 </div>
                 <!-- /top nav -->
 
-              {% verbatim %}
-                <div class="padding">
-                    <div class="full col-sm-9" ng-controller="draggableGridController">
-                        <div class="row">
-                  <div class="col-sm-12">
-                      <div class="panel panel-default">
-                          <div class="panel-body">Header</div>
-                      </div>
-                  </div>
-              </div>
-                      
-                        <!-- content -->
-                        <ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
-                            <li ng-repeat="item in items" as-sortable-item class="as-sortable-item">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" style="height: 35px;">
-                                        {{item.name}}
-                                        <span as-sortable-item-handle class="glyphicon glyphicon-move pull-right"></span>
-                                    </div>
-                                    <div class="panel-body"><svg class="chart"></svg></div>
-                                </div>
-                            </li>
-                        </ul>
-
-                    </div>
+              
+                <div class="main-content">
+                    <div ng-view></div>
                 </div>
-                {% endverbatim %}
             </div>
           
         </div>
@@ -133,9 +110,9 @@
         <script src="{% static "js/angular.js" %}"></script>
         <script src="{% static "js/angular-route.js" %}"></script>
         <script src="{% static "js/ng-sortable.js" %}"></script>
+        <script src="{% static "js/graphs.js" %}"></script>
         <script src="{% static "js/dashboard.js" %}"></script>
         <script src="{% static "js/draggable-controller.js" %}"></script>
-<script src="{% static "js/graphs.js" %}"></script>
 
     </body>
 </html>
