@@ -1,8 +1,6 @@
 /**
  * Created by lewis on 12/11/15.
  */
-
-<<<<<<< .mine
 function drawGraph1(elemID, data) {
     var width = 200,
         barHeight = 8.5;
