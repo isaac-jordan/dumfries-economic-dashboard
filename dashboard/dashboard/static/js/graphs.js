@@ -2,9 +2,8 @@
  * Created by lewis on 12/11/15.
  */
 
-function drawGraph1() {
-    var data = [4, 8, 15, 16, 23, 42];
-
+<<<<<<< .mine
+function drawGraph1(elemID, data) {
     var width = 200,
         barHeight = 8.5;
 
@@ -12,7 +11,7 @@ function drawGraph1() {
         .domain([0, d3.max(data)])
         .range([0, width]);
 
-    var chart = d3.select(".chart")
+    var chart = d3.select("#" + elemID)
         .attr("width", width)
         .attr("height", barHeight * data.length);
 

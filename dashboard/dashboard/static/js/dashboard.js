@@ -43,35 +43,46 @@ app.controller('contactController', function($scope) {
 app.controller('draggableGridController', function ($scope) {
     $scope.items = [{
         name: 'Crime 1',
-        dataset: 'some link'
+        id: "crime1",
+        dataset: [5,3,8,3]
     }, {
         name: 'Crime 2',
-        dataset: 'some link'
+        id: "crime2",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 3',
-        dataset: 'some link'
+        id: "crime3",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 4',
-        dataset: 'some link'
+        id: "crime4",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 5',
-        dataset: 'some link'
+        id: "crime5",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 6',
-        dataset: 'some link'
+        id: "crime6",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 7',
-        dataset: 'some link'
+        id: "crime7",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 8',
-        dataset: 'some link'
+        id: "crime8",
+        dataset: [4, 8, 15, 16, 23, 42]
     }, {
         name: 'Crime 9',
-        dataset: 'some link'
+        id: "crime9",
+        dataset: [4, 8, 15, 16, 23, 42]
     }];
 
     $scope.sortableOptions = {
 
     };
+    
+    $scope.drawGraphOne = function(id, data) { drawGraph1(id, data); };
     
 });
