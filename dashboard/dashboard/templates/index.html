@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+        <link href="{% static "css/ng-sortable.css" %}" rel="stylesheet">
+        <link href="{% static "css/ng-sortable.style.css" %}" rel="stylesheet">
+        <link href="{% static "css/styles.css" %}" rel="stylesheet">
+        <!--[if lt IE 9]>
+            <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body ng-app="dashboard">
+<div class="wrapper">
+    <div class="box">
+        <div class="row row-offcanvas row-offcanvas-left">
+                      
+          
+            <!-- sidebar -->
+            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
+              
+                <ul class="nav">
+                    <li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                </ul>
+               
+                <ul class="nav hidden-xs" id="lg-menu">
+                    <li class="active"><a href="#featured"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
+                    <li><a href="#stories"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
+                </ul>
+                <ul class="list-unstyled hidden-xs" id="sidebar-footer">
+                    <li>
+                      <a href=""><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
+                    </li>
+                </ul>
+              
+                <!-- tiny only nav-->
+              <ul class="nav visible-xs" id="xs-menu">
+                    <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                    <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+                </ul>
+              
+            </div>
+            <!-- /sidebar -->
+          
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+                
+                <!-- top nav -->
+                <div class="navbar navbar-blue navbar-static-top">  
+                    <div class="navbar-header">
+                      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a href="/" class="navbar-brand logo">D</a>
+                    </div>
+                    <nav class="collapse navbar-collapse" role="navigation">
+                    <form class="navbar-form navbar-left">
+                        <div class="input-group input-group-sm" style="max-width:360px;">
+                          <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                          <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                          </div>
+                        </div>
+                    </form>
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="">More</a></li>
+                          <li><a href="">More</a></li>
+                          <li><a href="">More</a></li>
+                          <li><a href="">More</a></li>
+                          <li><a href="">More</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <ul>
+                    </ul>
+                    </nav>
+                </div>
+                <!-- /top nav -->
+                
+              {% verbatim %}
+                <div class="padding">
+                    <div class="full col-sm-9" ng-controller="draggableGridController">
+                      
+                        <!-- content -->
+                        <ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
+                            <li ng-repeat="item in items" as-sortable-item class="as-sortable-item">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" style="height: 35px;">
+                                        {{item.name}}
+                                        <span as-sortable-item-handle class="glyphicon glyphicon-move pull-right"></span>
+                                    </div>
+                                    <div class="panel-body"><svg class="chart"></svg></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Header</div>
+                            </div>
+                          </div>
+                         </div>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Graph One</div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-body">Graph Three</div>
+                            </div>
+                          </div>
+                         </div>
+                    </div>
+                </div>
+                {% endverbatim %}
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+    <!-- script references -->
+        <script src="{% static "js/jquery-1.11.3.js" %}"></script>
+        <script src="{% static "js/bootstrap.js" %}"></script>
+        <script>
+            /* off-canvas sidebar toggle */
+            $(document).ready(function(){
+                $('[data-toggle=offcanvas]').click(function() {
+                    $(this).toggleClass('visible-xs text-center');
+                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                    $('.row-offcanvas').toggleClass('active');
+                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                    $('#btnShow').toggle();
+                });
+            });
+        </script>
+        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="{% static "js/angular.js" %}"></script>
+        <script src="{% static "js/angular-route.js" %}"></script>
+        <script src="{% static "js/ng-sortable.js" %}"></script>
+        <script src="{% static "js/dashboard.js" %}"></script>
+        <script src="{% static "js/draggable-controller.js" %}"></script>
+<script src="{% static "js/graphs.js" %}"></script>
+
+    </body>
+</html>
