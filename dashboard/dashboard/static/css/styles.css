@@ -179,32 +179,42 @@ ul.graph-grid {
 }
 
 /* D3 graph styling */
-.chart rect {
+.chart.bar rect {
   fill: steelblue;
 }
 
-.chart text {
+.chart.bar text {
   fill: white;
   font: 10px sans-serif;
   text-anchor: end;
 }
 
-.axis path,
-.axis line {
+.bar .axis path,
+.bar .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
 }
 
-.x.axis path {
+.bar .x.axis path {
     display: none;
 }
 
-.line {
+.bar .line {
     fill: none;
     stroke: steelblue;
     stroke-width: 1.5px;
 }
+
+.axis path {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: Lato;
+            font-size: 12px;
+        }
 /*
 . dot {
     stroke: #000;

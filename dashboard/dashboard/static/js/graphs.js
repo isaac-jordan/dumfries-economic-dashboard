@@ -1,8 +1,20 @@
-/**
- * Created by lewis on 12/11/15.
- */
-function drawGraph1(elemID, data) {
-    var width = 200,
+/*jshint*/
+/*global d3 */
+    
+function drawGraph(elemID, data, type) {
+    switch(type) {
+        case "bar":
+            bargraph(elemID, data);
+            break;
+        case "line":
+            linegraph(elemID, data);
+            break;
+    }
+}
+
+function bargraph(elemID, data) {
+    $("#" + elemID).empty();
+    var width = $("#" + elemID).parent().width(),
         barHeight = 8.5;
 
     var x = d3.scale.linear()
@@ -33,6 +45,55 @@ function drawGraph1(elemID, data) {
         .text(function (d) {
             return d;
         });
+        
+}
+
+function linegraph(elemID, data) {
+    $("#" + elemID).empty();
+    var WIDTH = $("#" + elemID).parent().width(),
+        HEIGHT = 200,
+        MARGINS = {
+            top: 30,
+            right: 20,
+            bottom: 30,
+            left: 30
+        },
+        xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(data, function(d) { return d.x; }), d3.max(data, function(d) { return d.x; })]),
+        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(data, function(d) { return d.y; }), d3.max(data, function(d) { return d.y; })]),
+        xAxis = d3.svg.axis()
+            .scale(xScale)
+            .ticks(Math.max(WIDTH/50, 2)),
+        yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left"),
+        vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
+    
+    vis.append("svg:g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+        .call(xAxis);
+    vis.append("svg:g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
+        .call(yAxis);
+    var lineGen = d3.svg.line()
+        .x(function(d) {
+            return xScale(d.x);
+        })
+        .y(function(d) {
+            return yScale(d.y);
+        })
+        .interpolate("basis");
+    vis.append('svg:path')
+        .attr('d', lineGen(data))
+        .attr('stroke', 'green')
+        .attr('stroke-width', 2)
+        .attr('fill', 'none');
+    /*vis.append('svg:path')
+        .attr('d', lineGen(data2))
+        .attr('stroke', 'blue')
+        .attr('stroke-width', 2)
+        .attr('fill', 'none');*/
 }
 
 /* other graphs, TODO: figure out how to insert into different divs
