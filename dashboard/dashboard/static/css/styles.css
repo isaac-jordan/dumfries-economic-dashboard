@@ -204,13 +204,16 @@ ul.graph-grid {
     fill: none;
     stroke: steelblue;
     stroke-width: 1.5px;
-
+}
+/*
 . dot {
     stroke: #000;
-} . tooltip {
+}
+
+. tooltip {
     position: absolute;
     width: 200px;
     height: 28px;
     pointer-events: none;
 }
-}
+*/
