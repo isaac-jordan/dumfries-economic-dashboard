@@ -8,21 +8,9 @@
                 </div>
             </div>
         </div>
-        <!--<ul as-sortable="sortableOptions" ng-model="items" class="graph-grid">
-            <li ng-repeat="item in items" as-sortable-item class="as-sortable-item">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="height: 35px;">
-                        {{item.name}}
-                        <span as-sortable-item-handle class="glyphicon glyphicon-move pull-right"></span>
-                    </div>
-                    <div class="panel-body"><svg id="{{item.id}}" class="chart {{item.type}}"></svg></div>
-                    {{ drawGraph(item.id, item.dataset, item.type) }}
-                </div>
-            </li>
-        </ul>-->
         <div gridster="gridsterOpts" ng-controller="draggableGridController">
             <ul>
-                <li gridster-item="widget" ng-repeat="widget in widgets">
+                <li gridster-item="customItemMap" ng-repeat="widget in widgets">
                     <div class="panel panel-default" >
                         <div class="panel-heading">
                             <div class="row">
@@ -35,7 +23,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}"></svg></div>
+                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
                         {{ drawGraph(widget.id, widget.dataset, widget.type) }}
                     </div>
                 </li>

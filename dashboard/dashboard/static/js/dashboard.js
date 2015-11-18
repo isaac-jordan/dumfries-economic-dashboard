@@ -41,36 +41,43 @@ app.controller('contactController', function($scope) {
 });
 
 app.controller('draggableGridController', function ($scope) {
+    $scope.customItemMap = {
+        sizeX: 'widget.size.x',
+        sizeY: 'widget.size.y',
+        row: 'widget.position[0]',
+        col: 'widget.position[1]'
+    };
+    
     $scope.widgets = [{
         name: 'Crime',
         type: "bar",
         id: "crime",
         dataset: [32,13,45,13,12],
         size: {
-            x: 1,
+            x: 2,
             y: 1
         },
-        position: [0, 0]
+        //position: [0, 0]
     }, {
         name: 'Employment Nature',
         type: "bar",
         id: "employment-nature",
         dataset: [5,3,8,3],
         size: {
-            x: 1,
+            x: 2,
             y: 1
         },
-        position: [0, 1]
+        //position: [0, 1]
     }, {
         name: 'Unemployment',
         type: "bar",
         id: "unemployment",
         dataset: [4, 8, 15, 16, 23, 42],
         size: {
-            x: 1,
+            x: 2,
             y: 1
         },
-        position: [0, 2]
+        //position: [0, 2]
     }, {
         name: 'GDP Per Head (£)',
         type: "line",
@@ -95,10 +102,10 @@ app.controller('draggableGridController', function ($scope) {
                 x: "2010"
             }],
         size: {
-            x: 1,
-            y: 1
+            x: 2,
+            y: 2
         },
-        position: [1, 0]
+        //position: [1, 0]
     }, {
         name: 'Employment Rate',
         type: "line",
@@ -123,20 +130,20 @@ app.controller('draggableGridController', function ($scope) {
                 x: "2010"
             }],
         size: {
-            x: 1,
-            y: 1
+            x: 2,
+            y: 2
         },
-        position: [1, 1]
+        //position: [1, 1]
     }, {
         name: 'Claimant Count Numbers',
         type: "bar",
         id: "claimant",
         dataset: [4, 8, 15, 16, 23, 42],
         size: {
-            x: 1,
+            x: 2,
             y: 1
         },
-        position: [1, 2]
+        //position: [1, 2]
     },{
         name: 'House Prices (£1000)',
         type: "line",
@@ -161,10 +168,10 @@ app.controller('draggableGridController', function ($scope) {
                 x: "2010"
             }],
         size: {
-            x: 1,
-            y: 1
+            x: 2,
+            y: 2
         },
-        position: [2, 0]
+        //position: [2, 0]
     }];
     
     $scope.gridsterOpts = {
@@ -180,6 +187,7 @@ app.controller('draggableGridController', function ($scope) {
         width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
         colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
         rowHeight: 'match',
+        floating: true
     };
 
     
