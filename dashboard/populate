@@ -1,0 +1,2 @@
+python manage.py migrate
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('test', 'test@example.com', 'test')" | python manage.py shell
