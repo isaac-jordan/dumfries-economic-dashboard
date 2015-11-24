@@ -1,5 +1,5 @@
 /*jshint*/
-/*global angular, drawGraph */
+/*global angular, drawGraph, console */
 'use strict';
 
 var app = angular.module('dashboard', ['ngRoute', 'gridster']);
@@ -41,43 +41,27 @@ app.controller('contactController', function($scope) {
 });
 
 app.controller('draggableGridController', function ($scope) {
-    $scope.customItemMap = {
-        sizeX: 'widget.size.x',
-        sizeY: 'widget.size.y',
-        row: 'widget.position[0]',
-        col: 'widget.position[1]'
-    };
-    
     $scope.widgets = [{
         name: 'Crime',
         type: "bar",
         id: "crime",
         dataset: [32,13,45,13,12],
-        size: {
-            x: 2,
-            y: 1
-        },
-        //position: [0, 0]
+        sizeX: 2,
+        sizeY: 1
     }, {
         name: 'Employment Nature',
         type: "bar",
         id: "employment-nature",
         dataset: [5,3,8,3],
-        size: {
-            x: 2,
-            y: 1
-        },
-        //position: [0, 1]
+        sizeX: 2,
+        sizeY: 1
     }, {
         name: 'Unemployment',
         type: "bar",
         id: "unemployment",
         dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 2,
-            y: 1
-        },
-        //position: [0, 2]
+        sizeX: 2,
+        sizeY: 1
     }, {
         name: 'GDP Per Head (£)',
         type: "line",
@@ -101,11 +85,8 @@ app.controller('draggableGridController', function ($scope) {
                 y: "176",
                 x: "2010"
             }],
-        size: {
-            x: 2,
-            y: 2
-        },
-        //position: [1, 0]
+        sizeX: 2,
+        sizeY: 2
     }, {
         name: 'Employment Rate',
         type: "line",
@@ -129,21 +110,15 @@ app.controller('draggableGridController', function ($scope) {
                 y: "176",
                 x: "2010"
             }],
-        size: {
-            x: 2,
-            y: 2
-        },
-        //position: [1, 1]
+        sizeX: 2,
+        sizeY: 2
     }, {
         name: 'Claimant Count Numbers',
         type: "bar",
         id: "claimant",
         dataset: [4, 8, 15, 16, 23, 42],
-        size: {
-            x: 2,
-            y: 1
-        },
-        //position: [1, 2]
+        sizeX: 2,
+        sizeY: 1
     },{
         name: 'House Prices (£1000)',
         type: "line",
@@ -167,18 +142,23 @@ app.controller('draggableGridController', function ($scope) {
                 y: "176",
                 x: "2010"
             }],
-        size: {
-            x: 2,
-            y: 2
-        },
-        //position: [2, 0]
+        sizeX: 2,
+        sizeY: 2
     }];
     
     $scope.gridsterOpts = {
         margins: [20, 20],
         outerMargin: false,
         draggable: {
-            enabled: true
+            enabled: true,
+            start: function(event, $element, widget) {
+                // optional callback fired when drag is started
+                // use this to try to stop lag
+            }, 
+            stop: function(event, $element, widget) {
+                // optional callback fired when item is finished dragging
+                // use this to try to stop lag
+            } 
         },
         resizable: {
             enabled: false

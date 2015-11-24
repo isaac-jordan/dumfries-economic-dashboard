@@ -10,7 +10,7 @@
         </div>
         <div gridster="gridsterOpts" ng-controller="draggableGridController">
             <ul>
-                <li gridster-item="customItemMap" ng-repeat="widget in widgets">
+                <li gridster-item="widget" ng-repeat="widget in widgets">
                     <div class="panel panel-default" >
                         <div class="panel-heading">
                             <div class="row">
