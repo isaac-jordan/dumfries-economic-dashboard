@@ -3,6 +3,7 @@
 'use strict';
 
 var app = angular.module('dashboard', ['ngRoute', 'gridster']);
+var GLOBAL = {};
 
 app.config(function($routeProvider) {
         $routeProvider
@@ -41,110 +42,7 @@ app.controller('contactController', function($scope) {
 });
 
 app.controller('draggableGridController', function ($scope) {
-    $scope.widgets = [{
-        name: 'Crime',
-        type: "bar",
-        id: "crime",
-        dataset: [32,13,45,13,12],
-        sizeX: 2,
-        sizeY: 1
-    }, {
-        name: 'Employment Nature',
-        type: "bar",
-        id: "employment-nature",
-        dataset: [5,3,8,3],
-        sizeX: 2,
-        sizeY: 1
-    }, {
-        name: 'Unemployment',
-        type: "bar",
-        id: "unemployment",
-        dataset: [4, 8, 15, 16, 23, 42],
-        sizeX: 2,
-        sizeY: 1
-    }, {
-        name: 'GDP Per Head (£)',
-        type: "line",
-        id: "gdp",
-        dataset: [{
-                y: "152",
-                x: "2000"
-            }, {
-                y: "189",
-                x: "2002"
-            }, {
-                y: "179",
-                x: "2004"
-            }, {
-                y: "199",
-                x: "2006"
-            }, {
-                y: "134",
-                x: "2008"
-            }, {
-                y: "176",
-                x: "2010"
-            }],
-        sizeX: 2,
-        sizeY: 2
-    }, {
-        name: 'Employment Rate',
-        type: "line",
-        id: "employment-rate",
-        dataset: [{
-                y: "152",
-                x: "2000"
-            }, {
-                y: "189",
-                x: "2002"
-            }, {
-                y: "179",
-                x: "2004"
-            }, {
-                y: "199",
-                x: "2006"
-            }, {
-                y: "134",
-                x: "2008"
-            }, {
-                y: "176",
-                x: "2010"
-            }],
-        sizeX: 2,
-        sizeY: 2
-    }, {
-        name: 'Claimant Count Numbers',
-        type: "bar",
-        id: "claimant",
-        dataset: [4, 8, 15, 16, 23, 42],
-        sizeX: 2,
-        sizeY: 1
-    },{
-        name: 'House Prices (£1000)',
-        type: "line",
-        id: "house-prices",
-        dataset: [{
-                y: "152",
-                x: "2000"
-            }, {
-                y: "189",
-                x: "2002"
-            }, {
-                y: "179",
-                x: "2004"
-            }, {
-                y: "199",
-                x: "2006"
-            }, {
-                y: "134",
-                x: "2008"
-            }, {
-                y: "176",
-                x: "2010"
-            }],
-        sizeX: 2,
-        sizeY: 2
-    }];
+    $scope.widgets = GLOBAL.widgets;
     
     $scope.gridsterOpts = {
         margins: [20, 20],
