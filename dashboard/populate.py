@@ -71,9 +71,9 @@ def populate():
                 "x": "2010"
             }], sizeY=2)
 
-def add_dataset(datasource, name, type, id, dataset, filename="", sizeX=2, sizeY=1):
+def add_dataset(datasource, name, t, html_id, dataset, filename="", sizeX=2, sizeY=1):
     JSONdataset = json.dumps(dataset)
-    p = Dataset.objects.get_or_create(datasource=datasource, name=name, type=type, html_id=id, dataset=JSONdataset, sizeX=sizeX, sizeY=sizeY)[0]
+    p = Dataset.objects.get_or_create(datasource=datasource, name=name, type=t, html_id=html_id, dataset=JSONdataset, sizeX=sizeX, sizeY=sizeY)[0]
     p.save()
     return p
 
