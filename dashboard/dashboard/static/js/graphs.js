@@ -36,11 +36,7 @@ function bargraph(elemID, data) {
         });
 
     bar.append("rect")
-        .attr("width", function(d) {
-            console.log(d);
-            console.log(x(d));
-            return x(d);
-        })
+        .attr("width", x)
         .attr("height", barHeight - 1);
 
     bar.append("text")
