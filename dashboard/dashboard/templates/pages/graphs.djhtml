@@ -6,10 +6,13 @@
 <div class="padding">
     <div class="full col-sm-9" ng-controller="draggableGridController">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-9">
                 <div class="panel panel-default">
                     <div class="panel-body">{{ message }}</div>
                 </div>
+            </div>
+            <div class="col-sm-3">
+                <div><a href="" ng-click="clear()">Clear</a></div>
             </div>
         </div>
         <div gridster="gridsterOpts" ng-controller="draggableGridController">
@@ -22,7 +25,7 @@
                                 <div class="col-sm-3">
                                     <div class="pull-right">
                                         <a title="settings"><i class="glyphicon glyphicon-cog"></i></a>
-                                        <a title="Remove widget"><i class="glyphicon glyphicon-trash"></i></a>
+                                        <a title="Remove widget" ng-click="deleteWidget($index)"><i class="glyphicon glyphicon-trash"></i></a>
                                     </div>
                                 </div>
                             </div>

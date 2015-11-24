@@ -43,6 +43,7 @@ app.controller('contactController', function($scope) {
 
 app.controller('draggableGridController', function ($scope) {
     $scope.widgets = GLOBAL.widgets;
+    $scope.drawGraph = drawGraph;
     
     $scope.gridsterOpts = {
         margins: [20, 20],
@@ -68,7 +69,12 @@ app.controller('draggableGridController', function ($scope) {
         floating: true
     };
 
+    $scope.clear = function() {
+        $scope.widgets.splice(0, $scope.widgets.length);
+    };
     
-    $scope.drawGraph = drawGraph;
+    $scope.deleteWidget = function(index) {
+        $scope.widgets.splice(index, 1);
+    };
     
 });

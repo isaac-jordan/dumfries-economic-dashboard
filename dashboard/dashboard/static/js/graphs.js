@@ -22,7 +22,7 @@ function bargraph(elemID, data) {
 
     var x = d3.scale.linear()
         .domain([0, d3.max(data)])
-        .range([0, width]);
+        .range([0, width - 5]);
 
     var chart = d3.select("#" + elemID)
         .attr("width", width)
@@ -36,7 +36,11 @@ function bargraph(elemID, data) {
         });
 
     bar.append("rect")
-        .attr("width", x)
+        .attr("width", function(d) {
+            console.log(d);
+            console.log(x(d));
+            return x(d);
+        })
         .attr("height", barHeight - 1);
 
     bar.append("text")
