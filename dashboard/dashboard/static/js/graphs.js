@@ -9,9 +9,6 @@ function drawGraph(elemID, data, type) {
         case "line":
             linegraph(elemID, data);
             break;
-        case "pie":
-            piegraph(elemID, data);
-            break;
     }
 }
 
@@ -92,10 +89,6 @@ function linegraph(elemID, data) {
         .attr('stroke', 'green')
         .attr('stroke-width', 2)
         .attr('fill', 'none');
-}
-
-function piegraph(elemID, data) {
-    
 }
 
  
