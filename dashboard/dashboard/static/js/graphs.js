@@ -18,7 +18,7 @@ function bargraph(elemID, data) {
         barHeight = 8.5;
 
     var x = d3.scale.linear()
-        .domain([0, d3.max(data)])
+        .domain([0, d3.max(data, function(d) {return d.y;})])
         .range([0, width - 5]);
 
     var chart = d3.select("#" + elemID)
@@ -33,23 +33,26 @@ function bargraph(elemID, data) {
         });
 
     bar.append("rect")
-        .attr("width", x)
+        .attr("width", function(d) {
+            return x(d.y);
+        })
         .attr("height", barHeight - 1);
 
     bar.append("text")
         .attr("x", function (d) {
-            return x(d) - 3;
+            return x(d.y) - 3;
         })
         .attr("y", barHeight / 2)
         .attr("dy", ".35em")
         .text(function (d) {
-            return d;
+            return d.y;
         });
         
 }
 
 function linegraph(elemID, data) {
     $("#" + elemID).empty();
+    if (elemID === "vis4") console.log(data);
     var WIDTH = $("#" + elemID).parent().width(),
         HEIGHT = 250,
         MARGINS = {

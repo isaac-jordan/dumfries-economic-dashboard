@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 # Local Imports
-from models import Datasource, Dataset
+from models import Datasource, Dataset, Visualisation
 
 
 def home(request):
@@ -16,14 +16,15 @@ def home(request):
 
 def graphs(request):
     ds = Datasource.objects.filter(name="test")
-    datasets = Dataset.objects.filter(datasource=ds)
+    visualisations = Visualisation.objects.filter(dataSource=ds)
+    datasets = Dataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     
-    widgets = json.dumps( [{'name': o.name,
-                           'id': o.html_id,
-                           'type': o.type,
-                           'dataset': json.loads(o.dataset),
-                           'sizeX': o.sizeX,
-                           'sizeY': o.sizeY} for o in datasets] )
+    widgets = json.dumps( [{'name': o.visualisation.name,
+                           'id': "vis" + str(o.visualisation.pk),
+                           'type': o.visualisation.type,
+                           'dataset': json.loads(o.dataJSON),
+                           'sizeX': o.visualisation.sizeX,
+                           'sizeY': o.visualisation.sizeY} for o in datasets] )
     
     print(widgets)
     return render(request, 'pages/graphs.djhtml', { "JSONwidgets": widgets })
@@ -31,6 +32,7 @@ def graphs(request):
 def about(request):
     return render(request, 'pages/about.djhtml')
 
+@login_required
 def savedConfigs(request):
     return render(request, "pages/savedConfigs.djhtml")
 
