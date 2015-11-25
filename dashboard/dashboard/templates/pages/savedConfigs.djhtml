@@ -3,11 +3,6 @@
         <div class="row">
             <div class="col-sm-12">
                 <p>Here are your saved configs!</p>
-                {% if configList %}
-                    Not empty!
-                {% else %}
-                    Maybe you need to log in?
-                {% endif %}
             </div>
         </div>
     </div>

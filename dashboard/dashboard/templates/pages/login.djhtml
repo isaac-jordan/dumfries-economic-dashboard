@@ -7,13 +7,11 @@ function submitLogin() {
         success: function(response){
             $("#message").html(response.message);
             if (response.success) {
-                $("#logout-btn").removeClass("hide");
-                $route.reload();
+                window.location.reload();
             }
         }
     });
 }
-
 </script>
 
 <div class="padding">
