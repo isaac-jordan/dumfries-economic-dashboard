@@ -18,11 +18,10 @@ app.config(function($routeProvider) {
                 templateUrl : 'pages/about',
                 controller  : 'aboutController'
             })
-
-            // route for the contact page
-            .when('/contact', {
-                templateUrl : 'pages/contact',
-                controller  : 'contactController'
+            
+            .when('/savedconfigs', {
+                templateUrl : 'pages/savedConfigs',
+                controller  : 'savedConfigController'
             });
     });
 
@@ -37,8 +36,8 @@ app.controller('aboutController', function($scope) {
     $scope.message = 'Look! I am an about page.';
 });
 
-app.controller('contactController', function($scope) {
-    $scope.message = 'Contact us! JK. This is just a demo.';
+app.controller('savedConfigController', function($scope, $route) {
+    
 });
 
 app.controller('draggableGridController', function ($scope) {
@@ -78,3 +77,14 @@ app.controller('draggableGridController', function ($scope) {
     };
     
 });
+
+function logoutUser() {
+    $.ajax({
+    type:"POST",
+    url: '/account/login',
+    data: $('#login_form').serialize(),
+    success: function(response){
+        $("#message").html();
+     }
+});
+}

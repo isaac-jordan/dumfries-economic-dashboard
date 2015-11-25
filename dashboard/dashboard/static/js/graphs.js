@@ -50,11 +50,11 @@ function bargraph(elemID, data) {
 
 function linegraph(elemID, data) {
     $("#" + elemID).empty();
-    var WIDTH = $("#" + elemID).parent().width()+80,
+    var WIDTH = $("#" + elemID).parent().width(),
         HEIGHT = 250,
         MARGINS = {
             top: 30,
-            right: 70,
+            right: 30,
             bottom: 30,
             left: 30
         },

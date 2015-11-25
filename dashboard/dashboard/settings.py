@@ -1,5 +1,6 @@
 # Django settings for dashboard project.
 import os
+from django.conf.global_settings import LOGIN_URL
 
 PWD = os.path.dirname(os.path.realpath(__file__ ))
 
@@ -80,6 +81,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+LOGIN_URL='/pages/login/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '9yhi^teu8c2gqt@ro%3ck-n$)sbed=o7^%2hk$h0r*wfz@ujq^'

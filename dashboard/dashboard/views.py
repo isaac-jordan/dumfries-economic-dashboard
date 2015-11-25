@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from models import Datasource, Dataset
+# Python Library Imports
 import json
+
+# Django Imports
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+# Local Imports
+from models import Datasource, Dataset
 
 
 def home(request):
@@ -22,3 +30,27 @@ def graphs(request):
 
 def about(request):
     return render(request, 'pages/about.djhtml')
+
+def savedConfigs(request):
+    return render(request, "pages/savedConfigs.djhtml")
+
+def loginPage(request):
+    return render(request, "pages/login.djhtml")
+
+def ajax_login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return JsonResponse({'message':'Successfully logged in.', "success": True})
+        else:
+            return JsonResponse({'message':'Error: Account disabled.', "success": False})
+    else:
+        return JsonResponse({'message':'Error: Invalid login details.', "success": False})
+
+def logoutUser(request):
+    logout(request)
+    # Redirect to a success page.
+    return redirect("/")
