@@ -2,12 +2,13 @@
 html, body {
    height: 100%;
    font-family:verdana,arial,sans-serif;
+   font-size: 100%;
    color:#555555;
 }
 
 .nav {
    font-family:Arial,sans-serif;
-   font-size:13px;
+   font-size:1.0em;
 }
 
 a {
@@ -100,7 +101,7 @@ hr {
 #sidebar, #sidebar a, #sidebar-footer a {
     color:#ffffff;
     background-color:transparent;
-	text-shadow:0 0 2px #000000;
+	text-shadow:0 0 0.5em #000000;
     padding-left:5px;
 }
 #sidebar .nav li>a:hover {
@@ -117,7 +118,7 @@ hr {
   margin:9px;
   margin-right:2px;
   margin-left:15px;
-  font-size:20px;
+  font-size:30px;
   font-weight:700;
   text-align:center;
   text-decoration:none;
@@ -176,6 +177,7 @@ ul.graph-grid {
 .graph-grid li {
     -webkit-column-break-inside: avoid;
     break-inside: avoid-column;
+    
 }
 
 /* D3 graph styling */
@@ -185,7 +187,7 @@ ul.graph-grid {
 
 .chart.bar text {
   fill: white;
-  font: 10px sans-serif;
+  font: 10px sans-serif;  /*Leaving this as px for now since it's not the final graph format*/
   text-anchor: end;
 }
 
@@ -213,7 +215,7 @@ ul.graph-grid {
         }
         .axis text {
             font-family: Lato;
-            font-size: 12px;
+            font-size: 0.6em;
         }
 /*
 . dot {
