@@ -19,14 +19,15 @@ def graphs(request):
     visualisations = Visualisation.objects.filter(dataSource=ds)
     datasets = Dataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     
-    widgets = json.dumps( [{'name': o.visualisation.name,
-                           'id': "vis" + str(o.visualisation.pk),
-                           'type': o.visualisation.type,
-                           'dataset': json.loads(o.dataJSON),
-                           'sizeX': o.visualisation.sizeX,
-                           'sizeY': o.visualisation.sizeY} for o in datasets] )
+    widgets = [{'name': o.name,
+                           'id': "vis" + str(o.pk),
+                           'type': o.type,
+                           'dataset': [json.loads(d.dataJSON) for d in datasets.filter(visualisation=o)],
+                           'sizeX': o.sizeX,
+                           'sizeY': o.sizeY} for o in visualisations]
     
     print(widgets)
+    widgets = json.dumps(widgets)
     return render(request, 'pages/graphs.djhtml', { "JSONwidgets": widgets })
 
 def about(request):

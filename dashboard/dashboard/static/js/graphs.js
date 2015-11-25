@@ -14,6 +14,7 @@ function drawGraph(elemID, data, type) {
 }
 
 function bargraph(elemID, data) {
+    data = data[0];
     $("#" + elemID).empty();
     var width = $("#" + elemID).parent().width(),
         barHeight = 8.5;
@@ -53,8 +54,23 @@ function bargraph(elemID, data) {
 
 function linegraph(elemID, data) {
     $("#" + elemID).empty();
-    if (elemID === "vis4") console.log(data);
+    var xMin = data[0][0].x, xMax = data[0][0].x, yMin = data[0][0].y, yMax = data[0][0].y;
+    var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
+    
+    for (var i=0; i<data.length; i++) {
+        xMinCurr = d3.min(data[i], function(d) {return d.x; });
+        xMaxCurr = d3.max(data[i], function(d) {return d.x; });
+        yMinCurr = d3.min(data[i], function(d) {return d.y; });
+        yMaxCurr = d3.max(data[i], function(d) {return d.y; });
+        
+        if (xMinCurr < xMin) xMin = xMinCurr;
+        if (xMaxCurr > xMax) xMax = xMaxCurr;
+        if (yMinCurr < yMin) yMin = yMinCurr;
+        if (yMaxCurr > yMax) yMax = yMaxCurr;
+    }
+    
     var WIDTH = $("#" + elemID).parent().width(),
+        colours = ['green', 'blue', 'red', 'yellow', 'orange'],
         HEIGHT = 250,
         MARGINS = {
             top: 30,
@@ -62,8 +78,8 @@ function linegraph(elemID, data) {
             bottom: 30,
             left: 30
         },
-        xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(data, function(d) { return d.x; }), d3.max(data, function(d) { return d.x; })]),
-        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(data, function(d) { return d.y; }), d3.max(data, function(d) { return d.y; })]),
+        xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
+        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
         xAxis = d3.svg.axis()
             .scale(xScale)
             .ticks(Math.max(WIDTH/50, 2)),
@@ -88,11 +104,15 @@ function linegraph(elemID, data) {
             return yScale(d.y);
         })
         .interpolate("basis");
-    vis.append('svg:path')
-        .attr('d', lineGen(data))
-        .attr('stroke', 'green')
+        
+    for (i=0; i<data.length; i++) {
+        vis.append('svg:path')
+        .attr('d', lineGen(data[i]))
+        .attr('stroke', colours[i])
         .attr('stroke-width', 2)
         .attr('fill', 'none');
+    }
+    
 }
 
  
