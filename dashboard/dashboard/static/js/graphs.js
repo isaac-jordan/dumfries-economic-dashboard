@@ -2,6 +2,7 @@
 /*global d3 */
     
 function drawGraph(elemID, data, type) {
+    if ($("#" + elemID).parent().width() < 0) return;
     switch(type) {
         case "bar":
             bargraph(elemID, data);
