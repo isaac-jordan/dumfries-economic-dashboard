@@ -57,3 +57,6 @@ def logoutUser(request):
     logout(request)
     # Redirect to a success page.
     return redirect("/")
+
+def registrationPage(request):
+    return render(request, "pages/register.djhtml")
