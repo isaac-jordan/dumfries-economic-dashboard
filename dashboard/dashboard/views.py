@@ -41,7 +41,7 @@ def loginPage(request):
     return render(request, "pages/login.djhtml")
 
 def ajax_login(request):
-    username = request.POST['username']
+    username = request.POST['email']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:

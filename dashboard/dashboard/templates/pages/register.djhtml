@@ -22,8 +22,6 @@ function submitRegistration() {
                     {% csrf_token %}
                     <input type="email" name="email" placeholder="Email Address" />
                     <br>
-                    <input type="text" name="username" placeholder="Username" />
-                    <br>
                     <input type="password" name="password" placeholder="Password">
                     <br>
                     <input type="password" name="password" placeholder="Repeat Password">

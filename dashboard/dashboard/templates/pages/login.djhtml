@@ -20,7 +20,7 @@ function submitLogin() {
             <div class="col-sm-12">
                 <form id="login_form" action="">
                     {% csrf_token %}
-                    <input type="text" name="username" placeholder="Username" />
+                    <input type="email" name="email" placeholder="Email Address" />
                     <input type="password" name="password" placeholder="Password">
                     <a class="btn btn-default" onclick="submitLogin()">Login</a>
                     <a class="btn btn-default" href="#register">Sign Up</a>
