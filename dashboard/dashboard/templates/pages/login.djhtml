@@ -22,8 +22,8 @@ function submitLogin() {
                     {% csrf_token %}
                     <input type="text" name="username" placeholder="Username" />
                     <input type="password" name="password" placeholder="Password">
-                    <input type="button" value="Login" onclick="submitLogin()">
-                    <input type="button" value="Sign Up" onclick="/#/register/">
+                    <a class="btn btn-default" onclick="submitLogin()">Login</a>
+                    <a class="btn btn-default" href="#register">Sign Up</a>
                 </form>
                 <p id="message">
             </div>

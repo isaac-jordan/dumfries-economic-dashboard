@@ -79,8 +79,6 @@
                             
                           </div>
                         </div>
-                        <a class="btn btn-default {% if user.is_authenticated %}hide{% endif %}" href="/#/savedconfigs" id="login-btn">Login</a>
-                        <a class="btn btn-default {% if user.is_authenticated %}hide{% endif %}" href="/#/register" id="register-btn">Sign Up</a>
                         <a class="btn btn-default {% if not user.is_authenticated %}hide{% endif %}" href="/logout" id="logout-btn">Logout</a>
                     </form>
                     

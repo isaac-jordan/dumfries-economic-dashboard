@@ -20,10 +20,6 @@ function submitRegistration() {
             <div class="col-sm-12">
                 <form id="registration_form" action="">
                     {% csrf_token %}
-                    <input type="text" name="firstname" placeholder="First Name" />
-                    <br>
-                    <input type="text" name="lastname" placeholder="Surname" />
-                    <br>
                     <input type="email" name="email" placeholder="Email Address" />
                     <br>
                     <input type="text" name="username" placeholder="Username" />

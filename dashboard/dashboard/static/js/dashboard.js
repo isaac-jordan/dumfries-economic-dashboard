@@ -22,6 +22,10 @@ app.config(function($routeProvider) {
             .when('/savedconfigs', {
                 templateUrl : 'pages/savedConfigs',
                 controller  : 'savedConfigController'
+            })
+
+            .when('/register', {
+                templateUrl : 'pages/register'
             });
     });
 

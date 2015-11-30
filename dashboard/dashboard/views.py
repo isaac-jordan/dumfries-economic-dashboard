@@ -64,4 +64,3 @@ def ajax_register(request):
 
 def registrationPage(request):
     return render(request, "pages/register.djhtml")
-    #TODO: get this to be displayed within the main div
