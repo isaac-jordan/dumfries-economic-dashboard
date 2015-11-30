@@ -58,5 +58,10 @@ def logoutUser(request):
     # Redirect to a success page.
     return redirect("/")
 
+def ajax_register(request):
+    return redirect("/")
+    # TODO: implement this
+
 def registrationPage(request):
     return render(request, "pages/register.djhtml")
+    #TODO: get this to be displayed within the main div

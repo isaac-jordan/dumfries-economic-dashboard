@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^pages/register', 'dashboard.views.registrationPage', name='register'),
     url(r'^logout', 'dashboard.views.logoutUser', name='logout'),
     url(r'^account/login', 'dashboard.views.ajax_login', name='ajax_login'),
+    url(r'^account/register', 'dashboard.views.ajax_register', name='ajax_register'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
