@@ -15,7 +15,12 @@
                 <div><a class="btn btn-default" href="" ng-click="clear()">Clear</a></div>
             </div>
         </div>
-        <input type="text" value="02/16/12" data-date-format="dd/mm/yy" class="datepicker" />
+	<div align="right">
+		Start Date:
+        	<input type="text"  data-date-format="dd/mm/yy" class="datepicker" />
+		End Date:
+		<input type="text"  data-date-format="dd/mm/yy" class="datepicker" />
+	</div>
         <div gridster="gridsterOpts" ng-controller="draggableGridController">
             <ul>
                 <li gridster-item="widget" ng-repeat="widget in widgets">
@@ -27,6 +32,9 @@
                                     <div class="pull-right">
                                         <a title="settings"><i class="glyphicon glyphicon-cog"></i></a>
                                         <a title="Remove widget" ng-click="deleteWidget($index)"><i class="glyphicon glyphicon-trash"></i></a>
+					<a href='' style="width:100px; margin:0 auto;" dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled">
+          Menu
+        </a>
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +53,10 @@
         $('.datepicker').datepicker({
             format: "mm-yyyy",
             startView: "months", 
-            minViewMode: "months"
+            minViewMode: "months",
+	    "setDate": new Date(),
+            "autoclose": true
         });
+	$(".datepicker").datepicker("setDate", new Date());
     });     
 </script> 
