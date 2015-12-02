@@ -4,6 +4,7 @@ import json
 # Django Imports
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
@@ -44,6 +45,8 @@ def ajax_login(request):
     username = request.POST['email']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
+    if request.POST["remember"] is None:
+        request.session.set_expiry(0)
     if user is not None:
         if user.is_active:
             login(request, user)
@@ -59,7 +62,14 @@ def logoutUser(request):
     return redirect("/")
 
 def ajax_register(request):
-    return redirect("/")
+    print request.POST
+    username = request.POST['email']
+    password = request.POST['password']
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'message':'Error: Email address already used.', 'success': False})
+    user = User.objects.create_user(username, username, password)
+    user.save()
+    return JsonResponse({'message':'Successfully registered.', "success": True})
     # TODO: implement this
 
 def registrationPage(request):
