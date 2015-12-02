@@ -70,7 +70,6 @@ def ajax_register(request):
     user = User.objects.create_user(username, username, password)
     user.save()
     return JsonResponse({'message':'Successfully registered.', "success": True})
-    # TODO: implement this
 
 def registrationPage(request):
     return render(request, "pages/register.djhtml")
