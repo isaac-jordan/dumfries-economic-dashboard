@@ -9,34 +9,86 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 # Local Imports
-from models import Datasource, Dataset, Visualisation
+from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph
 
 
 def home(request):
     return render(request, "index.html")
 
 def graphs(request):
+    return render(request, 'pages/graphs.djhtml')
+
+def ajaxGetGraphs(request):
     ds = Datasource.objects.filter(name="test")
     visualisations = Visualisation.objects.filter(dataSource=ds)
     datasets = Dataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     
     widgets = [{'name': o.name,
                            'id': "vis" + str(o.pk),
+                           'pk': o.pk,
                            'type': o.type,
                            'dataset': [json.loads(d.dataJSON) for d in datasets.filter(visualisation=o)],
                            'sizeX': o.sizeX,
                            'sizeY': o.sizeY} for o in visualisations]
     
     print(widgets)
-    widgets = json.dumps(widgets)
-    return render(request, 'pages/graphs.djhtml', { "JSONwidgets": widgets })
+    return JsonResponse({"widgets": widgets})
 
 def about(request):
     return render(request, 'pages/about.djhtml')
 
 @login_required
 def savedConfigs(request):
-    return render(request, "pages/savedConfigs.djhtml")
+    configs = SavedConfig.objects.filter(user=request.user)
+    return render(request, "pages/savedConfigs.djhtml", {"configurations": configs})
+
+#TODO: Optimise database requests
+def saveConfig(request):
+    dataJSON = request.POST["data"]
+    name = request.POST["name"]
+    data = json.loads(dataJSON)
+    savedConfig = SavedConfig.objects.create(user=request.user, name=name)
+    savedConfig.save()
+    print data
+    for graph in data:
+        vis = Visualisation.objects.filter(id=graph["visPK"])[0]
+        savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=savedConfig, xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
+        savedGraph.save()
+    return JsonResponse({'message':'Added new Saved Configuration.', "success": True})
+
+def ajaxloadSavedConfig(request):
+    scid = request.POST["id"]
+    savedConfig = SavedConfig.objects.filter(id=scid)[0]
+    savedGraphs = SavedGraph.objects.filter(savedConfig=savedConfig).select_related("visualisation")
+    if savedConfig.user != request.user:
+        return JsonResponse({'message':'Error: This Saved Configuration does not belong to you.', "success": False})
+    
+    widgets = [];
+    datasets = Dataset.objects
+    for graph in savedGraphs:
+        widget = {}
+        vis = graph.visualisation
+        widget["row"] = graph.yPosition
+        widget["col"] = graph.xPosition
+        widget["sizeX"] = graph.sizeX
+        widget["sizeY"] = graph.sizeY
+        widget["name"] = vis.name
+        widget["id"] = "vis" + str(vis.pk)
+        widget["pk"] = vis.pk
+        widget["type"] = vis.type
+        widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=vis)]
+        widgets.append(widget)
+    return JsonResponse({"widgets": widgets})
+
+def ajaxDeleteSavedConfig(request):
+    scid = request.POST["id"]
+    savedConfig = SavedConfig.objects.filter(id=scid)[0]
+    savedGraphs = SavedGraph.objects.filter(savedConfig=savedConfig).select_related("user")
+    if savedConfig.user != request.user:
+        return JsonResponse({'message':'Error: This Saved Configuration does not belong to you.', "success": False})
+    savedGraphs.delete()
+    savedConfig.delete()
+    return JsonResponse({'message':'Deleted Saved Configuration.', "success": True})
 
 def loginPage(request):
     return render(request, "pages/login.djhtml")

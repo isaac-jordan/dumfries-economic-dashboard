@@ -1,9 +1,17 @@
 /*jshint*/
-/*global angular, drawGraph, console */
+/*global angular, drawGraph, console, alert, prompt */
 'use strict';
 
 var app = angular.module('dashboard', ['ngRoute', 'gridster']);
 var GLOBAL = {};
+
+app.run(function($rootScope, $templateCache) {
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (typeof(current) !== 'undefined'){
+            $templateCache.remove(current.templateUrl);
+        }
+    });
+});
 
 app.config(function($routeProvider) {
         $routeProvider
@@ -20,8 +28,7 @@ app.config(function($routeProvider) {
             })
             
             .when('/savedconfigs', {
-                templateUrl : 'pages/savedConfigs',
-                controller  : 'savedConfigController'
+                templateUrl : 'pages/savedConfigs'
             })
 
             .when('/register', {
@@ -31,9 +38,44 @@ app.config(function($routeProvider) {
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
-    // create a message to display in our view
-    
+    $scope.widgets = GLOBAL.widgets;
     $scope.message = 'Welcome to the Dumfries Dashboard!';
+    
+    $scope.clear = function() {
+        $scope.widgets.splice(0, $scope.widgets.length);
+    };
+    
+    $scope.saveConfig = function() {
+        var widgets = GLOBAL.widgets,
+            data = [];
+        var name = prompt("Enter a name for the config: ");
+        if (!name) return;
+        for (var i=0; i<widgets.length; i++) {
+            var object = {};
+            object.visPK = widgets[i].pk;
+            object.xPosition = widgets[i].col;
+            object.yPosition = widgets[i].row;
+            object.sizeX = widgets[i].sizeX;
+            object.sizeY = widgets[i].sizeY;
+            data.push(object);
+        }
+        console.log(data);
+        $.ajax({
+            type:"POST",
+            url: '/saveConfig',
+            data: {data: JSON.stringify(data), name: name},
+            success: function(response){
+                alert(response.message);
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    };
+    
+    $scope.deleteWidget = function(index) {
+        $scope.widgets.splice(index, 1);
+    };
 });
 
 app.controller('aboutController', function($scope) {
@@ -41,10 +83,55 @@ app.controller('aboutController', function($scope) {
 });
 
 app.controller('savedConfigController', function($scope, $route) {
+    $scope.deleteSavedConfig = function(id) {
+        $.ajax({
+            type:"POST",
+            url: '/deleteSavedConfig',
+            data: {id: id},
+            success: function(response){
+                if (response.success)
+                    $route.reload();
+                else
+                    alert(response.message);
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    };
     
+    $scope.loadSavedConfig = function(id) {
+        $.ajax({
+            type:"POST",
+            url: '/loadSavedConfig',
+            data: {id: id},
+            success: function(response){
+                console.log(response);
+                GLOBAL.widgets = response.widgets;
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    };
 });
 
 app.controller('draggableGridController', function ($scope) {
+    if (!GLOBAL.widgets) {
+        $.ajax({
+            type:"GET",
+            url: '/getGraphs',
+            success: function(response){
+                GLOBAL.widgets = response.widgets;
+                $scope.widgets = GLOBAL.widgets;
+                $scope.$apply();
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+    
     $scope.widgets = GLOBAL.widgets;
     $scope.drawGraph = drawGraph;
     
@@ -71,24 +158,45 @@ app.controller('draggableGridController', function ($scope) {
         rowHeight: 'match',
         floating: true
     };
-
-    $scope.clear = function() {
-        $scope.widgets.splice(0, $scope.widgets.length);
-    };
-    
-    $scope.deleteWidget = function(index) {
-        $scope.widgets.splice(index, 1);
-    };
     
 });
 
 function logoutUser() {
     $.ajax({
-    type:"POST",
-    url: '/account/login',
-    data: $('#login_form').serialize(),
-    success: function(response){
-        $("#message").html();
-     }
-});
+        type:"POST",
+        url: '/account/login',
+        data: $('#login_form').serialize(),
+        success: function(response){
+            $("#message").html();
+        }
+    });
 }
+
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
+});
