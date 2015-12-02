@@ -15,10 +15,8 @@
             </div>
         </div>
 	<div align="right">
-		Start Date:
-        	<input type="text"  data-date-format="dd/mm/yy" class="datepicker" />
-		End Date:
-		<input type="text"  data-date-format="dd/mm/yy" class="datepicker" />
+		<b>Select a date :
+		<input type="text" name="daterange" />
 	</div>
         <div gridster="gridsterOpts" ng-controller="draggableGridController">
             <ul>
@@ -46,14 +44,11 @@
 </div>
 {% endverbatim %}
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.datepicker').datepicker({
-            format: "mm-yyyy",
-            startView: "months", 
-            minViewMode: "months",
-	    "setDate": new Date(),
-            "autoclose": true
-        });
-	$(".datepicker").datepicker("setDate", new Date());
-    });     
-</script> 
+	$(function() {
+   		$('input[name="daterange"]').daterangepicker("setDate", new Date());
+	});
+	$('input[name="daterange"]').daterangepicker({
+        	"setDate": new Date(),
+        	"autoclose": true
+	});
+</script>
