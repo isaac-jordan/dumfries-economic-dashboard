@@ -121,7 +121,9 @@ def ajax_register(request):
         return JsonResponse({'message':'Error: Email address already used.', 'success': False})
     user = User.objects.create_user(username, username, password)
     user.save()
-    return JsonResponse({'message':'Successfully registered.', "success": True})
+    user = authenticate(username=username, password=password)
+    login(request,user)
+    return JsonResponse({'message':'Successfully registered. You will now be logged in.', "success": True})
 
 def registrationPage(request):
     return render(request, "pages/register.djhtml")
