@@ -8,6 +8,7 @@ function submitRegistration() {
             $("#message").html(response.message);
             if (response.success) {
                 window.history.back();
+                window.location.reload();
             }
         }
     });

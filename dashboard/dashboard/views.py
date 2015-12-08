@@ -114,7 +114,6 @@ def logoutUser(request):
     return redirect("/")
 
 def ajax_register(request):
-    print request.POST
     username = request.POST['email']
     password = request.POST['password']
     if User.objects.filter(username=username).exists():
