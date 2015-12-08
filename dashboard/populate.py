@@ -1,16 +1,20 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
-
+from fileConverter import readConvertAdd
 import django
 from django.contrib.auth.models import User
 django.setup()
 
 from dashboard.models import Dataset, Datasource, Visualisation
 import json
+def users():
+    add_superuser("test@test.com", "test")
+    add_user("joe@test.com", "test")
+
 
 def populate():
     datasource = add_datasource("test")
-    
+
     crimeVis = add_visualisation(datasource, 'Crime', "bar", "Location", "Num of Crimes")
     add_dataset(crimeVis, dataset = [{
                 "y": 32,
@@ -28,7 +32,7 @@ def populate():
                 "y": 12,
                 "x": "Dublin"
             }])
-    
+
     employmentNatureVis = add_visualisation(datasource, 'Employment Nature', "bar", "Nature", "Num of Employments")
     add_dataset(employmentNatureVis, dataset = [{
                 "y": 5,
@@ -43,7 +47,7 @@ def populate():
                 "y": 3,
                 "x": "Leeds"
             }])
-    
+
     unemploymentVis = add_visualisation(datasource, 'Unemployment', "bar", "Location", "Num of Unemployments")
     add_dataset(unemploymentVis, dataset = [{
                 "y": 4,
@@ -61,7 +65,7 @@ def populate():
                 "y": 23,
                 "x": "Dublin"
             }])
-    
+
     # One graph with two lines
     gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', "line", "Year", "GDP Per Head", sizeY=2)
     add_dataset(gdpPCVis, dataset = [{
@@ -102,7 +106,7 @@ def populate():
                 "y": 110,
                 "x": 2010
             }])
-    
+
     employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', "line", "Year", "Percentage Employed", sizeY=2)
     add_dataset(employmentRateVis, [{
                 "y": 20,
@@ -123,7 +127,7 @@ def populate():
                 "y": 25,
                 "x": 2010
             }])
-    
+
     claimentCountVis = add_visualisation(datasource, 'Claimant Count Numbers', "bar", "Location", "Num of Claimants")
     add_dataset(claimentCountVis, [{
                 "y": 152,
@@ -144,7 +148,7 @@ def populate():
                 "y": 176,
                 "x": "Manchester"
             }])
-    
+
     housePriceVis = add_visualisation(datasource, 'House Price v Year', "line", "Year", "House Prices (1000)", sizeY=2)
     add_dataset(housePriceVis, [{
                 "y": 152,
@@ -165,16 +169,16 @@ def populate():
                 "y": 176,
                 "x": 2010
             }])
-    
+
     # Add some test users
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
 
 def add_visualisation(dataSource, name, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
-    d = Visualisation.objects.get_or_create(dataSource=dataSource, 
-                                      name=name, 
-                                      type=dataType, 
-                                      sizeX=sizeX, 
+    d = Visualisation.objects.get_or_create(dataSource=dataSource,
+                                      name=name,
+                                      type=dataType,
+                                      sizeX=sizeX,
                                       sizeY=sizeY,
                                       xLabel=xLabel,
                                       yLabel=yLabel)[0]
@@ -205,4 +209,8 @@ def add_superuser(name, password):
 
 if __name__ == '__main__':
     print "Starting population script..."
+    readConvertAdd('./dashboard/static/data/benefit-claims.csv','test')
+    readConvertAdd('./dashboard/static/data/full time employment.csv','test')
+    readConvertAdd('./dashboard/static/data/unemployment.csv','test')
+    readConvertAdd('./dashboard/static/data/wages.csv','test')
     populate()
