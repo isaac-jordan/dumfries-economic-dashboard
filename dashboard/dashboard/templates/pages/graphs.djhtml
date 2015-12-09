@@ -24,12 +24,12 @@
                     <div class="panel panel-default" >
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-sm-9"><h5>{{ widget.name }}</h5></div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
+                                <div class="col-sm-4">
                                     <div class="pull-right">
-                                        <a title="settings"><span class="glyphicon glyphicon-cog"></span></a>
+                                        <a title="settings"><span class="glyphicon glyphicon-cog"></a>
                                         <a title="information"dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled"><i class="glyphicon glyphicon-info-sign"></i></a>
-                                        <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></span></a>
+                                        <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></a>
                                     </div>
                                 </div>
                             </div>
