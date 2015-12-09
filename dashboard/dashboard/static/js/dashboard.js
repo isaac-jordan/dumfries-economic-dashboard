@@ -95,7 +95,7 @@ app.controller('mainController', function($scope) {
 });
 
 app.controller('aboutController', function($scope) {
-    $scope.message = 'Look! I am an about page.';
+    $scope.message = 'Here is where you will find pre-made configurations based on specific categories!';
 });
 
 app.controller('savedConfigController', function($scope, $route) {
