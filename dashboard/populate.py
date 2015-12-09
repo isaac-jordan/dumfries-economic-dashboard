@@ -1,6 +1,6 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
-from fileConverter import readConvertAdd
+from fileConverter import readConvertAdd, findFilePath
 import django
 from django.contrib.auth.models import User
 django.setup()
@@ -209,8 +209,8 @@ def add_superuser(name, password):
 
 if __name__ == '__main__':
     print "Starting population script..."
-    readConvertAdd('./dashboard/static/data/employment.csv','test')
-    readConvertAdd('./dashboard/static/data/full time employment.csv','test')
-    readConvertAdd('./dashboard/static/data/unemployment.csv','test')
-    readConvertAdd('./dashboard/static/data/wages.csv','test')
+    findFilePath('employment.csv','test')
+    findFilePath('full time employment.csv','test')
+    findFilePath('unemployment.csv','test')
+    findFilePath('wages.csv','test')
     populate()

@@ -31,6 +31,17 @@ def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
     return d
 
 
+def findFilePath(nameFile, source):
+    fileDirectory = ''
+    found = False
+    for root, dirs, files in os.walk(os.getcwd()):
+        if nameFile in files:
+            fileDirectory=root + '/' + nameFile
+            found = True
+            break
+    if found:
+        readConvertAdd(fileDirectory,source)
+    else: print "file does not exist"
 
 
 
@@ -56,7 +67,7 @@ def readConvertAdd(fileName , source):
                     'x':float(k[0:4]),
                     'y':float(v)
                 })
-        except ValueError: print "Reached letter"
+        except: print ''
 
         data.append(dataset)
     newName=fileName.split('/')
