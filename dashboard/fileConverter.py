@@ -71,7 +71,7 @@ def readConvertAdd(fileName , source):
 
         data.append(dataset)
     newName=fileName.split('/')
-    usedName=newName[4][0:-4]
+    usedName=newName[len(newName)-1][0:-4]
     usedName=usedName[:1].upper() + usedName[1:]
     usedName = usedName.replace('-', " ")
     usedName = usedName.replace('_', " ")
