@@ -145,6 +145,8 @@ app.controller('savedConfigController', function($scope, $route) {
 app.controller('draggableGridController', function ($scope, $timeout) {
     $scope.gridsterOptions = {
         margins: [20, 20],
+        columns: 6,
+        pushing: true,
         outerMargin: false,
         draggable: {
             enabled: true,
@@ -156,8 +158,10 @@ app.controller('draggableGridController', function ($scope, $timeout) {
             handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
             start: function(event, $element, widget) {},
             resize: function(event, $element, widget) {},
-            stop: function(event, $element, widget) {drawAllGraphs();}
+            stop: function(event, $element, widget) {$timeout(drawAllGraphs, 200);}
         },
+        minSizeX: 2,
+        minSizeY: 1,
         swapping: true, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
         width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
         colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'
