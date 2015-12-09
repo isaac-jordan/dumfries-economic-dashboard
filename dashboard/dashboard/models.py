@@ -1,12 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
 
 class Datasource(models.Model):
     name = models.CharField(max_length=100)
     
     def getAllWidgets(self):
-        #TODO
-        return
+        visualisations = Visualisation.objects.filter(dataSource=self)
+        widgets = []
+        for vis in visualisations:
+            widgets.append(vis.getWidget())
+        return widgets
     
 class Visualisation(models.Model):
     dataSource = models.ForeignKey(Datasource)
@@ -17,14 +21,23 @@ class Visualisation(models.Model):
     xLabel = models.CharField(max_length=100)
     yLabel = models.CharField(max_length=100)
     
-    def getAllWidgets(self):
-        #TODO
-        return
+    def getWidget(self):
+        widget = {'name': self.name,
+                           'id': "vis" + str(self.pk),
+                           'pk': self.pk,
+                           'type': self.type,
+                           'dataset': Dataset.objects.filter(visualisation=self)[0].fromJSON(),
+                           'sizeX': self.sizeX,
+                           'sizeY': self.sizeY}
+        return widget
 
 class Dataset(models.Model):
     visualisation = models.ForeignKey(Visualisation)
     filename = models.CharField(max_length=300)
     dataJSON = models.CharField(max_length=10000)
+    
+    def fromJSON(self):
+        return json.loads(self.dataJSON)
     
 class SavedConfig(models.Model):
     name = models.CharField(max_length=50)

@@ -90,7 +90,11 @@ app.controller('mainController', function($scope) {
                 });
             }
         });
-        
+    };
+    $scope.clear = function() {
+            if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
+            console.log($scope.widgets);
+            $scope.widgets.splice(0, $scope.widgets.length);
     };
 });
 
@@ -174,11 +178,6 @@ app.controller('draggableGridController', function ($scope, $timeout) {
     });
     
     $scope.widgets = GLOBAL.widgets;
-    $scope.drawGraph = drawGraph;
-    
-    $scope.clear = function() {
-        $scope.widgets.splice(0, $scope.widgets.length);
-    };
     
     $scope.deleteWidget = function(index) {
         $scope.widgets.splice(index, 1);
@@ -200,20 +199,6 @@ app.controller('draggableGridController', function ($scope, $timeout) {
     } else {
         $timeout(drawAllGraphs, 200); // TODO - Also fix this hacky solution
     }
-    
-    /*$scope.$on('gridster-item-transition-end', function(item) {
-        console.log(item);
-    });
-    
-    $scope.$on('gridster-item-initialized', function(item) {
-        console.log(item);
-    });
-    
-    $scope.$on('resize', function(item) {
-        console.log("Item resized:");
-        console.log(item);
-        drawAllGraphs();
-    });*/
     
 });
 

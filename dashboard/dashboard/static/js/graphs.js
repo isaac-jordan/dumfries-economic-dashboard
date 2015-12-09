@@ -88,7 +88,6 @@ function linegraph(elemID, data) {
             .orient("left"),
         vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
     
-    console.log("BEFORE: " + MARGINS.left);
     var maxw = 0;
     vis.append("svg:g")
         .attr("class", "y axis")
@@ -101,7 +100,6 @@ function linegraph(elemID, data) {
             }
         });
     vis.selectAll("g").remove();
-    console.log("AFTER: " + MARGINS.left);
         
     xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yMax]);
