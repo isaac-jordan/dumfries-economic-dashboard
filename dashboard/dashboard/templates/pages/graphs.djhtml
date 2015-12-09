@@ -18,7 +18,8 @@
 		<b>Select a date :
 		<input type="text" name="daterange" />
 	</div>
-        <div gridster="gridsterOpts" ng-controller="draggableGridController">
+	   <div ng-controller="draggableGridController">
+        <div gridster="gridsterOptions">
             <ul>
                 <li gridster-item="widget" ng-repeat="widget in widgets">
                     <div class="panel panel-default" >
@@ -35,10 +36,11 @@
                             </div>
                         </div>
                         <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
-                        {{ drawGraph(widget.id, widget.dataset, widget.type) }}
+                        <!--{{ drawGraph(widget.id, widget.dataset, widget.type) }}-->
                     </div>
                 </li>
             </ul>
+        </div>
         </div>
     </div>
 </div>
