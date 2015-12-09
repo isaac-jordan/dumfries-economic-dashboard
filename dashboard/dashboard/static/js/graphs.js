@@ -1,5 +1,5 @@
 /*jshint*/
-/*global d3 */
+/*global d3, console */
     
 function drawGraph(elemID, data, type) {
     if ($("#" + elemID).parent().width() < 0) return;
@@ -79,7 +79,7 @@ function linegraph(elemID, data) {
             left: 30
         },
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
-        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
+        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yMax]),
         xAxis = d3.svg.axis()
             .scale(xScale)
             .ticks(Math.max(WIDTH/50, 2)),
@@ -88,14 +88,40 @@ function linegraph(elemID, data) {
             .orient("left"),
         vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
     
+    console.log("BEFORE: " + MARGINS.left);
+    var maxw = 0;
+    vis.append("svg:g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + MARGINS.left + ",0)")
+        .call(yAxis)
+        .selectAll("text").each(function() {
+            if(this.getBBox().width > maxw) {
+                maxw = this.getBBox().width;
+                MARGINS.left = Math.max(MARGINS.left, maxw + 10);
+            }
+        });
+    vis.selectAll("g").remove();
+    console.log("AFTER: " + MARGINS.left);
+        
+    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
+    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yMax]);
+    xAxis = d3.svg.axis()
+        .scale(xScale)
+        .ticks(Math.max(WIDTH/50, 2));
+    yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left");
+        
+    vis.append("svg:g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + MARGINS.left + ",0)")
+        .call(yAxis);
+        
     vis.append("svg:g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
         .call(xAxis);
-    vis.append("svg:g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + (MARGINS.left) + ",0)")
-        .call(yAxis);
+    
     var lineGen = d3.svg.line()
         .x(function(d) {
             return xScale(d.x);
