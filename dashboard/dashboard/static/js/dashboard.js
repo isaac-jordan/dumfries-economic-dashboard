@@ -41,10 +41,6 @@ app.controller('mainController', function($scope) {
     $scope.widgets = GLOBAL.widgets;
     $scope.message = 'Welcome to the Dumfries Dashboard!';
     
-    $scope.clear = function() {
-        $scope.widgets.splice(0, $scope.widgets.length);
-    };
-    
     $scope.saveConfig = function() {
         var widgets = GLOBAL.widgets,
             data = [];
@@ -82,10 +78,6 @@ app.controller('mainController', function($scope) {
             }
         });
         
-    };
-    
-    $scope.deleteWidget = function(index) {
-        $scope.widgets.splice(index, 1);
     };
 });
 
@@ -145,6 +137,14 @@ app.controller('draggableGridController', function ($scope) {
         for(var i=0; i < $scope.widgets.length; i++) {
             drawGraph($scope.widgets[i].id, $scope.widgets[i].dataset, $scope.widgets[i].type);
         }
+    };
+    
+    $scope.clear = function() {
+        $scope.widgets.splice(0, $scope.widgets.length);
+    };
+    
+    $scope.deleteWidget = function(index) {
+        $scope.widgets.splice(index, 1);
     };
     
     if (!GLOBAL.widgets) {
