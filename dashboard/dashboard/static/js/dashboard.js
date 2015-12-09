@@ -48,29 +48,40 @@ app.controller('mainController', function($scope) {
     $scope.saveConfig = function() {
         var widgets = GLOBAL.widgets,
             data = [];
-        var name = prompt("Enter a name for the config: ");
-        if (!name) return;
-        for (var i=0; i<widgets.length; i++) {
-            var object = {};
-            object.visPK = widgets[i].pk;
-            object.xPosition = widgets[i].col;
-            object.yPosition = widgets[i].row;
-            object.sizeX = widgets[i].sizeX;
-            object.sizeY = widgets[i].sizeY;
-            data.push(object);
-        }
-        console.log(data);
         $.ajax({
-            type:"POST",
-            url: '/saveConfig',
-            data: {data: JSON.stringify(data), name: name},
+            type:"GET",
+            url: '/account/checkAuthenticated',
             success: function(response){
-                alert(response.message);
-            },
-            error: function(err) {
-                console.log(err);
+                if (!response.is_authenticated) {
+                    alert("Please log in first.");
+                    return;
+                }
+                var name = prompt("Enter a name for the config: ");
+                if (!name) return;
+                for (var i=0; i<widgets.length; i++) {
+                    var object = {};
+                    object.visPK = widgets[i].pk;
+                    object.xPosition = widgets[i].col;
+                    object.yPosition = widgets[i].row;
+                    object.sizeX = widgets[i].sizeX;
+                    object.sizeY = widgets[i].sizeY;
+                    data.push(object);
+                }
+                console.log(data);
+                $.ajax({
+                    type:"POST",
+                    url: '/saveConfig',
+                    data: {data: JSON.stringify(data), name: name},
+                    success: function(response){
+                        alert(response.message);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
             }
         });
+        
     };
     
     $scope.deleteWidget = function(index) {
@@ -108,6 +119,16 @@ app.controller('savedConfigController', function($scope, $route) {
             success: function(response){
                 console.log(response);
                 GLOBAL.widgets = response.widgets;
+                var el = $("#config"+id);
+                console.log(el);
+                el.removeClass("glyphicon-import");
+                el.addClass("glyphicon-saved");
+                el.addClass("icon-success");
+                setTimeout(function() {
+                    el.removeClass("glyphicon-saved");
+                    el.removeClass("icon-success");
+                    el.addClass("glyphicon-import");
+                }, 1000);
             },
             error: function(err) {
                 console.log(err);
@@ -117,6 +138,15 @@ app.controller('savedConfigController', function($scope, $route) {
 });
 
 app.controller('draggableGridController', function ($scope) {
+    $scope.widgets = GLOBAL.widgets;
+    $scope.drawGraph = drawGraph;
+    $scope.drawAllGraphs = function () {
+        if (!$scope.widgets) return;
+        for(var i=0; i < $scope.widgets.length; i++) {
+            drawGraph($scope.widgets[i].id, $scope.widgets[i].dataset, $scope.widgets[i].type);
+        }
+    };
+    
     if (!GLOBAL.widgets) {
         $.ajax({
             type:"GET",
@@ -131,9 +161,6 @@ app.controller('draggableGridController', function ($scope) {
             }
         });
     }
-    
-    $scope.widgets = GLOBAL.widgets;
-    $scope.drawGraph = drawGraph;
     
     $scope.gridsterOpts = {
         margins: [20, 20],
@@ -158,6 +185,18 @@ app.controller('draggableGridController', function ($scope) {
         rowHeight: 'match',
         floating: true
     };
+    
+    $scope.$on('gridster-item-transition-end', function(item) {
+        console.log(item);
+    });
+    
+    $scope.$on('gridster-item-initialized', function(item) {
+        console.log(item);
+    });
+    
+    $scope.$watch('widgets', function(items){
+        //$scope.drawAllGraphs();
+    }, true);
     
 });
 

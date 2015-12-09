@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 class Datasource(models.Model):
     name = models.CharField(max_length=100)
     
+    def getAllWidgets(self):
+        #TODO
+        return
+    
 class Visualisation(models.Model):
     dataSource = models.ForeignKey(Datasource)
     name = models.CharField(max_length=100)
@@ -12,6 +16,10 @@ class Visualisation(models.Model):
     sizeY = models.IntegerField()
     xLabel = models.CharField(max_length=100)
     yLabel = models.CharField(max_length=100)
+    
+    def getAllWidgets(self):
+        #TODO
+        return
 
 class Dataset(models.Model):
     visualisation = models.ForeignKey(Visualisation)

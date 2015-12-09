@@ -31,7 +31,6 @@ def ajaxGetGraphs(request):
                            'sizeX': o.sizeX,
                            'sizeY': o.sizeY} for o in visualisations]
     
-    print(widgets)
     return JsonResponse({"widgets": widgets})
 
 def about(request):
@@ -94,10 +93,10 @@ def loginPage(request):
     return render(request, "pages/login.djhtml")
 
 def ajax_login(request):
-    username = request.POST['email']
-    password = request.POST['password']
+    username = request.POST.get('email', "")
+    password = request.POST.get('password', "")
     user = authenticate(username=username, password=password)
-    if request.POST["remember"] is None:
+    if request.POST.get("remember", None) is None:
         request.session.set_expiry(0)
     if user is not None:
         if user.is_active:
@@ -107,6 +106,9 @@ def ajax_login(request):
             return JsonResponse({'message':'Error: Account disabled.', "success": False})
     else:
         return JsonResponse({'message':'Error: Invalid login details.', "success": False})
+
+def ajax_isAuthenticated(request):
+    return JsonResponse({"is_authenticated": request.user.is_authenticated()})
 
 def logoutUser(request):
     logout(request)

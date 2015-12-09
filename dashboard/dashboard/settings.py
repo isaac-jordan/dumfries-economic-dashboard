@@ -1,6 +1,5 @@
 # Django settings for dashboard project.
 import os
-from django.conf.global_settings import LOGIN_URL
 
 PWD = os.path.dirname(os.path.realpath(__file__ ))
 
@@ -124,6 +123,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'dashboard'
+)
+
+PROJECT_APPS = (
+    'dashboard',
 )
 
 # A sample logging configuration. The only tangible logging

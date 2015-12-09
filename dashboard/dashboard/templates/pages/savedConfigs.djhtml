@@ -12,7 +12,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <a href="" ng-click="loadSavedConfig({{config.id}})"><span class="glyphicon glyphicon-import"></span> Load</a>
+                            <a href="" ng-click="loadSavedConfig({{config.id}})"><span id="config{{config.id}}" class="glyphicon glyphicon-import"></span> Load</a>
                         </div>
                     </div>
                     {% empty %}

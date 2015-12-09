@@ -136,7 +136,9 @@ hr {
 }
 
 
-
+.icon-success {
+    color: #5CB85C;
+}
 
 /*
  * off canvas sidebar
