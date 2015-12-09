@@ -49,12 +49,9 @@ def readConvertAdd(fileName , source):
         od = collections.OrderedDict(sorted(dict.items()))
         nextarray.append(od)
     for dict in nextarray:
-        print dict
         dataset = []
         try:
             for k,v in dict.iteritems():
-                print 'samo k ',k
-                print 'kastnato k ',float(k[0:4])
                 dataset.append({
                     'x':float(k[0:4]),
                     'y':float(v)
@@ -70,7 +67,6 @@ def readConvertAdd(fileName , source):
     datasource = add_datasource(source)
     gdpPCVis = add_visualisation(datasource, usedName, "line", "Year", fileName, sizeY=2)
     for line in data:
-        print line
         add_dataset(gdpPCVis, line)
 
 

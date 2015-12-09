@@ -209,7 +209,7 @@ def add_superuser(name, password):
 
 if __name__ == '__main__':
     print "Starting population script..."
-    readConvertAdd('./dashboard/static/data/benefit-claims.csv','test')
+    readConvertAdd('./dashboard/static/data/employment.csv','test')
     readConvertAdd('./dashboard/static/data/full time employment.csv','test')
     readConvertAdd('./dashboard/static/data/unemployment.csv','test')
     readConvertAdd('./dashboard/static/data/wages.csv','test')
