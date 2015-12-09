@@ -174,7 +174,7 @@ def populate():
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
 
-def add_visualisation(dataSource, name, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=2):
+def add_visualisation(dataSource, name, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
     d = Visualisation.objects.get_or_create(dataSource=dataSource,
                                       name=name,
                                       type=dataType,
