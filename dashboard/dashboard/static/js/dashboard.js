@@ -169,7 +169,10 @@ app.controller('draggableGridController', function ($scope, $timeout) {
         floating: true
     };
     
-    $scope.beenDrawn = false;
+    $scope.$on('gridster-resized', function(sizes, gridster) {
+        $timeout(drawAllGraphs, 200);
+    });
+    
     $scope.widgets = GLOBAL.widgets;
     $scope.drawGraph = drawGraph;
     
