@@ -17,7 +17,7 @@ function bargraph(elemID, data) {
     data = data[0];
     $("#" + elemID).empty();
     var width = $("#" + elemID).parent().width(),
-        barHeight = 8.5;
+        barHeight = ($("#" + elemID).parent().height()/data.length)-data.length;
 
     var x = d3.scale.linear()
         .domain([0, d3.max(data, function(d) {return d.y;})])
@@ -25,7 +25,7 @@ function bargraph(elemID, data) {
 
     var chart = d3.select("#" + elemID)
         .attr("width", width)
-        .attr("height", barHeight * data.length);
+        .attr("height", 250);
 
     var bar = chart.selectAll("g")
         .data(data)
