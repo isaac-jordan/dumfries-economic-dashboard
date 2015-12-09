@@ -25,7 +25,7 @@ function bargraph(elemID, data) {
 
     var chart = d3.select("#" + elemID)
         .attr("width", width)
-        .attr("height", 250);
+        .attr("height", barHeight * data.length);
 
     var bar = chart.selectAll("g")
         .data(data)
