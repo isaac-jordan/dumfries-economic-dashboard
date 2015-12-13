@@ -36,10 +36,21 @@ def ajaxGetGraphs(request):
 def category(request):
     graphs = Visualisation.objects.all()
     categories = []
+    templates = []
     for graph in graphs:
         if graph.category not in categories:
             categories.append(graph.category)
-    return render(request, "pages/category.djhtml", {"graphs": categories})
+
+    #TODO: need a mechanism of auto-allocating X/Y sizes/positioning, and allowing permissions to all users
+    for category in categories:
+        config = SavedConfig.objects.create(user=request.user, name=category)
+        config.save()
+        vis = Visualisation.objects.filter(category=category)
+        savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=config,
+        xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
+        savedGraph.save()
+        templates.append(config)
+    return render(request, "pages/category.djhtml", {"templates": templates})
 
 @login_required
 def savedConfigs(request):

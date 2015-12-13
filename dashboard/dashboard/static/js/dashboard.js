@@ -37,7 +37,7 @@ app.config(function($routeProvider) {
             // route for the about page
             .when('/category', {
                 templateUrl : 'pages/category',
-                controller  : 'categoryController'
+                controller  : 'savedConfigController'
             })
             
             .when('/savedconfigs', {
