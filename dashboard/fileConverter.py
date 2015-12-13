@@ -7,9 +7,10 @@ import collections
 from dashboard.models import Dataset, Datasource, Visualisation
 import json
 
-def add_visualisation(dataSource, name, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
+def add_visualisation(dataSource, name,category, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
     d = Visualisation.objects.get_or_create(dataSource=dataSource,
                                       name=name,
+                                      category=category,
                                       type=dataType,
                                       sizeX=sizeX,
                                       sizeY=sizeY,
@@ -76,7 +77,7 @@ def readConvertAdd(fileName , source):
     usedName = usedName.replace('-', " ")
     usedName = usedName.replace('_', " ")
     datasource = add_datasource(source)
-    gdpPCVis = add_visualisation(datasource, usedName, "line", "Year", fileName, sizeY=2)
+    gdpPCVis = add_visualisation(datasource, usedName, "Employment", "line", "Year", fileName, sizeY=2)
     for line in data:
         add_dataset(gdpPCVis, line)
 

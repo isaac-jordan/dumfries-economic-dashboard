@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel-group">
-                    {% for source in datasources %}
+                    {% for graph in graphs %}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            {{ source.name }}
+                            {{ graph }}
                         </div>
                     </div>
                     {% empty %}
-                    <p>You have no Datasources.</p>
+                    <p>You have no visualisations.</p>
                     {% endfor %}
                 </div>
             </div>

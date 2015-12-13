@@ -15,7 +15,7 @@ def users():
 def populate():
     datasource = add_datasource("test")
 
-    crimeVis = add_visualisation(datasource, 'Crime', "bar", "Location", "Num of Crimes")
+    crimeVis = add_visualisation(datasource, 'Crime', "Living", "bar", "Location", "Num of Crimes")
     add_dataset(crimeVis, dataset = [{
                 "y": 32,
                 "x": "Edinburgh"
@@ -33,7 +33,7 @@ def populate():
                 "x": "Dublin"
             }])
 
-    employmentNatureVis = add_visualisation(datasource, 'Employment Nature', "bar", "Nature", "Num of Employments")
+    employmentNatureVis = add_visualisation(datasource, 'Employment Nature', "Employment", "bar", "Nature", "Num of Employments")
     add_dataset(employmentNatureVis, dataset = [{
                 "y": 5,
                 "x": "Edinburgh"
@@ -48,7 +48,7 @@ def populate():
                 "x": "Leeds"
             }])
 
-    unemploymentVis = add_visualisation(datasource, 'Unemployment', "bar", "Location", "Num of Unemployments")
+    unemploymentVis = add_visualisation(datasource, 'Unemployment', "Employment", "bar", "Location", "Num of Unemployments")
     add_dataset(unemploymentVis, dataset = [{
                 "y": 4,
                 "x": "Edinburgh"
@@ -67,7 +67,7 @@ def populate():
             }])
 
     # One graph with two lines
-    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', "line", "Year", "GDP Per Head", sizeY=2)
+    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', "Living", "line", "Year", "GDP Per Head", sizeY=2)
     add_dataset(gdpPCVis, dataset = [{
                 "y": 152,
                 "x": 2000
@@ -107,7 +107,7 @@ def populate():
                 "x": 2010
             }])
 
-    employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', "line", "Year", "Percentage Employed", sizeY=2)
+    employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', "Employment", "line", "Year", "Percentage Employed", sizeY=2)
     add_dataset(employmentRateVis, [{
                 "y": 20,
                 "x": 2000
@@ -128,7 +128,7 @@ def populate():
                 "x": 2010
             }])
 
-    claimentCountVis = add_visualisation(datasource, 'Claimant Count Numbers', "bar", "Location", "Num of Claimants")
+    claimentCountVis = add_visualisation(datasource, 'Claimant Count Numbers', "Living", "bar", "Location", "Num of Claimants")
     add_dataset(claimentCountVis, [{
                 "y": 152,
                 "x": "Edinburgh"
@@ -149,7 +149,7 @@ def populate():
                 "x": "Manchester"
             }])
 
-    housePriceVis = add_visualisation(datasource, 'House Price v Year', "line", "Year", "House Prices (1000)", sizeY=2)
+    housePriceVis = add_visualisation(datasource, 'House Price v Year', "Living", "line", "Year", "House Prices (1000)", sizeY=2)
     add_dataset(housePriceVis, [{
                 "y": 152,
                 "x": 2000
@@ -174,9 +174,10 @@ def populate():
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
 
-def add_visualisation(dataSource, name, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
+def add_visualisation(dataSource, name, category, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
     d = Visualisation.objects.get_or_create(dataSource=dataSource,
                                       name=name,
+                                      category=category,
                                       type=dataType,
                                       sizeX=sizeX,
                                       sizeY=sizeY,

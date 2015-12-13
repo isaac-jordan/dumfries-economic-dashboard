@@ -34,8 +34,12 @@ def ajaxGetGraphs(request):
     return JsonResponse({"widgets": widgets})
 
 def category(request):
-    sources = Datasource.objects.all()
-    return render(request, "pages/category.djhtml", {"datasources": sources})
+    graphs = Visualisation.objects.all()
+    categories = []
+    for graph in graphs:
+        if graph.category not in categories:
+            categories.append(graph.category)
+    return render(request, "pages/category.djhtml", {"graphs": categories})
 
 @login_required
 def savedConfigs(request):

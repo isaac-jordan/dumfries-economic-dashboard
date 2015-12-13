@@ -15,6 +15,7 @@ class Datasource(models.Model):
 class Visualisation(models.Model):
     dataSource = models.ForeignKey(Datasource)
     name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
     type = models.CharField(max_length=100)
     sizeX = models.IntegerField()
     sizeY = models.IntegerField()
@@ -25,6 +26,7 @@ class Visualisation(models.Model):
         widget = {'name': self.name,
                            'id': "vis" + str(self.pk),
                            'pk': self.pk,
+                           'category': self.category,
                            'type': self.type,
                            'dataset': Dataset.objects.filter(visualisation=self)[0].fromJSON(),
                            'sizeX': self.sizeX,
