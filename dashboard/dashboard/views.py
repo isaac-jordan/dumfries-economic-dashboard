@@ -33,8 +33,9 @@ def ajaxGetGraphs(request):
     
     return JsonResponse({"widgets": widgets})
 
-def about(request):
-    return render(request, 'pages/about.djhtml')
+def category(request):
+    sources = Datasource.objects.all()
+    return render(request, "pages/category.djhtml", {"datasources": sources})
 
 @login_required
 def savedConfigs(request):

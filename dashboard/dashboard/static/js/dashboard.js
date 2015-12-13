@@ -35,9 +35,9 @@ app.config(function($routeProvider) {
             })
 
             // route for the about page
-            .when('/about', {
-                templateUrl : 'pages/about',
-                controller  : 'aboutController'
+            .when('/category', {
+                templateUrl : 'pages/category',
+                controller  : 'categoryController'
             })
             
             .when('/savedconfigs', {
@@ -98,8 +98,7 @@ app.controller('mainController', function($scope) {
     };
 });
 
-app.controller('aboutController', function($scope) {
-    $scope.message = 'Here is where you will find pre-made configurations based on specific categories!';
+app.controller('categoryController', function($scope) {
 });
 
 app.controller('savedConfigController', function($scope, $route) {
