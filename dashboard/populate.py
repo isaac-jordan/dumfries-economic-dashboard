@@ -1,21 +1,22 @@
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
-from fileConverter import readConvertAdd, findFilePath
+from fileConverter import findFilePath
 import django
 from django.contrib.auth.models import User
 django.setup()
 
-from dashboard.models import Dataset, Datasource, Visualisation
+from dashboard.models import Dataset, Datasource, Visualisation, Category
 import json
-def users():
-    add_superuser("test@test.com", "test")
-    add_user("joe@test.com", "test")
 
 
 def populate():
-    datasource = add_datasource("test")
+    datasource = add_datasource("Fake Data Test")
+    crimeCategory = add_category("Crime")
+    employmentCategory = add_category("Employment")
+    housingCategory = add_category("Housing")
+    economyCategory = add_category("Economy")
 
-    crimeVis = add_visualisation(datasource, 'Crime', "Living", "bar", "Location", "Num of Crimes")
+    crimeVis = add_visualisation(datasource, 'Crime', crimeCategory, "bar", "Location", "Num of Crimes")
     add_dataset(crimeVis, dataset = [{
                 "y": 32,
                 "x": "Edinburgh"
@@ -33,7 +34,7 @@ def populate():
                 "x": "Dublin"
             }])
 
-    employmentNatureVis = add_visualisation(datasource, 'Employment Nature', "Employment", "bar", "Nature", "Num of Employments")
+    employmentNatureVis = add_visualisation(datasource, 'Employment Nature', employmentCategory, "bar", "Nature", "Num of Employments")
     add_dataset(employmentNatureVis, dataset = [{
                 "y": 5,
                 "x": "Edinburgh"
@@ -48,7 +49,7 @@ def populate():
                 "x": "Leeds"
             }])
 
-    unemploymentVis = add_visualisation(datasource, 'Unemployment', "Employment", "bar", "Location", "Num of Unemployments")
+    unemploymentVis = add_visualisation(datasource, 'Unemployment', employmentCategory, "bar", "Location", "Num of Unemployments")
     add_dataset(unemploymentVis, dataset = [{
                 "y": 4,
                 "x": "Edinburgh"
@@ -67,7 +68,7 @@ def populate():
             }])
 
     # One graph with two lines
-    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', "Living", "line", "Year", "GDP Per Head", sizeY=2)
+    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', economyCategory, "line", "Year", "GDP Per Head", sizeY=2)
     add_dataset(gdpPCVis, dataset = [{
                 "y": 152,
                 "x": 2000
@@ -107,7 +108,7 @@ def populate():
                 "x": 2010
             }])
 
-    employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', "Employment", "line", "Year", "Percentage Employed", sizeY=2)
+    employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', employmentCategory, "line", "Year", "Percentage Employed", sizeY=2)
     add_dataset(employmentRateVis, [{
                 "y": 20,
                 "x": 2000
@@ -128,8 +129,8 @@ def populate():
                 "x": 2010
             }])
 
-    claimentCountVis = add_visualisation(datasource, 'Claimant Count Numbers', "Living", "bar", "Location", "Num of Claimants")
-    add_dataset(claimentCountVis, [{
+    claimantCountVis = add_visualisation(datasource, 'Claimant Count Numbers', economyCategory, "bar", "Location", "Num of Claimants")
+    add_dataset(claimantCountVis, [{
                 "y": 152,
                 "x": "Edinburgh"
             }, {
@@ -149,7 +150,7 @@ def populate():
                 "x": "Manchester"
             }])
 
-    housePriceVis = add_visualisation(datasource, 'House Price v Year', "Living", "line", "Year", "House Prices (1000)", sizeY=2)
+    housePriceVis = add_visualisation(datasource, 'House Price v Year', housingCategory, "line", "Year", "House Prices (1000)", sizeY=2)
     add_dataset(housePriceVis, [{
                 "y": 152,
                 "x": 2000
@@ -186,6 +187,10 @@ def add_visualisation(dataSource, name, category, dataType, xLabel, yLabel, file
     d.save()
     return d
 
+def add_category(name):
+    c = Category.objects.get_or_create(name=name)[0]
+    return c
+
 def add_datasource(name):
     d = Datasource.objects.get_or_create(name=name)[0]
     return d
@@ -208,10 +213,17 @@ def add_superuser(name, password):
     u.save()
     return u
 
+def importRealData(fileNames):
+    for name in fileNames:
+        #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
+        res = findFilePath(name)
+        category = add_category("Employment")
+        source = add_datasource("Real Data Test")
+        vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
+        for line in res["data"]:
+            add_dataset(vis, line)
+
 if __name__ == '__main__':
     print "Starting population script..."
-    findFilePath('employment.csv','test')
-    findFilePath('full time employment.csv','test')
-    findFilePath('unemployment.csv','test')
-    findFilePath('wages.csv','test')
+    importRealData(['employment.csv', 'full time employment.csv', 'full time employment.csv', 'wages.csv'])
     populate()

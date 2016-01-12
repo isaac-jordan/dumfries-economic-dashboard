@@ -7,32 +7,7 @@ import collections
 from dashboard.models import Dataset, Datasource, Visualisation
 import json
 
-def add_visualisation(dataSource, name,category, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
-    d = Visualisation.objects.get_or_create(dataSource=dataSource,
-                                      name=name,
-                                      category=category,
-                                      type=dataType,
-                                      sizeX=sizeX,
-                                      sizeY=sizeY,
-                                      xLabel=xLabel,
-                                      yLabel=yLabel)[0]
-    d.save()
-    return d
-
-def add_datasource(name):
-
-
-    d = Datasource.objects.get_or_create(name=name)[0]
-    return d
-
-def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
-    if JSONdataset == "":
-        JSONdataset = json.dumps(dataset);
-    d = Dataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)
-    return d
-
-
-def findFilePath(nameFile, source):
+def findFilePath(nameFile):
     fileDirectory = ''
     found = False
     for root, dirs, files in os.walk(os.getcwd()):
@@ -41,13 +16,12 @@ def findFilePath(nameFile, source):
             found = True
             break
     if found:
-        readConvertAdd(fileDirectory,source)
-    else: print "file does not exist"
+        return readConvertAdd(fileDirectory)
+    else: 
+        print "file does not exist"
+        return None
 
-
-
-def readConvertAdd(fileName , source):
-
+def readConvertAdd(fileName):
     print "converting ..."
     with open(fileName) as csvfile:
         reader = csv.DictReader(csvfile)
@@ -57,9 +31,11 @@ def readConvertAdd(fileName , source):
         data = []
         for row in reader:
             newarray.append(row)
+            
     for dict in newarray:
         od = collections.OrderedDict(sorted(dict.items()))
         nextarray.append(od)
+        
     for dict in nextarray:
         dataset = []
         try:
@@ -68,18 +44,22 @@ def readConvertAdd(fileName , source):
                     'x':float(k[0:4]),
                     'y':float(v)
                 })
-        except: print ''
-
+        except:
+            print ''
         data.append(dataset)
+        
     newName=fileName.split('/')
     usedName=newName[len(newName)-1][0:-4]
     usedName=usedName[:1].upper() + usedName[1:]
     usedName = usedName.replace('-', " ")
     usedName = usedName.replace('_', " ")
-    datasource = add_datasource(source)
-    gdpPCVis = add_visualisation(datasource, usedName, "Employment", "line", "Year", fileName, sizeY=2)
-    for line in data:
-        add_dataset(gdpPCVis, line)
+    
+    return {"visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
+    #datasource = add_datasource(source)
+    #category = add_category("Employment")
+    #gdpPCVis = add_visualisation(datasource, usedName, category, "line", "Year", fileName, sizeY=2)
+    #for line in data:
+    #    add_dataset(gdpPCVis, line)
 
 
 

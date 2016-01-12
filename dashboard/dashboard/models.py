@@ -12,10 +12,13 @@ class Datasource(models.Model):
             widgets.append(vis.getWidget())
         return widgets
     
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    
 class Visualisation(models.Model):
     dataSource = models.ForeignKey(Datasource)
     name = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category)
     type = models.CharField(max_length=100)
     sizeX = models.IntegerField()
     sizeY = models.IntegerField()

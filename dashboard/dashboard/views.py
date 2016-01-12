@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 # Local Imports
-from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph
+from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph, Category
 
 
 def home(request):
@@ -19,7 +19,7 @@ def graphs(request):
     return render(request, 'pages/graphs.djhtml')
 
 def ajaxGetGraphs(request):
-    ds = Datasource.objects.filter(name="test")
+    ds = Datasource.objects.all()
     visualisations = Visualisation.objects.filter(dataSource=ds)
     datasets = Dataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     
@@ -33,24 +33,38 @@ def ajaxGetGraphs(request):
     
     return JsonResponse({"widgets": widgets})
 
-def category(request):
-    graphs = Visualisation.objects.all()
-    categories = []
-    templates = []
-    for graph in graphs:
-        if graph.category not in categories:
-            categories.append(graph.category)
+# def category(request):
+#     graphs = Visualisation.objects.all()
+#     categories = []
+#     templates = []
+#     for graph in graphs:
+#         if graph.category not in categories:
+#             categories.append(graph.category)
+# 
+#     #TODO: need a mechanism of auto-allocating X/Y sizes/positioning, and allowing permissions to all users
+#     for category in categories:
+#         config = SavedConfig.objects.create(user=request.user, name=category)
+#         config.save()
+#         vis = Visualisation.objects.filter(category=category)
+#         savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=config,
+#         xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
+#         savedGraph.save()
+#         templates.append(config)
+#     return render(request, "pages/category.djhtml", {"templates": templates})
 
-    #TODO: need a mechanism of auto-allocating X/Y sizes/positioning, and allowing permissions to all users
-    for category in categories:
-        config = SavedConfig.objects.create(user=request.user, name=category)
-        config.save()
-        vis = Visualisation.objects.filter(category=category)
-        savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=config,
-        xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
-        savedGraph.save()
-        templates.append(config)
-    return render(request, "pages/category.djhtml", {"templates": templates})
+def categoryList(request):
+    categories = Category.objects.all()
+    print categories
+    return render(request, "pages/categoryList.djhtml", {"categories": categories})
+
+def category(request, categoryName):
+    category = Category.objects.filter(name__iexact=categoryName)
+    if category.count() < 1:
+        error = "Category '" + categoryName + "' name not found."
+    else:
+        error = None
+        category = category[0]
+    return render(request, "pages/category.djhtml", {"category": category, "error": error})
 
 @login_required
 def savedConfigs(request):

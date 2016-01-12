@@ -36,8 +36,13 @@ app.config(function($routeProvider) {
 
             // route for the about page
             .when('/category', {
-                templateUrl : 'pages/category',
-                controller  : 'savedConfigController'
+                templateUrl : 'pages/category'
+            })
+            
+            .when('/category/:category', {
+                templateUrl : function(params) {
+                    return 'pages/category/' + params.category;
+                }
             })
             
             .when('/savedconfigs', {
