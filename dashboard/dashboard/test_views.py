@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import SESSION_KEY
 from django.core.urlresolvers import reverse
 
-from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph
+from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph, Category
 
 class TestAuthViews(TestCase):
     def setUp(self):
@@ -62,7 +62,8 @@ class TestSavedConfigView(TestCase):
 class TestGraphsView(TestCase):
     def setUp(self):
         ds1 = Datasource.objects.create(name="test")
-        vis1 = Visualisation.objects.create(dataSource=ds1, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
+        cat = Category.objects.create(name="CategoryTest")
+        vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         Dataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
         
     def test_ajax_getGraphs_view_loads(self):
