@@ -208,6 +208,8 @@ app.controller('draggableGridController', function ($scope, $timeout) {
 
 app.controller('categoryController', function ($scope, $timeout) {
 
+    //TODO - needs properly implemented
+
     $scope.widgets = GLOBAL.widgets;
 
         if (!GLOBAL.widgets) {

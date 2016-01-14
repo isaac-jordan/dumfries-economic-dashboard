@@ -10,10 +10,10 @@
                 </div>
                 {% endif %}
                 <h2>{{category.name}}</h2>
+            </div>
 
-                <div ng-controller="categoryController" ng-repeat="widget in widgets">
-
-                  <div class="panel panel-default" >
+                {% for widget in widgets %}
+                <div class="panel panel-default" >
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
@@ -25,10 +25,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="100" height="50"></svg></div>
-                  </div>
+                <!-- TODO: need to modify and implement controller to load graphs -->
+                <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
                 </div>
-            </div>
+                {% empty %}
+                    <p>There's no graphs for this category.</p>
+                {% endfor %}
         </div>
     </div>
 </div>
