@@ -10,7 +10,24 @@
                 </div>
                 {% endif %}
                 <h2>{{category.name}}</h2>
-                
+
+                <div ng-controller="categoryController" ng-repeat="widget in widgets">
+
+                  <div class="panel panel-default" >
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
+                                <div class="col-sm-4">
+                                    <div class="pull-right">
+                                        <a title="settings"><span class="glyphicon glyphicon-cog"></a>
+                                        <a title="information"dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="100" height="50"></svg></div>
+                  </div>
+                </div>
             </div>
         </div>
     </div>

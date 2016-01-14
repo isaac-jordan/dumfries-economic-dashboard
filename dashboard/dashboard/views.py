@@ -59,12 +59,13 @@ def categoryList(request):
 
 def category(request, categoryName):
     category = Category.objects.filter(name__iexact=categoryName)
+    widgets = Visualisation.objects.filter(category=category)
     if category.count() < 1:
         error = "Category '" + categoryName + "' name not found."
     else:
         error = None
         category = category[0]
-    return render(request, "pages/category.djhtml", {"category": category, "error": error})
+    return render(request, "pages/category.djhtml", {"category": category, "widgets": widgets, "error": error})
 
 @login_required
 def savedConfigs(request):

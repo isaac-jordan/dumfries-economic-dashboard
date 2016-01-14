@@ -206,6 +206,31 @@ app.controller('draggableGridController', function ($scope, $timeout) {
     
 });
 
+app.controller('categoryController', function ($scope, $timeout) {
+
+    $scope.widgets = GLOBAL.widgets;
+
+        if (!GLOBAL.widgets) {
+        $.ajax({
+            type:"GET",
+            url: '/getGraphs',
+            success: function(response){
+                GLOBAL.widgets = response.widgets;
+                $scope.widgets = GLOBAL.widgets;
+                $timeout(drawAllGraphs, 350); // TODO - fix this hacky solution to randomly wait 200ms before drawing graphs.
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    } else {
+        $timeout(drawAllGraphs, 200); // TODO - Also fix this hacky solution
+    }
+
+});
+
+
+
 function logoutUser() {
     $.ajax({
         type:"POST",
