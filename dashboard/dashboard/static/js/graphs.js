@@ -62,13 +62,11 @@ function linegraph(elemID, data) {
         xMaxCurr = d3.max(data[i], function(d) {return d.x; });
         yMinCurr = d3.min(data[i], function(d) {return d.y; });
         yMaxCurr = d3.max(data[i], function(d) {return d.y; });
-        
         if (xMinCurr < xMin) xMin = xMinCurr;
         if (xMaxCurr > xMax) xMax = xMaxCurr;
         if (yMinCurr < yMin) yMin = yMinCurr;
         if (yMaxCurr > yMax) yMax = yMaxCurr;
     }
-    
     var WIDTH = $("#" + elemID).parent().width(),
         colours = ['green', 'blue', 'red', 'yellow', 'orange'],
         HEIGHT = 250,
@@ -79,7 +77,7 @@ function linegraph(elemID, data) {
             left: 30
         },
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
-        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yMax]),
+        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
         xAxis = d3.svg.axis()
             .scale(xScale)
             .ticks(Math.max(WIDTH/50, 2)),
@@ -102,7 +100,7 @@ function linegraph(elemID, data) {
     vis.selectAll("g").remove();
         
     xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
-    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, yMax]);
+    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     xAxis = d3.svg.axis()
         .scale(xScale)
         .ticks(Math.max(WIDTH/50, 2));

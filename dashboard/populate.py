@@ -68,7 +68,7 @@ def populate():
             }])
 
     # One graph with two lines
-    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds) v Year', economyCategory, "line", "Year", "GDP Per Head", sizeY=2)
+    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds)', economyCategory, "line", "Year", "GDP Per Head", sizeY=2)
     add_dataset(gdpPCVis, dataset = [{
                 "y": 152,
                 "x": 2000
@@ -108,7 +108,7 @@ def populate():
                 "x": 2010
             }])
 
-    employmentRateVis = add_visualisation(datasource, 'Employment Rate v Year', employmentCategory, "line", "Year", "Percentage Employed", sizeY=2)
+    employmentRateVis = add_visualisation(datasource, 'Employment Rate', employmentCategory, "line", "Year", "Percentage Employed", sizeY=2)
     add_dataset(employmentRateVis, [{
                 "y": 20,
                 "x": 2000
@@ -150,7 +150,7 @@ def populate():
                 "x": "Manchester"
             }])
 
-    housePriceVis = add_visualisation(datasource, 'House Price v Year', housingCategory, "line", "Year", "House Prices (1000)", sizeY=2)
+    housePriceVis = add_visualisation(datasource, 'House Price', housingCategory, "line", "Year", "House Prices (1000)", sizeY=2)
     add_dataset(housePriceVis, [{
                 "y": 152,
                 "x": 2000
@@ -225,5 +225,5 @@ def importRealData(fileNames):
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['employment.csv', 'full time employment.csv', 'full time employment.csv', 'wages.csv'])
+    importRealData(['Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()

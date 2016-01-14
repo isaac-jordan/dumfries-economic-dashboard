@@ -52,6 +52,9 @@
     locale: {
       format: 'YYYY-MM-DD'
     },
-    "setDate": new Date()
+    "setDate": new Date(),
+    autoUpdateInput:true,
+    startDate: '2010-01-01',
+    endDate: '2016-01-01'
 });
 </script>

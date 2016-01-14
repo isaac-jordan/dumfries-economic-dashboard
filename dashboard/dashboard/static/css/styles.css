@@ -221,7 +221,7 @@ font-size: 1.0em;
             shape-rendering: crispEdges;
         }
         .axis text {
-            font-family: Lato;
+            font-family: sans-serif;
             font-size: 0.6em;
         }
 /*
