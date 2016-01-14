@@ -45,12 +45,13 @@
     </div>
 </div>
 {% endverbatim %}
+
 <script type="text/javascript">
-	$(function() {
-   		$('input[name="daterange"]').daterangepicker("setDate", new Date());
-	});
-	$('input[name="daterange"]').daterangepicker({
-        	"setDate": new Date(),
-        	"autoclose": true
-	});
+	$('input[name="daterange"]').daterangepicker(
+{
+    locale: {
+      format: 'YYYY-MM-DD'
+    },
+    "setDate": new Date()
+});
 </script>
