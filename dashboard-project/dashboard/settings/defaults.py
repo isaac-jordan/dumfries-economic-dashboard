@@ -130,7 +130,12 @@ INSTALLED_APPS = (
 
 PROJECT_APPS = (
     'dashboard',
+    'dataset_importer',
+    'csv_processor',
+    'api_processor'
 )
+
+JENKINS_TASKS = ()
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
