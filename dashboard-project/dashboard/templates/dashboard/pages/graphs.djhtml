@@ -1,0 +1,62 @@
+{% verbatim %}
+<div class="padding">
+    <div class="full col-sm-9">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-body">{{ message }}</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div>
+                    <a class="btn btn-default" href="" ng-click="saveConfig()"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                    <a class="btn btn-default" href="" ng-click="clear()"><span class="glyphicon glyphicon-trash"></span> Clear</a>
+                </div>
+            </div>
+        </div>
+	<br>
+	<div align="right">
+		<b>Select a date :
+		<input type="text" name="daterange" />
+	</div>
+	</br>
+	   <div ng-controller="draggableGridController">
+        <div gridster="gridsterOptions">
+            <ul>
+                <li gridster-item="widget" ng-repeat="widget in widgets">
+                    <div class="panel panel-default" >
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
+                                <div class="col-sm-4">
+                                    <div class="pull-right">
+                                        <a title="settings"><span class="glyphicon glyphicon-cog"></a>
+                                        <a title="information"dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                        <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
+                        <!--{{ drawGraph(widget.id, widget.dataset, widget.type) }}-->
+                    </div>
+                </li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+
+<script type="text/javascript">
+	$('input[name="daterange"]').daterangepicker(
+{
+    locale: {
+      format: 'DD-MM-YYYY'
+    },
+    "setDate": new Date(),
+    autoUpdateInput:true,
+    startDate: '01-01-2007',
+    endDate: '31-12-2016'
+});
+</script>
