@@ -100,7 +100,7 @@ hr {
 
 #sidebar, #sidebar a, #sidebar-footer a {
     color:#ffffff;
-    background-color:transparent;
+    background-color:#1a3366;
 	text-shadow:0 0 0.5em #000000;
     padding-left:5px;
 }
@@ -126,7 +126,7 @@ hr {
   border-radius:2px;
 }
 #sidebar-footer {
-  background-color:#444;
+  background-color: #1a3366;
   position:absolute;
   bottom:5px;
   padding:5px;
