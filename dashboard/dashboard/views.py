@@ -59,13 +59,26 @@ def categoryList(request):
 
 def category(request, categoryName):
     category = Category.objects.filter(name__iexact=categoryName)
-    widgets = Visualisation.objects.filter(category=category)
+    categoryVis = Visualisation.objects.filter(category=category)
+    
+    widgets = [];
+    datasets = Dataset.objects
+    for v in categoryVis:
+        widget = {}
+        widget["sizeX"] = v.sizeX
+        widget["sizeY"] = v.sizeY
+        widget["name"] = v.name
+        widget["pk"] = v.pk
+        widget["type"] = v.type
+        widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)]
+        widgets.append(widget)
+    
     if category.count() < 1:
         error = "Category '" + categoryName + "' name not found."
     else:
         error = None
         category = category[0]
-    return render(request, "pages/category.djhtml", {"category": category, "widgets": widgets, "error": error})
+    return render(request, "pages/category.djhtml", {"category": category, "widgets": widgets, "widgetsJSON": json.dumps(widgets), "error": error})
 
 @login_required
 def savedConfigs(request):

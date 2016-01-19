@@ -12,7 +12,7 @@
                 <h2>{{category.name}}</h2>
             </div>
 
-            <div ng-controller="categoryGridController">
+            <div>
                 {% for widget in widgets %}
                 <div class="panel panel-default" >
                         <div class="panel-heading">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                 <!-- TODO: need to modify and implement controller to load graphs -->
-                <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
+                <div class="panel-body"><svg id="graph{{widget.pk}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
                 </div>
                 {% empty %}
                     <p>There's no graphs for this category.</p>
@@ -36,3 +36,7 @@
         </div>
     </div>
 </div>
+
+<script>
+GLOBAL.currentCategoryWidgets = {{ widgetsJSON | safe }};
+</script>

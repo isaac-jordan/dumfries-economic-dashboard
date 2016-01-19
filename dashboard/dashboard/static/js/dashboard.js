@@ -5,16 +5,16 @@
 var app = angular.module('dashboard', ['ngRoute', 'gridster']);
 var GLOBAL = {};
 var drawAllGraphs = function() {
-                    if (!GLOBAL.widgets) return;
-                    for(var i=0; i < GLOBAL.widgets.length; i++) {
-                        //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
-                        drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
-                    }
-                };
+    if (!GLOBAL.widgets) return;
+    for (var i = 0; i < GLOBAL.widgets.length; i++) {
+        //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
+        drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
+    }
+};
 
 app.run(function($rootScope, $templateCache) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        if (typeof(current) !== 'undefined'){
+        if (typeof(current) !== 'undefined') {
             $templateCache.remove(current.templateUrl);
         }
     });
@@ -22,59 +22,58 @@ app.run(function($rootScope, $templateCache) {
 
 app.run(['gridsterConfig', '$rootScope', function(gridsterConfig, $rootScope) {
     gridsterConfig.resizable.stop = function(event, uiWidget, $element) {
-      $rootScope.$broadcast('resize');
+        $rootScope.$broadcast('resize');
     };
 }]);
 
 app.config(function($routeProvider) {
-        $routeProvider
-            // route for the home page
-            .when('/', {
-                templateUrl : 'pages/home',
-                controller  : 'mainController'
-            })
+    $routeProvider
+    // route for the home page
+        .when('/', {
+        templateUrl: 'pages/home',
+        controller: 'mainController'
+    })
 
-            // route for the about page
-            .when('/category', {
-                templateUrl : 'pages/category'
-            })
-            
-            .when('/category/:category', {
-                templateUrl : function(params) {
-                    controller  : 'categoryController'
-                    return 'pages/category/' + params.category;
+    // route for the about page
+    .when('/category', {
+        templateUrl: 'pages/category'
+    })
 
-                }
-            })
-            
-            .when('/savedconfigs', {
-                templateUrl : 'pages/savedConfigs'
-            })
+    .when('/category/:category', {
+        templateUrl: function(params) {
+            return 'pages/category/' + params.category;
+        },
+        controller: 'categoryController'
+    })
 
-            .when('/register', {
-                templateUrl : 'pages/register'
-            });
+    .when('/savedconfigs', {
+        templateUrl: 'pages/savedConfigs'
+    })
+
+    .when('/register', {
+        templateUrl: 'pages/register'
     });
+});
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
     $scope.widgets = GLOBAL.widgets;
     $scope.message = 'Welcome to the Dumfries Dashboard!';
-    
+
     $scope.saveConfig = function() {
         var widgets = GLOBAL.widgets,
             data = [];
         $.ajax({
-            type:"GET",
+            type: "GET",
             url: '/account/checkAuthenticated',
-            success: function(response){
+            success: function(response) {
                 if (!response.is_authenticated) {
                     alert("Please log in first.");
                     return;
                 }
                 var name = prompt("Enter a name for the config: ");
                 if (!name) return;
-                for (var i=0; i<widgets.length; i++) {
+                for (var i = 0; i < widgets.length; i++) {
                     var object = {};
                     object.visPK = widgets[i].pk;
                     object.xPosition = widgets[i].col;
@@ -85,10 +84,13 @@ app.controller('mainController', function($scope) {
                 }
                 console.log(data);
                 $.ajax({
-                    type:"POST",
+                    type: "POST",
                     url: '/saveConfig',
-                    data: {data: JSON.stringify(data), name: name},
-                    success: function(response){
+                    data: {
+                        data: JSON.stringify(data),
+                        name: name
+                    },
+                    success: function(response) {
                         alert(response.message);
                     },
                     error: function(err) {
@@ -99,19 +101,21 @@ app.controller('mainController', function($scope) {
         });
     };
     $scope.clear = function() {
-            if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
-            console.log($scope.widgets);
-            $scope.widgets.splice(0, $scope.widgets.length);
+        if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
+        console.log($scope.widgets);
+        $scope.widgets.splice(0, $scope.widgets.length);
     };
 });
 
 app.controller('savedConfigController', function($scope, $route) {
     $scope.deleteSavedConfig = function(id) {
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: '/deleteSavedConfig',
-            data: {id: id},
-            success: function(response){
+            data: {
+                id: id
+            },
+            success: function(response) {
                 if (response.success)
                     $route.reload();
                 else
@@ -122,16 +126,18 @@ app.controller('savedConfigController', function($scope, $route) {
             }
         });
     };
-    
+
     $scope.loadSavedConfig = function(id) {
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: '/loadSavedConfig',
-            data: {id: id},
-            success: function(response){
+            data: {
+                id: id
+            },
+            success: function(response) {
                 console.log(response);
                 GLOBAL.widgets = response.widgets;
-                var el = $("#config"+id);
+                var el = $("#config" + id);
                 console.log(el);
                 el.removeClass("glyphicon-import");
                 el.addClass("glyphicon-saved");
@@ -149,7 +155,7 @@ app.controller('savedConfigController', function($scope, $route) {
     };
 });
 
-app.controller('draggableGridController', function ($scope, $timeout) {
+app.controller('draggableGridController', function($scope, $timeout) {
     $scope.gridsterOptions = {
         margins: [20, 20],
         columns: 6,
@@ -157,15 +163,17 @@ app.controller('draggableGridController', function ($scope, $timeout) {
         outerMargin: false,
         draggable: {
             enabled: true,
-            start: function(event, $element, widget) {}, 
-            stop: function(event, $element, widget) {} 
+            start: function(event, $element, widget) {},
+            stop: function(event, $element, widget) {}
         },
         resizable: {
             enabled: true,
             handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
             start: function(event, $element, widget) {},
             resize: function(event, $element, widget) {},
-            stop: function(event, $element, widget) {$timeout(drawAllGraphs, 200);}
+            stop: function(event, $element, widget) {
+                $timeout(drawAllGraphs, 200);
+            }
         },
         minSizeX: 2,
         minSizeY: 1,
@@ -175,22 +183,22 @@ app.controller('draggableGridController', function ($scope, $timeout) {
         rowHeight: 'match',
         floating: true
     };
-    
+
     $scope.$on('gridster-resized', function(sizes, gridster) {
         $timeout(drawAllGraphs, 200);
     });
-    
+
     $scope.widgets = GLOBAL.widgets;
-    
+
     $scope.deleteWidget = function(index) {
         $scope.widgets.splice(index, 1);
     };
-    
+
     if (!GLOBAL.widgets) {
         $.ajax({
-            type:"GET",
+            type: "GET",
             url: '/getGraphs',
-            success: function(response){
+            success: function(response) {
                 GLOBAL.widgets = response.widgets;
                 $scope.widgets = GLOBAL.widgets;
                 $timeout(drawAllGraphs, 350); // TODO - fix this hacky solution to randomly wait 200ms before drawing graphs. 
@@ -202,14 +210,23 @@ app.controller('draggableGridController', function ($scope, $timeout) {
     } else {
         $timeout(drawAllGraphs, 200); // TODO - Also fix this hacky solution
     }
-    
+
 });
 
-app.controller('categoryController', function ($scope, $timeout) {
+app.controller('categoryController', function($scope, $timeout) {
 
     //TODO - needs properly implemented
+    console.log("I'm in the category controller!");
+    
+    console.log(GLOBAL.currentCategoryWidgets);
+    for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
+        var widget = GLOBAL.currentCategoryWidgets[i];
+        drawGraph("graph" + widget.pk, widget.dataset, widget.type);
+    }
 
-    $scope.widgets = GLOBAL.widgets;
+    // You don't want the same graphs that are on the dashboard (and you don't want to mess with them otherwise the dashboard will be messed up).
+    // You should load in, and draw the graphs either through an AJAX call, or using Django templating language.
+    /*$scope.widgets = GLOBAL.widgets;
 
         if (!GLOBAL.widgets) {
         $.ajax({
@@ -226,7 +243,7 @@ app.controller('categoryController', function ($scope, $timeout) {
         });
     } else {
         $timeout(drawAllGraphs, 200); // TODO - Also fix this hacky solution
-    }
+    }*/
 
 });
 
@@ -234,10 +251,10 @@ app.controller('categoryController', function ($scope, $timeout) {
 
 function logoutUser() {
     $.ajax({
-        type:"POST",
+        type: "POST",
         url: '/account/login',
         data: $('#login_form').serialize(),
-        success: function(response){
+        success: function(response) {
             $("#message").html();
         }
     });
