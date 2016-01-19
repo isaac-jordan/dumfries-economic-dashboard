@@ -14,10 +14,12 @@
                 </div>
             </div>
         </div>
+	<br>
 	<div align="right">
 		<b>Select a date :
 		<input type="text" name="daterange" />
 	</div>
+	</br>
 	   <div ng-controller="draggableGridController">
         <div gridster="gridsterOptions">
             <ul>

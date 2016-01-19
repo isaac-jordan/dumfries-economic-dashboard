@@ -184,12 +184,12 @@ ul.graph-grid {
 
 h5 {
 font-size: 1.0em;
-
+background-color:transparent;
 }
 
 /* D3 graph styling */
 .chart.bar rect {
-  fill: steelblue;
+  fill: #00254d;
 }
 
 .chart.bar text {
@@ -201,7 +201,7 @@ font-size: 1.0em;
 .bar .axis path,
 .bar .axis line {
     fill: none;
-    stroke: #000;
+    stroke: #00254d;
     shape-rendering: crispEdges;
 }
 
@@ -217,11 +217,12 @@ font-size: 1.0em;
 
 .axis path {
             fill: none;
-            stroke: #777;
+            stroke: #264c73;
             shape-rendering: crispEdges;
         }
         .axis text {
-            font-family: sans-serif;
+	    color: #19334d;
+            font-family: Calibri;
             font-size: 0.6em;
         }
 /*
