@@ -41,7 +41,9 @@ app.config(function($routeProvider) {
             
             .when('/category/:category', {
                 templateUrl : function(params) {
+                    controller  : 'categoryController'
                     return 'pages/category/' + params.category;
+
                 }
             })
             
@@ -101,9 +103,6 @@ app.controller('mainController', function($scope) {
             console.log($scope.widgets);
             $scope.widgets.splice(0, $scope.widgets.length);
     };
-});
-
-app.controller('categoryController', function($scope) {
 });
 
 app.controller('savedConfigController', function($scope, $route) {

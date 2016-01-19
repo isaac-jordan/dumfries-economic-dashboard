@@ -50,11 +50,11 @@
 	$('input[name="daterange"]').daterangepicker(
 {
     locale: {
-      format: 'YYYY-MM-DD'
+      format: 'DD-MM-YYYY'
     },
     "setDate": new Date(),
     autoUpdateInput:true,
-    startDate: '2010-01-01',
-    endDate: '2016-01-01'
+    startDate: '01-01-2007',
+    endDate: '31-12-2016'
 });
 </script>

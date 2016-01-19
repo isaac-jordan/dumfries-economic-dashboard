@@ -12,6 +12,7 @@
                 <h2>{{category.name}}</h2>
             </div>
 
+            <div ng-controller="categoryGridController">
                 {% for widget in widgets %}
                 <div class="panel panel-default" >
                         <div class="panel-heading">
@@ -31,6 +32,7 @@
                 {% empty %}
                     <p>There's no graphs for this category.</p>
                 {% endfor %}
+            </div>
         </div>
     </div>
 </div>
