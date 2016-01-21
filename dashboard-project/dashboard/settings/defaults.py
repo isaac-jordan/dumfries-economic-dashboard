@@ -125,7 +125,8 @@ INSTALLED_APPS = (
     'dashboard',
     'dataset_importer',
     'csv_processor',
-    'api_processor'
+    'api_processor',
+    'api_processor.linked_data_processor'
 )
 
 PROJECT_APPS = (

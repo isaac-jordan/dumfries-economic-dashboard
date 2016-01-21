@@ -17,9 +17,16 @@ class ImportTest(TestCase):
         
     def test_import_all_result_not_empty(self):
         """Tests that csv can be read."""
-        csv = CsvFile.objects.get_or_create(filename="test_employment.csv")[0]
+        csv = CsvFile.objects.get_or_create(filename="test_employment.csv", folderpath="csv_processor/static/csv_processor/data/")[0]
         csvData = csv.importData()
         self.assertTrue(len(csvData) > 0, msg="CsvFile.importData() returned an empty sequence.")
+        
+    def test_auto_find_file(self):
+        csv = CsvFile.objects.get_or_create(filename="test_employment.csv")[0]
+        try:
+            csv.importData()
+        except IOError:
+            self.fail("CsvFile.importData() couldn't automatically find the file, when it should.")
         
     def test_importJson_is_exact(self):
         csv = CsvFile.objects.get_or_create(filename="test_employment.csv")[0]

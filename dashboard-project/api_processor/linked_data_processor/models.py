@@ -1,6 +1,6 @@
 from django.db import models
-from api_processor import API
+from api_processor.models import APIEndpoint
 
 # Create your models here.
-class LinkedDataAPI(API):
+class LinkedDataAPIEndpoint(APIEndpoint):
     pass

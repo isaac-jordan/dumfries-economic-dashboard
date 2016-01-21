@@ -11,21 +11,24 @@ class Dimension(models.Model):
 
 class CsvFile(Importer):
     filename = models.CharField(max_length=1024)
-    folderpath = models.CharField(max_length=1024)
+    folderpath = models.CharField(max_length=1024, null=True)
     importantDimensions = models.ManyToManyField(Dimension)
     
     def importData(self):
         """Returns 2D Python array of the CSV's data"""
-        fileDirectory = ''
-        found = False
-        for root, dirs, files in os.walk(os.getcwd()):
-            if self.filename in files:
-                fileDirectory=root + '/' + self.filename
-                found = True
-                break
-        
-        if not found:
-            raise IOError("File '" + self.filename + "' could not be found.")
+        if self.folderpath is None:
+            fileDirectory = ''
+            found = False
+            for root, dirs, files in os.walk(os.getcwd()):
+                if self.filename in files:
+                    fileDirectory=os.path.join(root, self.filename)
+                    found = True
+                    break
+            
+            if not found:
+                raise IOError("File '" + self.filename + "' could not be found.")
+        else:
+            fileDirectory=os.path.join(self.folderpath, self.filename)
         
         with open(fileDirectory) as csvfile:
             reader = csv.DictReader(csvfile)
