@@ -143,8 +143,9 @@ function linegraph(elemID, data) {
 
     vis.append("text")
            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-           .attr("transform", "translate("+ (WIDTH/2) +","+(HEIGHT-(MARGINS.bottom/3))+")")  // centre below axis
+           .attr("transform", "translate("+ (WIDTH/2) +","+((HEIGHT+10)-(MARGINS.bottom/3))+")")  // centre below axis
            .text("Year");
+
 
 
     var lineGen = d3.svg.line()
