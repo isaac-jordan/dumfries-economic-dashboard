@@ -126,7 +126,7 @@ function linegraph(elemID, data) {
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     xAxis = d3.svg.axis()
         .scale(xScale)
-	.tickFormat(d3.format("date"))
+        .tickFormat(d3.format("date"))
     yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
@@ -135,12 +135,18 @@ function linegraph(elemID, data) {
         .attr("class", "y axis")
         .attr("transform", "translate(" + MARGINS.left + ",0)")
         .call(yAxis);
-        
+
     vis.append("svg:g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
         .call(xAxis);
-    
+
+    vis.append("text")
+           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+           .attr("transform", "translate("+ (WIDTH/2) +","+(HEIGHT-(MARGINS.bottom/3))+")")  // centre below axis
+           .text("Year");
+
+
     var lineGen = d3.svg.line()
         .x(function(d) {
             return xScale(d.x);
