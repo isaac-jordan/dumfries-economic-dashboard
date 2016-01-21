@@ -225,5 +225,5 @@ def importRealData(fileNames):
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
+    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock.csv','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()
