@@ -91,7 +91,7 @@ function linegraph(elemID, data) {
 	    }
     }
     var WIDTH = $("#" + elemID).parent().width(),
-        colours = ['green', 'blue', 'red', 'yellow', 'orange'],
+        colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
         HEIGHT = 250,
         MARGINS = {
             top: 30,
