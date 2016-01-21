@@ -53,22 +53,45 @@ function bargraph(elemID, data) {
 }
 
 function linegraph(elemID, data) {
-    $("#" + elemID).empty();
-    var xMin = data[0][0].x, xMax = data[0][0].x, yMin = data[0][0].y, yMax = data[0][0].y;
-    var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
+
+    var dates=$('input[name="daterange"]').val();//get daterangepicker's value
+    var end_date = dates.slice(-4);
     
-    for (var i=0; i<data.length; i++) {
-        xMinCurr = d3.min(data[i], function(d) {return d.x; });
-        xMaxCurr = d3.max(data[i], function(d) {return d.x; });
-        yMinCurr = d3.min(data[i], function(d) {return d.y; });
-        yMaxCurr = d3.max(data[i], function(d) {return d.y; });
-        if (xMinCurr < xMin) xMin = xMinCurr;
-        if (xMaxCurr > xMax) xMax = xMaxCurr;
-        if (yMinCurr < yMin) yMin = yMinCurr;
-        if (yMaxCurr > yMax) yMax = yMaxCurr;
+    var start_date =dates.substring(6,10);
+    var clean_data=[];
+    for (var i=0;i<data.length;i++) {
+     clean_data[i] = [];
+  }
+    
+    for (i=0; i<data.length; i++) {
+	for (d=0;d<data[i].length; d++) {
+		if(data[i][d].x<=end_date && data[i][d].x>=start_date) {
+			clean_data[i].push(data[i][d]);
+		}
+	}
+
+    }
+
+
+    $("#" + elemID).empty();
+    var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
+    var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
+    var x=0;
+    for (x=0;x<clean_data.length;x++){
+	    for (i=0; i<clean_data[x].length; i++) {
+		xMinCurr = clean_data[x][i].x;
+		xMaxCurr = clean_data[x][i].x;
+		yMinCurr = clean_data[x][i].y;
+		yMaxCurr = clean_data[x][i].y;
+
+		if (xMinCurr < xMin) xMin = xMinCurr;
+		if (xMaxCurr > xMax) xMax = xMaxCurr;
+		if (yMinCurr < yMin) yMin = yMinCurr;
+		if (yMaxCurr > yMax) yMax = yMaxCurr;
+	    }
     }
     var WIDTH = $("#" + elemID).parent().width(),
-        colours = [ '#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
+        colours = ['green', 'blue', 'red', 'yellow', 'orange'],
         HEIGHT = 250,
         MARGINS = {
             top: 30,
@@ -127,9 +150,9 @@ function linegraph(elemID, data) {
         })
         .interpolate("basis");
         
-    for (i=0; i<data.length; i++) {
+    for (i=0; i<clean_data.length; i++) {
         vis.append('svg:path')
-        .attr('d', lineGen(data[i]))
+        .attr('d', lineGen(clean_data[i]))
         .attr('stroke', colours[i])
         .attr('stroke-width', 2)
         .attr('fill', 'none');

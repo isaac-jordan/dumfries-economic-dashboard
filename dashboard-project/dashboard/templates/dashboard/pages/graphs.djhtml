@@ -17,7 +17,7 @@
 	<br>
 	<div align="right">
 		<b>Select a date :
-		<input type="text" name="daterange" />
+		<input id="daterange" type="text" name="daterange" />
 	</div>
 	</br>
 	   <div ng-controller="draggableGridController">
@@ -49,14 +49,21 @@
 {% endverbatim %}
 
 <script type="text/javascript">
-	$('input[name="daterange"]').daterangepicker(
-{
-    locale: {
-      format: 'DD-MM-YYYY'
-    },
-    "setDate": new Date(),
-    autoUpdateInput:true,
-    startDate: '01-01-2007',
-    endDate: '31-12-2016'
+$('#daterange').daterangepicker({
+    locale: { cancelLabel: 'Clear' },
+    "showDropdowns": true,
+    "showWeekNumbers": true,
+    "autoApply": true,
+    "autoUpdateInput": true,
+    "startDate": "01/13/2010",
+    "endDate": "01/19/2016",
+    "opens": "left"
+}, function(start, end, label) {
+  console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+});
+$('#daterange').on('apply.daterangepicker', function(ev, picker) {
+  console.log(picker.startDate.format('YYYY-MM-DD'));
+  console.log(picker.endDate.format('YYYY-MM-DD'));
+  drawAllGraphs();
 });
 </script>
