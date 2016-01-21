@@ -8,7 +8,6 @@ django.setup()
 from dashboard.models import Dataset, Datasource, Visualisation, Category
 import json
 
-
 def populate():
     datasource = add_datasource("Fake Data Test")
     crimeCategory = add_category("Crime")

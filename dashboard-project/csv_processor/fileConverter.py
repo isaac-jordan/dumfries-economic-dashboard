@@ -4,7 +4,6 @@ import csv
 import django
 django.setup()
 import collections
-from dashboard.models import Dataset, Datasource, Visualisation
 import json
 
 def findFilePath(nameFile):

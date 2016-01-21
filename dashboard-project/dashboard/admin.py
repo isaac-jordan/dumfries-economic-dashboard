@@ -1,21 +1,20 @@
 from django.contrib import admin
-from models import Dataset, Datasource, Visualisation, SavedConfig, SavedGraph
+from models import Datasource, Visualisation, Dataset, SavedConfig, SavedGraph
 
 class DatasetAdmin(admin.ModelAdmin):
-    readonly_fields=('id',)
-    list_display = ('filename','visualisation')
+    list_display = Dataset._meta.get_all_field_names()
     
 class DatasourceAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = Datasource._meta.get_all_field_names()
     
 class VisualisationAdmin(admin.ModelAdmin):
-    list_display = ('name','category','type','dataSource')
+    list_display = Visualisation._meta.get_all_field_names()
     
 class SavedConfigAdmin(admin.ModelAdmin):
-    list_display = ('name','user')
+    list_display = SavedConfig._meta.get_all_field_names()
     
 class SavedGraphAdmin(admin.ModelAdmin):
-    list_display = ('savedConfig','visualisation','xPosition', 'yPosition','sizeX','sizeY')
+    list_display = SavedGraph._meta.get_all_field_names()
 
 admin.site.register(Dataset, DatasetAdmin)
 admin.site.register(Datasource, DatasourceAdmin)
