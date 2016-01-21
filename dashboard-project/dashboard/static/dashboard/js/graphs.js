@@ -53,7 +53,6 @@ function bargraph(elemID, data) {
 }
 
 function linegraph(elemID, data) {
-
     var dates=$('input[name="daterange"]').val();//get daterangepicker's value
     var end_date = dates.slice(-4);
     
@@ -71,8 +70,7 @@ function linegraph(elemID, data) {
 	}
 
     }
-
-
+    if (clean_data[0].length==0 ) return
     $("#" + elemID).empty();
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
