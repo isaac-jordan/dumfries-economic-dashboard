@@ -1,8 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
 import csv
-import django
-django.setup()
 import collections
 import json
 
