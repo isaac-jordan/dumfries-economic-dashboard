@@ -11,6 +11,7 @@
                 <div>
                     <a class="btn btn-default" href="" ng-click="saveConfig()"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
                     <a class="btn btn-default" href="" ng-click="clear()"><span class="glyphicon glyphicon-trash"></span> Clear</a>
+                    <a class="btn btn-default" href="" ng-click="addWidget()"><span class="glyphicon glyphicon-add"></span> Add</a>
                 </div>
             </div>
         </div>
@@ -23,6 +24,7 @@
 	   <div ng-controller="draggableGridController">
         <div gridster="gridsterOptions">
             <ul>
+
                 <li gridster-item="widget" ng-repeat="widget in widgets">
                     <div class="panel panel-default" >
                         <div class="panel-heading">
@@ -46,6 +48,7 @@
         </div>
     </div>
 </div>
+
 {% endverbatim %}
 
 <script type="text/javascript">

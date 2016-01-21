@@ -100,11 +100,17 @@ app.controller('mainController', function($scope) {
             }
         });
     };
+    $scope.addWidget = function() {
+        if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
+        console.log($scope.widgets);
+        $scope.widgets.splice(0, $scope.widgets.length);
+		};
     $scope.clear = function() {
         if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
         console.log($scope.widgets);
         $scope.widgets.splice(0, $scope.widgets.length);
     };
+
 });
 
 app.controller('savedConfigController', function($scope, $route) {
@@ -189,7 +195,6 @@ app.controller('draggableGridController', function($scope, $timeout) {
     });
 
     $scope.widgets = GLOBAL.widgets;
-
     $scope.deleteWidget = function(index) {
         $scope.widgets.splice(index, 1);
     };

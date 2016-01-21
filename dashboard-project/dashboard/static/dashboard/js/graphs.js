@@ -103,7 +103,7 @@ function linegraph(elemID, data) {
         yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
         xAxis = d3.svg.axis()
             .scale(xScale)
-            .ticks(Math.max(WIDTH/50, 2)),
+            .tickFormat(d3.format(xAxis)),
         yAxis = d3.svg.axis()
             .scale(yScale)
             .orient("left"),
@@ -126,11 +126,11 @@ function linegraph(elemID, data) {
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     xAxis = d3.svg.axis()
         .scale(xScale)
-        .ticks(Math.max(WIDTH/50, 2));
+	.tickFormat(d3.format("date"))
     yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
-        
+
     vis.append("svg:g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + MARGINS.left + ",0)")
