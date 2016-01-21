@@ -1,10 +1,18 @@
 from django.db import models
 from dataset_importer.models import Importer
-import os, csv, collections
+import os, csv, collections, json
 
-# Create your models here.
+
+class Dimension(models.Model):
+    label = models.CharField(max_length=50)
+    isRow = models.BooleanField()
+    makeXaxis = models.BooleanField()
+
+
 class CsvFile(Importer):
     filename = models.CharField(max_length=1024)
+    folderpath = models.CharField(max_length=1024)
+    importantDimensions = models.ManyToManyField(Dimension)
     
     def importData(self):
         """Returns 2D Python array of the CSV's data"""
@@ -15,8 +23,9 @@ class CsvFile(Importer):
                 fileDirectory=root + '/' + self.filename
                 found = True
                 break
+        
         if not found:
-            raise FileNotFoundError("File '" + self.filename + "' could not be found.")
+            raise IOError("File '" + self.filename + "' could not be found.")
         
         with open(fileDirectory) as csvfile:
             reader = csv.DictReader(csvfile)
@@ -36,9 +45,17 @@ class CsvFile(Importer):
             dataset = []
             try:
                 for k,v in dict.iteritems():
+                    x = float(k[0:4])
+                    if (x.is_integer()):
+                        x = int(x)
+                    
+                    y = float(v)
+                    if (y.is_integer()):
+                        y = int(y)
+                    
                     dataset.append({
-                        'x':float(k[0:4]),
-                        'y':float(v)
+                        'x':x,
+                        'y':y
                     })
             except:
                 pass
@@ -47,5 +64,5 @@ class CsvFile(Importer):
         return data
     
     def importJsonData(self):
-        self.dataJson = importData()
+        self.dataJson = json.dumps(self.importData())
         return self.dataJson
