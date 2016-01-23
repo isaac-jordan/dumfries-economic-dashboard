@@ -703,8 +703,8 @@
             if (this.showDropdowns) {
                 var currentMonth = calendar[1][1].month();
                 var currentYear = calendar[1][1].year();
-                var maxYear = (maxDate && maxDate.year()) || (currentYear + 50);//Temporary fix 
-                var minYear = (minDate && minDate.year()) || (currentYear - 50);//Temporary fix 
+                var maxYear = (maxDate && maxDate.year()) || (currentYear + 5);
+                var minYear = (minDate && minDate.year()) || (currentYear - 50);
                 var inMinYear = currentYear == minYear;
                 var inMaxYear = currentYear == maxYear;
 

@@ -55,14 +55,10 @@
 $('#daterange').daterangepicker({
     locale: { cancelLabel: 'Clear' },
     "showDropdowns": true,
-    "minDate": -100,
-    "maxDate": +20,
     "showWeekNumbers": true,
     "autoApply": true,
     "autoUpdateInput": true,
     "startDate": "01/13/2010",
-    yearRange: "-20:+0",
-    showOn: "both", 
     "endDate": "01/19/2016",
     "opens": "left"
 }, function(start, end, label) {
