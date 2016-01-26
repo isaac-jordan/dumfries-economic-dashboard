@@ -38,8 +38,8 @@ class Visualisation(models.Model):
 
 class Dataset(models.Model):
     visualisation = models.ForeignKey(Visualisation)
-    filename = models.CharField(max_length=300)
-    dataJSON = models.CharField(max_length=10000)
+    filename = models.CharField(max_length=300, blank=True, null=True)
+    dataJSON = models.TextField()
     
     def fromJSON(self):
         return json.loads(self.dataJSON)
