@@ -33,24 +33,22 @@ def ajaxGetGraphs(request):
     
     return JsonResponse({"widgets": widgets})
 
-# def category(request):
-#     graphs = Visualisation.objects.all()
-#     categories = []
-#     templates = []
-#     for graph in graphs:
-#         if graph.category not in categories:
-#             categories.append(graph.category)
-# 
-#     #TODO: need a mechanism of auto-allocating X/Y sizes/positioning, and allowing permissions to all users
-#     for category in categories:
-#         config = SavedConfig.objects.create(user=request.user, name=category)
-#         config.save()
-#         vis = Visualisation.objects.filter(category=category)
-#         savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=config,
-#         xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
-#         savedGraph.save()
-#         templates.append(config)
-#     return render(request, "pages/category.djhtml", {"templates": templates})
+def trends(request, graphName):
+    return
+    # TODO: implement this pseudocode
+    #     get all x and y data
+    #     get recent trend (last year-year before/year before)
+    #     get record trends (max increase/decrease = max of percentage increase for each pair of years
+    #     get max/min y values and their years
+    #     store in dictionary e.g. {"recent": recent, "bigrecord": bigrecord, "littlerecord": littlerecord,
+    #     "max": max, "min": min}
+    #     return render(request, dashboard/pages/trends.djhtml", dict)
+    #graph = Visualisation.objects.filter(name=graphName)
+    #dataset = Dataset.objects.filter(visualisation=graph)
+    # in form 	[{"y": y value, "x": x value}]
+    #for line in dataset:
+        #for value in line:
+
 
 def categoryList(request):
     categories = Category.objects.all()
