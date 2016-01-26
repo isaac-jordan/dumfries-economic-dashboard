@@ -57,6 +57,7 @@ $('#daterange').daterangepicker({
     "showDropdowns": true,
     "showWeekNumbers": true,
     "autoApply": true,
+    maxDate:"+10Y",//Works, don't know why, but it does !
     "autoUpdateInput": true,
     "startDate": "01/13/2010",
     "endDate": "01/19/2016",
