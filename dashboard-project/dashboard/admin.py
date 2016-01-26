@@ -6,12 +6,16 @@ class DatasetAdmin(admin.ModelAdmin):
     
 class DatasourceAdmin(admin.ModelAdmin):
     list_display = Datasource._meta.get_all_field_names()
+    list_display.remove("visualisation")
     
 class VisualisationAdmin(admin.ModelAdmin):
     list_display = Visualisation._meta.get_all_field_names()
+    list_display.remove("savedgraph")
+    list_display.remove("dataset")
     
 class SavedConfigAdmin(admin.ModelAdmin):
     list_display = SavedConfig._meta.get_all_field_names()
+    list_display.remove("savedgraph")
     
 class SavedGraphAdmin(admin.ModelAdmin):
     list_display = SavedGraph._meta.get_all_field_names()

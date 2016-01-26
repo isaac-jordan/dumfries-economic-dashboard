@@ -2,7 +2,7 @@ from django.db import models
 
 class Importer(models.Model):
     name = models.CharField(max_length=100)
-    dataJson = models.TextField()
+    dataJson = models.TextField(blank=True)
     
     def importData(self):
         """Import and return data from this Importer's storage medium. Data is not stored in dataJson field."""
