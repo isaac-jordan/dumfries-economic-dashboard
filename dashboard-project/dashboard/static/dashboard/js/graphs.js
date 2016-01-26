@@ -70,7 +70,15 @@ function linegraph(elemID, data) {
 	}
 
     }
-    if (clean_data[0].length==0 ) return
+    if (clean_data[0].length==0 ) { //Trying to add text saying that no information is available
+	vis = d3.select("#" + elemID)
+		.attr('width', 500)
+            	.attr('height', 200)
+		.append('text')
+			.attr('text','No information is available for these dates')
+			.attr('x', 3)
+    			.attr('y', 15);
+	return;}
     $("#" + elemID).empty();
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
