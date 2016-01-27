@@ -3,7 +3,12 @@ from dataset_importer.models import Importer
 import os, csv, collections, json, util, locale
 from datetime import datetime
 
+from dashboard.models import Visualisation, DashboardDataset, Category, Datasource
+
 class CsvFile(Importer):
+    visualisationName = models.CharField(max_length=150)
+    category = models.ForeignKey(Category)
+    dataSource = models.ForeignKey(Datasource)
     upload = models.FileField()
     source = models.URLField()
     
@@ -89,10 +94,21 @@ class CsvFile(Importer):
         self.save()
         return self.dataJson
     
-#     def save(self, *args, **kwargs):
-#         super(CsvFile, self).save(*args, **kwargs) # Saves everything (importantly the file)
-#         self.importJsonData() # Update self.dataJson
-#         return super(CsvFile, self).save(*args, **kwargs) # Saves self.dataJson
+    def createDashboardInfo(self):
+        vis, created = Visualisation.objects.get_or_create(name=self.visualisationName,
+                                                  category=self.category,
+                                                  type="line",
+                                                  dataSource=self.dataSource,
+                                                  sizeX=2,
+                                                  sizeY=2,
+                                                  xLabel="Placeholder",
+                                                  yLabel="Placeholder")
+        DashboardDataset.objects.filter(visualisation=vis).delete()
+        importedDatasets = self.importData()
+        for dataset in importedDatasets:
+            DashboardDataset.objects.create(visualisation=vis, dataJSON=json.dumps(dataset, cls=util.DatetimeEncoder))
+        self.dataJson = json.dumps(self.importData(), cls=util.DatetimeEncoder)
+        self.save()
     
 class Dimension(models.Model):
     TYPE_CHOICES = (

@@ -5,7 +5,7 @@ import django
 from django.contrib.auth.models import User
 django.setup()
 
-from dashboard.models import Dataset, Datasource, Visualisation, Category
+from dashboard.models import DashboardDataset, Datasource, Visualisation, Category
 import json
 
 def populate():
@@ -197,7 +197,7 @@ def add_datasource(name):
 def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
     if JSONdataset == "":
         JSONdataset = json.dumps(dataset);
-    d = Dataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)
+    d = DashboardDataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)
     return d
 
 def add_user(name, password, email="test@example.com"):

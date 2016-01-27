@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 # Local Imports
-from models import Datasource, Dataset, Visualisation, SavedConfig, SavedGraph, Category
+from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
 
 
 def home(request):
@@ -21,7 +21,7 @@ def graphs(request):
 def ajaxGetGraphs(request):
     ds = Datasource.objects.all()
     visualisations = Visualisation.objects.filter(dataSource=ds)
-    datasets = Dataset.objects.filter(visualisation=visualisations).select_related("visualisation")
+    datasets = DashboardDataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     
     widgets = [{'name': o.name,
                            'id': "vis" + str(o.pk),
@@ -60,7 +60,7 @@ def category(request, categoryName):
     categoryVis = Visualisation.objects.filter(category=category)
     
     widgets = [];
-    datasets = Dataset.objects
+    datasets = DashboardDataset.objects
     for v in categoryVis:
         widget = {}
         widget["sizeX"] = v.sizeX
@@ -105,7 +105,7 @@ def ajaxloadSavedConfig(request):
         return JsonResponse({'message':'Error: This Saved Configuration does not belong to you.', "success": False})
     
     widgets = [];
-    datasets = Dataset.objects
+    datasets = DashboardDataset.objects
     for graph in savedGraphs:
         widget = {}
         vis = graph.visualisation

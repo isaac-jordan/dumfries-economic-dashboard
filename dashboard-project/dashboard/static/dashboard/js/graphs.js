@@ -63,37 +63,38 @@ function linegraph(elemID, data) {
   }
     
     for (i=0; i<data.length; i++) {
-	for (d=0;d<data[i].length; d++) {
-		if(data[i][d].x<=end_date && data[i][d].x>=start_date) {
-			clean_data[i].push(data[i][d]);
-		}
-	}
-
+    	for (var d=0;d<data[i].length; d++) {
+    		if(data[i][d].x<=end_date && data[i][d].x>=start_date) {
+    			clean_data[i].push(data[i][d]);
+    		}
+    	}
     }
-    if (clean_data[0].length==0 ) { //Trying to add text saying that no information is available
-	vis = d3.select("#" + elemID)
-		.attr('width', 500)
-            	.attr('height', 200)
-		.append('text')
-			.attr('text','No information is available for these dates')
-			.attr('x', 3)
-    			.attr('y', 15);
-	return;}
+    
+    if (clean_data[0].length === 0 ) { //Trying to add text saying that no information is available
+    	vis = d3.select("#" + elemID)
+    		.attr('width', 500)
+                	.attr('height', 200)
+    		.append('text')
+    			.attr('text','No information is available for these dates')
+    			.attr('x', 3)
+        			.attr('y', 15);
+    	return;
+	}
     $("#" + elemID).empty();
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
     var x=0;
     for (x=0;x<clean_data.length;x++){
 	    for (i=0; i<clean_data[x].length; i++) {
-		xMinCurr = clean_data[x][i].x;
-		xMaxCurr = clean_data[x][i].x;
-		yMinCurr = clean_data[x][i].y;
-		yMaxCurr = clean_data[x][i].y;
-
-		if (xMinCurr < xMin) xMin = xMinCurr;
-		if (xMaxCurr > xMax) xMax = xMaxCurr;
-		if (yMinCurr < yMin) yMin = yMinCurr;
-		if (yMaxCurr > yMax) yMax = yMaxCurr;
+    		xMinCurr = clean_data[x][i].x;
+    		xMaxCurr = clean_data[x][i].x;
+    		yMinCurr = clean_data[x][i].y;
+    		yMaxCurr = clean_data[x][i].y;
+    
+    		if (xMinCurr < xMin) xMin = xMinCurr;
+    		if (xMaxCurr > xMax) xMax = xMaxCurr;
+    		if (yMinCurr < yMin) yMin = yMinCurr;
+    		if (yMaxCurr > yMax) yMax = yMaxCurr;
 	    }
     }
     var WIDTH = $("#" + elemID).parent().width(),
@@ -132,7 +133,7 @@ function linegraph(elemID, data) {
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     xAxis = d3.svg.axis()
         .scale(xScale)
-        .tickFormat(d3.format("date"))
+        .tickFormat(d3.format("date"));
     yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");

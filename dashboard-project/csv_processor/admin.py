@@ -22,7 +22,7 @@ class CsvFileAdmin(admin.ModelAdmin):
     def save_related(self, request, form, formsets, change):
         obj = form.instance
         super(CsvFileAdmin, self).save_related(request, form, formsets, change)
-        obj.importJsonData()
+        obj.createDashboardInfo()
     
     def save_model(self, request, obj, form, change):
         admin.ModelAdmin.save_model(self, request, obj, form, change)

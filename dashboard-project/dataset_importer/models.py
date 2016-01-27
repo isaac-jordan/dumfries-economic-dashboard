@@ -14,3 +14,15 @@ class Importer(models.Model):
     
     class Meta:
         abstract = True
+        
+class Dataset(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+    dataJSON = models.TextField()
+    
+    def fromJSON(self):
+        return json.loads(self.dataJSON)
+    
+    def __str__(self):
+        if self.name:
+            return self.name
+        return "Imported Dataset " + str(self.pk)
