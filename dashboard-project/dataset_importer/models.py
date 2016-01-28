@@ -1,4 +1,5 @@
 from django.db import models
+import json
 
 class Importer(models.Model):
     name = models.CharField(max_length=100)

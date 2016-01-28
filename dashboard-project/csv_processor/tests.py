@@ -6,7 +6,7 @@ Test classes for CsvFile model.
 from django.test import TestCase
 from django.core.files import File
 from csv_processor.models import CsvFile, Dimension
-from dashboard.models import Category, Datasource
+from dashboard.models import Category, Datasource, Visualisation, DashboardDataset
 import os, json
 
 class CSVImportTest(TestCase):
@@ -41,17 +41,17 @@ class CSVImportTest(TestCase):
                                         makeXaxisOnGraph = True,
                                         csvFile = csvFile)
         
-    def test_import_data_not_none(self):
+    def test_csv_import_data_not_none(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         data = csvFile.importData()
         self.assertIsNotNone(data, "Result from CsvFile.importData is null.")
         
-    def test_import_data_returns_one_dataset(self):
+    def test_csv_import_data_returns_one_dataset(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         data = csvFile.importData()
         self.assertTrue(len(data) == 1, "CsvFile.importData returned incorrect number of datasets for 2 Dimensions")
         
-    def test_import_data_returns_two_datasets(self):
+    def test_csv_import_data_returns_two_datasets(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         Dimension.objects.get_or_create(label="Scotland",
                                         indexForLabel = 1,
@@ -64,3 +64,17 @@ class CSVImportTest(TestCase):
                                         csvFile = csvFile)
         data = csvFile.importData()
         self.assertTrue(len(data) == 2, "CsvFile.importData returned incorrect number of datasets for 3 Dimensions")
+        
+    def test_csv_import_json_data_returns_string(self):
+        csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
+        jsonData = csvFile.importJsonData()
+        self.assertTrue(type(jsonData) is str, "CsvFile.importJsonData did not return a string")
+        self.assertTrue(len(json.loads(jsonData)) == 1, "CsvFile.importJsonData returned incorrect number of datasets for 2 Dimensions")
+        
+    def test_csv_import_create_dashboard_info_works(self):
+        csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
+        csvFile.createDashboardInfo()
+        vis = Visualisation.objects.get(name=csvFile.visualisationName)
+        datasets = DashboardDataset.objects.filter(visualisation=vis)
+        self.assertTrue(len(datasets) == 1, "CsvFile.createDashboardInfo created incorrect number of datasets for 2 Dimensions")
+        self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")

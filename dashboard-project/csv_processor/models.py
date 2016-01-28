@@ -49,12 +49,12 @@ class CsvFile(Importer):
                 if dimension.dataType == "date":
                     # Use dimension.format as a strptime to retrieve DateTime object
                     #print "FORMAT: " + dimension.dataFormat
-                    localData = [datetime.strptime(d, "%b-%y") for d in localData]
+                    localData = [datetime.strptime(d, dimension.dataFormat) for d in localData]
                 elif dimension.dataType == "currency":
                     # Use dimension.format to remove currency markers ($)
                     # and cast to float.
                     locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
-                    localData = [locale.atoi(d.replace("\xc2\xa3".decode("UTF8"), "")) for d in localData]
+                    localData = [locale.atoi(d.replace(dimension.dataFormat, "")) for d in localData]
                 elif dimension.DataType == "numeric":
                     # Cast data to int or float
                     pass
