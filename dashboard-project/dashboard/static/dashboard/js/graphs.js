@@ -51,19 +51,29 @@ function bargraph(elemID, data) {
         });
         
 }
+function reconstruct_data(data){
+	
+}
 function cleanup_data(data,type,clean_data){
 	var dates=$('input[name="daterange"]').val();//get daterangepicker's value
-	var end_date = dates.slice(-4);
-	var start_date =dates.substring(6,10);
+	var e_date = dates.slice(-4);
+	var end_date=new Date();
+	end_date.setYear(e_date);
+	var s_date =dates.substring(6,10);
+	var start_date=new Date();
+	start_date.setYear(s_date);
 	if (type=="normal"){
 		for (i=0; i<data.length; i++) {
 		    	for (i=0; i<data.length; i++) {
 			    	for (var d=0;d<data[i].length; d++) {
-			    		if(data[i][d].x<=end_date && data[i][d].x>=start_date) {
-						var date_c=new Date();
-						date_c.setYear(data[i][d].x);
-						data[i][d].x=date_c;
-			    			clean_data[i].push(data[i][d]);
+					var c_date=new Date();
+					c_date.setYear(data[i][d].x);
+			    		if(c_date<=end_date && c_date>=start_date) {
+						var input={};
+						input["x"]=c_date;
+						input["y"]=data[i][d].y;
+						
+			    			clean_data[i].push(input);
 			    		}
 			    	}
     			}
@@ -94,13 +104,12 @@ function linegraph(elemID, data) {
     for (var i=0;i<data.length;i++) {
      clean_data[i] = [];
   }
-    if (data[0][0].x.length>4) type="date_format"//Temporary solution for the different date formats
+    if (typeof(data[0][0].x)=="string") type="date_format"//Temporary solution for the different date formats
     
     clean_data=cleanup_data(c_data,type,clean_data);// Sends a copy of our data to be filtered and converts dates to JS Date format
-    
     if (clean_data[0].length == 0 ) { //It does not add the text !!
     	vis = d3.select("#" + elemID)
-    		.attr('width', 368)
+    		.attr('width', $("#" + elemID).parent().width())
                 	.attr('height', 300)
     		.append('text')
     			.attr('text','No information is available for these dates')
@@ -131,7 +140,7 @@ function linegraph(elemID, data) {
 	//For now just get the year value
 	xMin=xMin.getFullYear();
 	xMax=xMax.getFullYear();
-
+	
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
         HEIGHT = 300,
@@ -148,9 +157,8 @@ function linegraph(elemID, data) {
             .tickFormat(d3.format(xAxis)),
         yAxis = d3.svg.axis()
             .scale(yScale)
-            .orient("left"),
+            .orient("left");
         vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
-    
     /**var maxw = 0;
     vis.append("svg:g")
         .attr("class", "y axis")
@@ -162,11 +170,10 @@ function linegraph(elemID, data) {
                 MARGINS.left = Math.max(MARGINS.left, maxw + 10);
             }
         });*/
-    
     xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     if (clean_data[0].length==1) {// In case of 1 element margin domain changes 
-	xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-5, xMax+5]);
+	xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
     	yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMax/2, yMax*2]);
 	}
     xAxis = d3.svg.axis()
@@ -219,7 +226,6 @@ function linegraph(elemID, data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
-    
 }
 
  

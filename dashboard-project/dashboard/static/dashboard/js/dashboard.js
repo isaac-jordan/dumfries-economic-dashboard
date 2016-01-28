@@ -179,6 +179,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
             resize: function(event, $element, widget) {},
             stop: function(event, $element, widget) {
                 $timeout(drawAllGraphs, 200);
+		console.log("REDRAWING GRAPHS");
             }
         },
         minSizeX: 2,
