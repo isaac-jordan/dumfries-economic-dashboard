@@ -69,6 +69,7 @@ function cleanup_data(data,type,clean_data){
 	var s_date =dates.substring(6,10);
 	var start_date=new Date();
 	start_date.setYear(s_date);
+	if (type=="date_format") console.log("we have a date format")
 	if (type=="normal"){
 		for (i=0; i<data.length; i++) {
 		    	for (i=0; i<data.length; i++) {
@@ -88,10 +89,10 @@ function cleanup_data(data,type,clean_data){
 	}else{
 		for (i=0; i<data.length; i++) {
 		    	for (var d=0;d<data[i].length; d++) {
-		    		if(data[i][d].x<=end_date && data[i][d].x>=start_date) {
-					var date_c=new Date(data[i][d].x);
+				var c_date=new Date(data[i][d].x);
+		    		if(c_date<=end_date && c_date>=start_date) {
 					var input={};
-					input["x"]=date_c;
+					input["x"]=c_date;
 					input["y"]=data[i][d].y;
 		    			clean_data[i].push(input);
 		    		}
