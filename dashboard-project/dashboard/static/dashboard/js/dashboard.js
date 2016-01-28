@@ -7,7 +7,7 @@ var GLOBAL = {};
 var drawAllGraphs = function() {
     if (!GLOBAL.widgets) return;
     for (var i = 0; i < GLOBAL.widgets.length; i++) {
-        //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
+        console.log("Drawing graph: " + GLOBAL.widgets[i].id);
         drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
     }
 };
@@ -218,17 +218,20 @@ app.controller('draggableGridController', function($scope, $timeout) {
     }
 
 });
+var drawCategoryGraphs = function() {
+	for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
+        var widget = GLOBAL.currentCategoryWidgets[i];
+        drawGraph("graph" + widget.pk, widget.dataset, widget.type);
+    }
 
+};
 app.controller('categoryController', function($scope, $timeout) {
 
     //TODO - needs properly implemented
     console.log("I'm in the category controller!");
     
     console.log(GLOBAL.currentCategoryWidgets);
-    for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
-        var widget = GLOBAL.currentCategoryWidgets[i];
-        drawGraph("graph" + widget.pk, widget.dataset, widget.type);
-    }
+    drawCategoryGraphs();
 
     // You don't want the same graphs that are on the dashboard (and you don't want to mess with them otherwise the dashboard will be messed up).
     // You should load in, and draw the graphs either through an AJAX call, or using Django templating language.

@@ -51,8 +51,15 @@ function bargraph(elemID, data) {
         });
         
 }
-function reconstruct_data(data){
-	
+function add_Trend_Element(vis,elemID){
+	vis.append("text")
+           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+           .attr("transform", "translate("+ ($("#" + elemID).width()-100) +","+(($("#" + elemID).height()-250))+")")  // centre below axis
+           .text("Highest Value was : 500")
+	   .append('svg:tspan')
+	   .attr('x', -40)
+	   .attr('dy', 15)
+	   .text("Now is : 300");
 }
 function cleanup_data(data,type,clean_data){
 	var dates=$('input[name="daterange"]').val();//get daterangepicker's value
@@ -226,6 +233,7 @@ function linegraph(elemID, data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
+	if (elemID=="graph1") add_Trend_Element(vis,elemID);
 }
 
  
