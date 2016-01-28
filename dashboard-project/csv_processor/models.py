@@ -42,13 +42,13 @@ class CsvFile(Importer):
                 else:
                     raise NotImplementedError("No support for Dimension.type of column yet.")
                 
-                print "Pre-formatting {0}:".format(dimension.label)
-                print localData
+                #print "Pre-formatting {0}:".format(dimension.label)
+                #print localData
                 
                 # Format data!
                 if dimension.dataType == "date":
                     # Use dimension.format as a strptime to retrieve DateTime object
-                    print "FORMAT: " + dimension.dataFormat
+                    #print "FORMAT: " + dimension.dataFormat
                     localData = [datetime.strptime(d, "%b-%y") for d in localData]
                 elif dimension.dataType == "currency":
                     # Use dimension.format to remove currency markers ($)
@@ -61,21 +61,21 @@ class CsvFile(Importer):
                 #...
                 else:
                     pass
-                print "Post formatting:"
-                print localData
+                #print "Post formatting:"
+                #print localData
                 if dimension.makeXaxisOnGraph:
                     xAxisData = localData[:]
                 else:
                     data.append(localData)
         
         new = []
-        print data
+        #print data
         # [ [ {"y": 48600.0, "x": 2008.0},  {"y": 48600.0, "x": 2008.0}], [] ]
         for yAxis in data:
-            print "found a yaxis"
+            #print "found a yaxis"
             if len(yAxis) != len(xAxisData):
-                print len(yAxis)
-                print len(xAxisData)
+                #print len(yAxis)
+                #print len(xAxisData)
                 raise NotImplementedError("Axes of different lengths aren't supported yet.")
             l = []
             for y, x in zip(yAxis, xAxisData):
@@ -85,7 +85,7 @@ class CsvFile(Importer):
                 }
                 l.append(val)
             new.append(l)
-            print new
+            #print new
         data = new
         return data
     

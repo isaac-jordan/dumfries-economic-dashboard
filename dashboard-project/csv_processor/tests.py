@@ -1,37 +1,66 @@
+# coding=UTF8
 """
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
+Test classes for CsvFile model.
 """
 
 from django.test import TestCase
-from csv_processor.models import CsvFile
+from django.core.files import File
+from csv_processor.models import CsvFile, Dimension
+from dashboard.models import Category, Datasource
 import os, json
 
-# class ImportTest(TestCase):
-#     def test_file_does_not_exist(self):
-#         """Tests that an IOError is thrown if file doesn't exist."""
-#         csv = CsvFile.objects.get_or_create(filename="this_file_doesnt_exist.dud")[0]
-#         self.assertRaises(IOError, csv.importData)
-#         
-#     def test_import_all_result_not_empty(self):
-#         """Tests that csv can be read."""
-#         csv = CsvFile.objects.get_or_create(filename="test_employment.csv", folderpath="csv_processor/static/csv_processor/data/")[0]
-#         csvData = csv.importData()
-#         self.assertTrue(len(csvData) > 0, msg="CsvFile.importData() returned an empty sequence.")
-#         
-#     def test_auto_find_file(self):
-#         csv = CsvFile.objects.get_or_create(filename="test_employment.csv")[0]
-#         try:
-#             csv.importData()
-#         except IOError:
-#             self.fail("CsvFile.importData() couldn't automatically find the file, when it should.")
-#         
-#     def test_importJson_is_exact(self):
-#         csv = CsvFile.objects.get_or_create(filename="test_employment.csv")[0]
-#         basepath = os.path.dirname(__file__)
-#         knownJson = open(os.path.abspath(os.path.join(basepath, "static", "csv_processor", "data", "test_employment.json"))).read()
-#         
-#         csvDataJson = csv.importJsonData()
-#         self.assertEqual(json.loads(knownJson), json.loads(csvDataJson), "Generated JSON doesn't match the known JSON.")
+class CSVImportTest(TestCase):
+    def setUp(self):
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
+        f = File(open(filepath))
+        category = Category.objects.get_or_create(name="test_category")[0]
+        dataSource = Datasource.objects.get_or_create(name="test_datasource")[0]
+        csvFile = CsvFile.objects.get_or_create(visualisationName="test_real_monthly_test",
+                                      category = category,
+                                      dataSource = dataSource,
+                                      upload = f,
+                                      source = "http://test.example.com"
+                                      )[0]
+        Dimension.objects.get_or_create(label="Dumfries and Galloway",
+                                        indexForLabel = 1,
+                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        dataStartIndex = 2,
+                                        dataEndIndex = 151,
+                                        dataType = Dimension.DATA_CHOICES[1][0],
+                                        dataFormat = "£",
+                                        makeXaxisOnGraph = False,
+                                        csvFile = csvFile)
+        Dimension.objects.get_or_create(label="Month-Year",
+                                        index = 5,
+                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        dataStartIndex = 2,
+                                        dataEndIndex = 151,
+                                        dataType = Dimension.DATA_CHOICES[0][0],
+                                        dataFormat = "%b-%y",
+                                        makeXaxisOnGraph = True,
+                                        csvFile = csvFile)
+        
+    def test_import_data_not_none(self):
+        csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
+        data = csvFile.importData()
+        self.assertIsNotNone(data, "Result from CsvFile.importData is null.")
+        
+    def test_import_data_returns_one_dataset(self):
+        csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
+        data = csvFile.importData()
+        self.assertTrue(len(data) == 1, "CsvFile.importData returned incorrect number of datasets for 2 Dimensions")
+        
+    def test_import_data_returns_two_datasets(self):
+        csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
+        Dimension.objects.get_or_create(label="Scotland",
+                                        indexForLabel = 1,
+                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        dataStartIndex = 2,
+                                        dataEndIndex = 151,
+                                        dataType = Dimension.DATA_CHOICES[1][0],
+                                        dataFormat = "£",
+                                        makeXaxisOnGraph = False,
+                                        csvFile = csvFile)
+        data = csvFile.importData()
+        self.assertTrue(len(data) == 2, "CsvFile.importData returned incorrect number of datasets for 3 Dimensions")
