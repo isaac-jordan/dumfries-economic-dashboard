@@ -117,7 +117,7 @@ function linegraph(elemID, data) {
     if (clean_data[0].length == 0 ) { //It does not add the text !!
     	vis = d3.select("#" + elemID)
     		.attr('width', $("#" + elemID).parent().width())
-                	.attr('height', 300)
+                	.attr('height', 270)
     		.append('text')
     			.attr('text','No information is available for these dates')
     			.attr('x', 3)
@@ -150,7 +150,7 @@ function linegraph(elemID, data) {
 	
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
-        HEIGHT = 300,
+        HEIGHT = 270,
         MARGINS = {
             top: 30,
             right: 30,

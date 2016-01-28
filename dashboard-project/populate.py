@@ -1,11 +1,14 @@
+# coding=UTF8
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
 from csv_processor.fileConverter import findFilePath
 import django
 from django.contrib.auth.models import User
+from django.core.files import File
 django.setup()
 
 from dashboard.models import DashboardDataset, Datasource, Visualisation, Category
+from csv_processor.models import CsvFile, Dimension
 import json
 
 def populate():
@@ -169,6 +172,17 @@ def populate():
                 "y": 176,
                 "x": 2010
             }])
+    
+    #Add CSV file data
+    realDataSource = add_datasource("Real Data Test");
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
+    f = File(open(filepath))
+    csvFile = add_csvFile("CSV Real Monthly Sept 2015", housingCategory, realDataSource, f, "http://example.com")
+    add_dimension("Dumfries and Galloway", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
+    add_dimension("Scotland", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
+    add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
+    csvFile.createDashboardInfo()
 
     # Add some test users
     add_superuser("test@test.com", "test")
@@ -197,12 +211,16 @@ def add_datasource(name):
 def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
     if JSONdataset == "":
         JSONdataset = json.dumps(dataset);
-    d = DashboardDataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)
+    d = DashboardDataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)[0]
     return d
 
 def add_user(name, password, email="test@example.com"):
-    user = User.objects.create_user(name, email, password)
+    try:
+        user = User.objects.get(username=name, email=email)
+    except User.DoesNotExist:
+        user = User.objects.create_user(name, email, password)
     return user
+    
 
 def add_superuser(name, password):
     u = User.objects.get_or_create(username=name)[0]
@@ -211,6 +229,28 @@ def add_superuser(name, password):
     u.is_staff = True
     u.save()
     return u
+
+def add_csvFile(visualisationName, category, dataSource, file, source):
+    c = CsvFile.objects.get_or_create(name=visualisationName,
+                                      visualisationName=visualisationName,
+                                      category=category,
+                                      dataSource=dataSource,
+                                      upload=file,
+                                      source=source)[0]
+    return c
+
+def add_dimension(label, type, dataStartIndex, dataEndIndex, dataType, dataFormat, makeXaxisOnGraph, csvFile, indexForLabel=None, index=None):
+    d = Dimension.objects.get_or_create(label=label,
+                                        type=type,
+                                        dataStartIndex=dataStartIndex,
+                                        dataEndIndex=dataEndIndex,
+                                        dataType=dataType,
+                                        dataFormat=dataFormat,
+                                        makeXaxisOnGraph=makeXaxisOnGraph,
+                                        csvFile=csvFile,
+                                        indexForLabel=indexForLabel,
+                                        index=index)[0]
+    return d
 
 def importRealData(fileNames):
     for name in fileNames:

@@ -2,6 +2,8 @@ from django.db import models
 from dataset_importer.models import Importer
 import os, csv, collections, json, util, locale
 from datetime import datetime
+from django.db.models.signals import pre_delete 
+from django.dispatch import receiver
 
 from dashboard.models import Visualisation, DashboardDataset, Category, Datasource
 
@@ -109,6 +111,13 @@ class CsvFile(Importer):
             DashboardDataset.objects.create(visualisation=vis, dataJSON=json.dumps(dataset, cls=util.DatetimeEncoder))
         self.dataJson = json.dumps(self.importData(), cls=util.DatetimeEncoder)
         self.save()
+        
+@receiver(pre_delete)
+def delete_csv_dashboard_related(sender, instance, **kwargs):
+    if sender == CsvFile:
+        vis = Visualisation.objects.get(name=instance.visualisationName)
+        datasets = DashboardDataset.objects.filter(visualisation=vis).delete()
+        vis.delete()
     
 class Dimension(models.Model):
     TYPE_CHOICES = (
