@@ -50,6 +50,12 @@ app.config(function($routeProvider) {
     .when('/savedconfigs', {
         templateUrl: 'pages/savedConfigs'
     })
+    
+    .when('/search/:searchTerm', {
+        templateUrl: function(params) {
+            return 'pages/searchResult/' + params.searchTerm;
+        },
+    })
 
     .when('/register', {
         templateUrl: 'pages/register'
@@ -57,7 +63,7 @@ app.config(function($routeProvider) {
 });
 
 // create the controller and inject Angular's $scope
-app.controller('mainController', function($scope) {
+app.controller('mainController', function($scope, $location) {
     $scope.widgets = GLOBAL.widgets;
     $scope.message = 'Welcome to the Dumfries Dashboard!';
 
@@ -111,6 +117,22 @@ app.controller('mainController', function($scope) {
         console.log($scope.widgets);
         $scope.widgets.splice(0, $scope.widgets.length);
     };
+    
+    $("#searchForm").submit(function(event) {
+        
+        /* stop form from submitting normally */
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        /* get some values from elements on the page: */
+        var $form = $(this),
+            searchVal = $form.find("#srch-term").val();
+        
+        $location.path("/search/" + searchVal).replace();
+        $scope.$apply();
+        console.log($location);
+        return false;
+    });
 
 });
 
@@ -180,7 +202,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
             resize: function(event, $element, widget) {},
             stop: function(event, $element, widget) {
                 $timeout(drawAllGraphs, 200);
-		console.log("REDRAWING GRAPHS");
+		        console.log("REDRAWING GRAPHS");
             }
         },
         minSizeX: 2,

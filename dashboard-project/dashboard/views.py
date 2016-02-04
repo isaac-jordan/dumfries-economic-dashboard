@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Q
 
 # Local Imports
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
@@ -25,6 +26,18 @@ def ajaxGetGraphs(request):
     datasets = DashboardDataset.objects.filter(visualisation=visualisations).select_related("visualisation")
     widgets = [o.getWidget() for o in visualisations]
     return JsonResponse({"widgets": widgets})
+
+def ajaxSearch(request, searchTerm):
+    resultsAsVis = []
+    if searchTerm is not None:
+        # Search all datasource, categories, and visualisations.
+        ds = Datasource.objects.filter(name__icontains=searchTerm);
+        resultsAsVis += Visualisation.objects.filter(Q(dataSource=ds) |
+                                                    Q(name__icontains=searchTerm) |
+                                                    Q(category__name__icontains=searchTerm))
+        
+        return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": [o.getWidget() for o in resultsAsVis] })
+    return render(request, 'dashboard/pages/searchResults.djhtml')
 
 def trends(request, graphName):
     graphName = 'Wages'
