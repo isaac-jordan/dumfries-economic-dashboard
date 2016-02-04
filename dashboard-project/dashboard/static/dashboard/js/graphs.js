@@ -17,7 +17,7 @@ function bargraph(elemID, data) {
     data = data[0];
     $("#" + elemID).empty();
     var width = $("#" + elemID).parent().width(),
-        barHeight = 10;
+        barHeight =  ($("#" + elemID).parent().parent().parent().height()-90)/data.length;
 
     var x = d3.scale.linear()
         .domain([0, d3.max(data, function(d) {return d.y;})])
@@ -25,7 +25,7 @@ function bargraph(elemID, data) {
 
     var chart = d3.select("#" + elemID)
         .attr("width", width)
-        .attr("height", barHeight * data.length);
+        .attr("height", $("#" + elemID).parent().parent().parent().height()-90);
 
     var bar = chart.selectAll("g")
         .data(data)
@@ -73,7 +73,6 @@ function cleanup_data(data,type,clean_data){
 	var s_date =dates.substring(6,10);
 	var start_date=new Date();
 	start_date.setYear(s_date);
-	if (type=="date_format") console.log("we have a date format")
 	if (type=="normal"){
 		for (i=0; i<data.length; i++) {
 		    	for (i=0; i<data.length; i++) {
@@ -155,7 +154,7 @@ function linegraph(elemID, data) {
 	
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
-        HEIGHT = 270,
+        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90,
         MARGINS = {
             top: 40,
             right: 40,
@@ -182,6 +181,7 @@ function linegraph(elemID, data) {
                 MARGINS.left = Math.max(MARGINS.left, maxw + 10);
             }
         });*/
+    console.log(WIDTH);
     xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     if (clean_data[0].length==1) {// In case of 1 element margin domain changes 
@@ -220,15 +220,16 @@ function linegraph(elemID, data) {
             return yScale(d.y);
         })
         .interpolate("basis");
+
      //In case of 1 element we append a circle with just a text
      if (clean_data[0].length==1){
 	vis.append('circle')
 	   .attr("cx", WIDTH/2)
-           .attr("cy", HEIGHT/2+40)                         
+           .attr("cy", HEIGHT/2+40)
 	   .attr("r", 10);
 	  vis.append('text')
 	   .attr("transform", "translate("+ (WIDTH/2-40) +","+((HEIGHT/2-40))+")")  // centre below axis
-	   .text(clean_data[0][0].y+" for "+clean_data[0][0].x.getFullYear()); 
+	   .text(clean_data[0][0].y+" for "+clean_data[0][0].x.getFullYear());
 	return;
 	}
     for (i=0; i<clean_data.length; i++) {
