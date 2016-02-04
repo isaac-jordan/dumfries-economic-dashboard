@@ -153,10 +153,10 @@ function linegraph(elemID, data) {
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
         HEIGHT = 270,
         MARGINS = {
-            top: 30,
-            right: 30,
-            bottom: 30,
-            left: 30
+            top: 40,
+            right: 40,
+            bottom: 40,
+            left: 40
         },
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
         yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
