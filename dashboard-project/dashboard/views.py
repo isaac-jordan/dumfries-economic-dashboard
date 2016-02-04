@@ -10,6 +10,7 @@ from django.http import JsonResponse
 
 # Local Imports
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
+from csv_processor import util
 
 
 def home(request):
@@ -34,21 +35,47 @@ def ajaxGetGraphs(request):
     return JsonResponse({"widgets": widgets})
 
 def trends(request, graphName):
-    return
-    # TODO: implement this pseudocode
-    #     get all x and y data
-    #     get recent trend (last year-year before/year before)
-    #     get record trends (max increase/decrease = max of percentage increase for each pair of years
-    #     get max/min y values and their years
-    #     store in dictionary e.g. {"recent": recent, "bigrecord": bigrecord, "littlerecord": littlerecord,
-    #     "max": max, "min": min}
-    #     return render(request, dashboard/pages/trends.djhtml", dict)
-    #graph = Visualisation.objects.filter(name=graphName)
-    #dataset = Dataset.objects.filter(visualisation=graph)
+    graphName = 'Wages'
+    graph = Visualisation.objects.filter(name=graphName)
+    datasets = DashboardDataset.objects.filter(visualisation=graph)
+    lineNum = 1
+
+    valuesList = []
+    for dsObj in datasets:
+        values={}
+        lines={}
+        dataset = json.loads(dsObj.dataJSON)
+        maxXPair = dataset[0].copy()
+        maxYPair = dataset[0].copy()
+        lowestYpair=dataset[0].copy()
+        print dataset
+        for point in dataset:
+            if point["x"] is str:
+                dt = json.loads(point["x"], cls=util.DatetimeEncoder)
+                if dt > maxXPair['x']:
+                    maxXPair=point.copy()
+            else:
+                year = point["x"]
+                if point["x"] > maxXPair["x"]:
+                    maxXPair = point.copy()
+
+            if point["y"] > maxYPair["y"]:
+                maxYPair = point.copy()
+            if point["y"] < lowestYpair["y"]:
+                lowestYpair = point.copy()
+        print maxXPair
+        values["maxX"] = maxXPair.copy()
+        values["maxY"] = maxYPair.copy()
+        values["lowestY"] = lowestYpair.copy()
+        lines["line "+str(lineNum)] = values
+        lineNum+=1
+        valuesList.append(lines)
+    return render(request,'dashboard/pages/category.djhtml', {graphName: valuesList})
+
+
     # in form 	[{"y": y value, "x": x value}]
     #for line in dataset:
         #for value in line:
-
 
 def categoryList(request):
     categories = Category.objects.all()

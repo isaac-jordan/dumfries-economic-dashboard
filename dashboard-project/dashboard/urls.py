@@ -22,4 +22,6 @@ urlpatterns = patterns('',
     url(r'^account/register', 'dashboard.views.ajax_register', name='ajax_register'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'test_trends', 'dashboard.views.trends'),
 )
