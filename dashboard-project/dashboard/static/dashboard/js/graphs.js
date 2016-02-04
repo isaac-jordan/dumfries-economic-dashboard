@@ -156,7 +156,7 @@ function linegraph(elemID, data) {
             top: 40,
             right: 40,
             bottom: 40,
-            left: 40
+            left: 50
         },
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
         yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]),
