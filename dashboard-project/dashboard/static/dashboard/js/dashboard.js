@@ -10,6 +10,7 @@ var drawAllGraphs = function() {
         console.log("Drawing graph: " + GLOBAL.widgets[i].id);
         drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
     }
+    $('[data-toggle="popover"]').popover();
 };
 
 app.run(function($rootScope, $templateCache) {
@@ -198,6 +199,10 @@ app.controller('draggableGridController', function($scope, $timeout) {
     $scope.widgets = GLOBAL.widgets;
     $scope.deleteWidget = function(index) {
         $scope.widgets.splice(index, 1);
+    };
+    
+    $scope.showPopover = function(event) {
+        $(event.target).closest('[data-toggle="popover"]').popover("toggle");
     };
 
     if (!GLOBAL.widgets) {

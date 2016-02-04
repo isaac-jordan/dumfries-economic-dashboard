@@ -33,14 +33,13 @@
                                 <div class="col-sm-4">
                                     <div class="pull-right">
                                         <a title="settings"><span class="glyphicon glyphicon-cog"></a>
-                                        <a title="information"dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                        <a title="Information" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="Source: {{ widget.source }}" ng-click="showPopover($event)"><i class="glyphicon glyphicon-info-sign"></i></a>
                                         <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
-                        <!--{{ drawGraph(widget.id, widget.dataset, widget.type) }}-->
                     </div>
                 </li>
             </ul>
@@ -52,6 +51,6 @@
 {% endverbatim %}
 
 <script type="text/javascript">
-$('#daterange').daterangepicker();
-applyDatePickerStats();
+    $('#daterange').daterangepicker();
+    applyDatePickerStats();
 </script>

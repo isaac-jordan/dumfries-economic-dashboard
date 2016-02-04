@@ -29,6 +29,7 @@ def ajaxGetGraphs(request):
                            'pk': o.pk,
                            'type': o.type,
                            'dataset': [json.loads(d.dataJSON) for d in datasets.filter(visualisation=o)],
+                           'source': "http://example.com",
                            'sizeX': o.sizeX,
                            'sizeY': o.sizeY} for o in visualisations]
     
