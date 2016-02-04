@@ -10,7 +10,7 @@ var drawAllGraphs = function() {
         console.log("Drawing graph: " + GLOBAL.widgets[i].id);
         drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
     }
-    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover({html: true});
 };
 
 app.run(function($rootScope, $templateCache) {

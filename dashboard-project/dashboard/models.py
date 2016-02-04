@@ -60,9 +60,11 @@ class Visualisation(models.Model):
         widget = {'name': self.name,
                            'id': "vis" + str(self.pk),
                            'pk': self.pk,
-                           'category': self.category,
+                           'category': self.category.name,
                            'type': self.type,
-                           'dataset': Dataset.objects.filter(visualisation=self)[0].fromJSON(),
+                           'dataset': [json.loads(d.dataJSON) for d in DashboardDataset.objects.filter(visualisation=self)],
+                           'sourceName': self.dataSource.name,
+                           'sourceLink': self.dataSource.link,
                            'sizeX': self.sizeX,
                            'sizeY': self.sizeY}
         return widget

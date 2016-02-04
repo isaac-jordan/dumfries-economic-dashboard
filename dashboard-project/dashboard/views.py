@@ -23,16 +23,7 @@ def ajaxGetGraphs(request):
     ds = Datasource.objects.all()
     visualisations = Visualisation.objects.filter(dataSource=ds)
     datasets = DashboardDataset.objects.filter(visualisation=visualisations).select_related("visualisation")
-    
-    widgets = [{'name': o.name,
-                           'id': "vis" + str(o.pk),
-                           'pk': o.pk,
-                           'type': o.type,
-                           'dataset': [json.loads(d.dataJSON) for d in datasets.filter(visualisation=o)],
-                           'source': "http://example.com",
-                           'sizeX': o.sizeX,
-                           'sizeY': o.sizeY} for o in visualisations]
-    
+    widgets = [o.getWidget() for o in visualisations]
     return JsonResponse({"widgets": widgets})
 
 def trends(request, graphName):
