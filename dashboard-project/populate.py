@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 from django.core.files import File
 django.setup()
 
-from dashboard.models import DashboardDataset, Datasource, Visualisation, Category
+from dashboard.models import DashboardDataset, DashboardDatasource, Visualisation, Category
 from csv_processor.models import CsvFile, Dimension
 import json
 
 def populate():
-    datasource = add_datasource("Fake Data Test")
+    datasource = add_datasource("Fake Data Test", "http://example.com")
     crimeCategory = add_category("Crime")
     employmentCategory = add_category("Employment")
     housingCategory = add_category("Housing")
@@ -174,7 +174,7 @@ def populate():
             }])
     
     #Add CSV file data
-    realDataSource = add_datasource("Real Data Test");
+    realDataSource = add_datasource("Real Data Test", "http://example.com");
     basepath = os.path.dirname(__file__)
     filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
     f = File(open(filepath))
@@ -204,8 +204,8 @@ def add_category(name):
     c = Category.objects.get_or_create(name=name)[0]
     return c
 
-def add_datasource(name):
-    d = Datasource.objects.get_or_create(name=name)[0]
+def add_datasource(name, link):
+    d = DashboardDatasource.objects.get_or_create(name=name, link=link)[0]
     return d
 
 def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
@@ -257,7 +257,7 @@ def importRealData(fileNames):
         #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
         res = findFilePath(name)
         category = add_category("Employment")
-        source = add_datasource("Real Data Test")
+        source = add_datasource("Real Data Test", "http://example.com")
         vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
         for line in res["data"]:
             add_dataset(vis, line)

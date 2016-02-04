@@ -5,13 +5,13 @@ Some methods use models from dashboard for convenient importing into the db.
 """
 
 from django.db import models
-from dataset_importer.models import Importer
+from dataset_importer.models import Importer, Datasource
 import os, csv, collections, json, util, locale
 from datetime import datetime
 from django.db.models.signals import pre_delete 
 from django.dispatch import receiver
 
-from dashboard.models import Visualisation, DashboardDataset, Category, Datasource
+from dashboard.models import Visualisation, DashboardDataset, Category
 
 class CsvFile(Importer):
     """
