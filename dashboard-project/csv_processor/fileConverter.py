@@ -1,9 +1,20 @@
+"""
+This file is here for utility purposes.
+It is used my populate.py to process CSV files without hitting the database.
+"""
+
 import os
 import csv
 import collections
 import json
 
 def findFilePath(nameFile):
+    """
+    Locates the first file with the provided name.
+    Executes a breadth-first search from current working directory.
+    
+    Calls realConvertAdd if it finds a file with the name.
+    """
     fileDirectory = ''
     found = False
     for root, dirs, files in os.walk(os.getcwd()):
@@ -18,7 +29,10 @@ def findFilePath(nameFile):
         return None
 
 def readConvertAdd(fileName):
-    print "converting ..."
+    """
+    Function that actually opens the CSV and constructs
+    the data contained within in a nested list.
+    """
     with open(fileName) as csvfile:
         reader = csv.DictReader(csvfile)
         newarray=[]
@@ -51,30 +65,6 @@ def readConvertAdd(fileName):
     usedName = usedName.replace('_', " ")
     
     return {"visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
-    #datasource = add_datasource(source)
-    #category = add_category("Employment")
-    #gdpPCVis = add_visualisation(datasource, usedName, category, "line", "Year", fileName, sizeY=2)
-    #for line in data:
-    #    add_dataset(gdpPCVis, line)
-
-
-
-
-
-#fileName = sys.argv[1]
-#SourceOf = sys.argv[2]
-#if os.path.exists(fileName):
-    #print "converting ...."
-    #readConvertAdd(fileName,SourceOf)
-
-
-#readConvertAdd(sys.argv[1],sys.argv[2])
-
-
-#dataset = {scotland:{'y':2004-Q1,'x':2430600}}
-#TO DO CREATE DICTIONARY TO REPRESEN JSON
-#EACH ROW
-
 
 
 

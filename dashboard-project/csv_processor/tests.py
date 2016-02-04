@@ -1,6 +1,6 @@
 # coding=UTF8
 """
-Test classes for CsvFile model.
+Test classes for CSV Processor application.
 """
 
 from django.test import TestCase
@@ -11,6 +11,10 @@ import os, json
 
 class CSVImportTest(TestCase):
     def setUp(self):
+        """
+        Creates some entries in the database for use by tests.
+        This is ran before every test in this class.
+        """
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
         f = File(open(filepath))

@@ -1,3 +1,9 @@
+"""
+Contains models used by csv_processor.
+
+Some methods use models from dashboard for convenient importing into the db.
+"""
+
 from django.db import models
 from dataset_importer.models import Importer
 import os, csv, collections, json, util, locale
@@ -8,6 +14,12 @@ from django.dispatch import receiver
 from dashboard.models import Visualisation, DashboardDataset, Category, Datasource
 
 class CsvFile(Importer):
+    """
+    A subclass of Importer.
+    
+    This specifies a type of Importer that uses CSV files.
+    """
+    
     visualisationName = models.CharField(max_length=150)
     category = models.ForeignKey(Category)
     dataSource = models.ForeignKey(Datasource)
@@ -15,7 +27,13 @@ class CsvFile(Importer):
     source = models.URLField()
     
     def importData(self):
-        """Returns 2D Python array of the CSV's data"""    
+        """
+        Executes the import.
+        
+        Returns data in the form of a list containing multiple datasets.
+        Each dataset is a list of dictionaries with x, y values.
+        """    
+        
         data = []
         xAxisData = []
         dimensions = self.dimensions.all()
@@ -92,11 +110,20 @@ class CsvFile(Importer):
         return data
     
     def importJsonData(self):
+        """
+        A shortcut method that imports data, saves it to the
+        dataJson field, and returns the json.
+        """
         self.dataJson = json.dumps(self.importData(), cls=util.DatetimeEncoder)
         self.save()
         return self.dataJson
     
     def createDashboardInfo(self):
+        """
+        A shortcut method that creates all the required database entries
+        for this data for use by the dashboard app.
+        It imports the data, saves it to json, and creates the database entries.
+        """
         vis, created = Visualisation.objects.get_or_create(name=self.visualisationName,
                                                   category=self.category,
                                                   type="line",
@@ -114,12 +141,31 @@ class CsvFile(Importer):
         
 @receiver(pre_delete)
 def delete_csv_dashboard_related(sender, instance, **kwargs):
+    """
+    This functions runs before any deletes happen in the database.
+    
+    If we are deleting a CsvFile entry, then special logic is required to
+    delete all associated Visualisations and DashboardDatasets.
+    """
     if sender == CsvFile:
         vis = Visualisation.objects.get(name=instance.visualisationName)
         datasets = DashboardDataset.objects.filter(visualisation=vis).delete()
         vis.delete()
     
 class Dimension(models.Model):
+    """
+    This model represents part of a row or column that the user
+    is interested in retrieving from the CSV file.
+    
+    This model contains information on the exact location of the data,
+    including labels, and which parts of the row or column we want.
+    
+    It also contains information on the type of that data, what
+    format it is, and whether it should form the x-axis.
+    
+    This model contains no logic, but the values specified are used during
+    the importData method of CsvFile.
+    """
     TYPE_CHOICES = (
                         ("row", "Row"),
                         ("col", "Column")
@@ -134,27 +180,33 @@ class Dimension(models.Model):
                     ("text", "Text")
     )
     
-    label = models.CharField(max_length=50,
-                             help_text=u"The label that appears for this data series in the CSV file.")
-    indexForLabel = models.PositiveIntegerField(null=True, blank=True,
-                             help_text=u"The row or column index that the label appears in. If blank, you must specify 'index'. \
-                             This is orthogonal to the type. E.g. If type is 'Row', then this field is the column index that the label appears in.")
-    type = models.CharField(max_length=3,
+    label = models.CharField("Data Label",
+                            max_length=50,
+                            help_text=u"The label that appears for this data series in the CSV file.")
+    indexForLabel = models.PositiveIntegerField("Label Index",
+                            null=True, blank=True,
+                            help_text=u"The row or column index that the label appears in. If blank, you must specify 'index'. \
+                            This is orthogonal to the type. E.g. If type is 'Row', then this field is the column index that the label appears in.")
+    type = models.CharField("Label Type",
+                            max_length=3,
                             choices=TYPE_CHOICES,
                             default=TYPE_CHOICES[0][0],
-                             help_text=u"Whether these indices should be taken as row or column values.")
-    index = models.PositiveIntegerField(null=True, blank=True,
-                             help_text=u"<OPTIONAL> If data series has no label, this field can specify the index.")
-    dataStartIndex = models.PositiveIntegerField(
-                             help_text=u"The index of the first cell of interest for this data series.")
-    dataEndIndex = models.PositiveIntegerField(
-                             help_text=u"The index of the last cell of interest for this data series.")
-    dataType = models.CharField(max_length=10,
+                            help_text=u"Whether these indices should be taken as row or column values.")
+    index = models.PositiveIntegerField("Override label with index",
+                            null=True, blank=True,
+                            help_text=u"<OPTIONAL> If data series has no label, this field can specify the index.")
+    dataStartIndex = models.PositiveIntegerField("Data Start",
+                            help_text=u"The index of the first cell of interest for this data series.")
+    dataEndIndex = models.PositiveIntegerField("Data End",
+                            help_text=u"The index of the last cell of interest for this data series.")
+    dataType = models.CharField("Data Type",
+                            max_length=10,
                             choices=DATA_CHOICES,
                             default=DATA_CHOICES[0][0],
-                             help_text=u"The type of data the CSV contains for this data series.")
-    dataFormat = models.CharField(max_length=100,
+                            help_text=u"The type of data the CSV contains for this data series.")
+    dataFormat = models.CharField("Data Format",
+                            max_length=100,
                             help_text=u"ADVANCED: Specify the format of the data. If dataType is 'date', uses strptime formatting. Otherwise uses Python Regex formatting.")
-    makeXaxisOnGraph = models.BooleanField(
-                             help_text=u"Select ONE dimension to be used as the X axis.")
+    makeXaxisOnGraph = models.BooleanField("Make x-axis on graph",
+                            help_text=u"Select ONE dimension to be used as the X axis.")
     csvFile = models.ForeignKey(CsvFile, related_name='dimensions')
