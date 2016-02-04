@@ -13,6 +13,7 @@
                         </div>
                         <div class="panel-body">
                             <a href="" ng-click="loadSavedConfig({{config.id}})"><span id="config{{config.id}}" class="glyphicon glyphicon-import"></span> Load</a>
+                            <a href="" ng-click="exportCheatSheet({{config.id}})"><span id="config{{config.id}}" class="glyphicon glyphicon-export"></span> Download as PDF</a>
                         </div>
                     </div>
                     {% empty %}
