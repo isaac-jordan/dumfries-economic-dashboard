@@ -1,6 +1,6 @@
 /*jshint*/
 /*global d3, console */
-    
+
 function drawGraph(elemID, data, type) {
     if ($("#" + elemID).parent().width() < 0) return;
     switch(type) {
@@ -49,7 +49,7 @@ function bargraph(elemID, data) {
         .text(function (d) {
             return d.y;
         });
-        
+
 }
 function add_Trend_Element(vis,elemID){
 	vis.append("text")
@@ -83,7 +83,7 @@ function cleanup_data(data,type,clean_data){
 						var input={};
 						input["x"]=c_date;
 						input["y"]=data[i][d].y;
-						
+
 			    			clean_data[i].push(input);
 			    		}
 			    	}
@@ -116,7 +116,7 @@ function linegraph(elemID, data) {
      clean_data[i] = [];
   }
     if (typeof(data[0][0].x)=="string") type="date_format"//Temporary solution for the different date formats
-    
+
     clean_data=cleanup_data(c_data,type,clean_data);// Sends a copy of our data to be filtered and converts dates to JS Date format
     if (clean_data[0].length == 0 ) { //It does not add the text !!
     	vis = d3.select("#" + elemID)
@@ -129,7 +129,7 @@ function linegraph(elemID, data) {
     	return;
 	}
     $("#" + elemID).empty();// Clean previous graph in widget
-    
+
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
     var x=0;
@@ -141,7 +141,7 @@ function linegraph(elemID, data) {
     		xMaxCurr = clean_data[x][i].x;
     		yMinCurr = clean_data[x][i].y;
     		yMaxCurr = clean_data[x][i].y;
-    		
+
     		if (xMinCurr < xMin) xMin = xMinCurr;
     		if (xMaxCurr > xMax) xMax = xMaxCurr;
     		if (yMinCurr < yMin) yMin = yMinCurr;
@@ -151,7 +151,7 @@ function linegraph(elemID, data) {
 	//For now just get the year value
 	xMin=xMin.getFullYear();
 	xMax=xMax.getFullYear();
-	
+
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
         HEIGHT = $("#" + elemID).parent().parent().parent().height()-90,
@@ -181,13 +181,14 @@ function linegraph(elemID, data) {
                 MARGINS.left = Math.max(MARGINS.left, maxw + 10);
             }
         });*/
-    console.log(WIDTH);
     xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
     yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
-    if (clean_data[0].length==1) {// In case of 1 element margin domain changes 
-	xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
+    if (clean_data[0].length==1) {// In case of 1 element margin domain changes
+	    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
     	yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMax/2, yMax*2]);
+
 	}
+    if (type!="normal") {}
     xAxis = d3.svg.axis()
         .scale(xScale)
         .tickFormat(d3.format("date"));
@@ -214,7 +215,7 @@ function linegraph(elemID, data) {
 
     var lineGen = d3.svg.line()
         .x(function(d) {
-            return xScale(d.x.getFullYear());
+            return xScale(d.x.getFullYear()+d.x.getMonth()/12);
         })
         .y(function(d) {
             return yScale(d.y);
