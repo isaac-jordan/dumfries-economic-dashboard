@@ -187,7 +187,10 @@ function linegraph(elemID, data) {
 	    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
     	yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMax/2, yMax*2]);
 
-	}
+	}else if(type!="normal"){
+        xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax+1]);
+        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
+    }
     if (type!="normal") {}
     xAxis = d3.svg.axis()
         .scale(xScale)
@@ -212,10 +215,9 @@ function linegraph(elemID, data) {
            .text("Year");
 
 
-
     var lineGen = d3.svg.line()
         .x(function(d) {
-            return xScale(d.x.getFullYear()+d.x.getMonth()/12);
+            return xScale(d.x.getFullYear()+(d.x.getMonth()-1)/12);
         })
         .y(function(d) {
             return yScale(d.y);
