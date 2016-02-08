@@ -14,10 +14,16 @@ function drawGraph(elemID, data, type) {
 }
 
 function bargraph(elemID, data) {
+    HEIGHT=0;
+    if ($("#" + elemID).parent().parent().parent().height()-90>1000){
+        HEIGHT = 300
+    }else{
+        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90
+    }
     data = data[0];
     $("#" + elemID).empty();
     var width = $("#" + elemID).parent().width(),
-        barHeight =  ($("#" + elemID).parent().parent().parent().height()-90)/data.length;
+        barHeight =  HEIGHT/data.length;
 
     var x = d3.scale.linear()
         .domain([0, d3.max(data, function(d) {return d.y;})])
@@ -25,7 +31,7 @@ function bargraph(elemID, data) {
 
     var chart = d3.select("#" + elemID)
         .attr("width", width)
-        .attr("height", $("#" + elemID).parent().parent().parent().height()-90);
+        .attr("height", HEIGHT);
 
     var bar = chart.selectAll("g")
         .data(data)
@@ -151,10 +157,15 @@ function linegraph(elemID, data) {
 	//For now just get the year value
 	xMin=xMin.getFullYear();
 	xMax=xMax.getFullYear();
-
+    var HEIGHT=0;
+    if ($("#" + elemID).parent().parent().parent().height()-90>1000){
+        HEIGHT = 300
+    }else{
+        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90
+    }
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
-        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90,
+
         MARGINS = {
             top: 40,
             right: 40,
