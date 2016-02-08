@@ -118,6 +118,7 @@ function linegraph(elemID, data) {
     var c_data=data;//Copy of our data given in
     var type="normal";
     var clean_data=[];
+    $("#" + elemID).empty();// Clean previous graph in widget
     for (var i=0;i<data.length;i++) {
      clean_data[i] = [];
   }
@@ -125,16 +126,15 @@ function linegraph(elemID, data) {
 
     clean_data=cleanup_data(c_data,type,clean_data);// Sends a copy of our data to be filtered and converts dates to JS Date format
     if (clean_data[0].length == 0 ) { //It does not add the text !!
-    	vis = d3.select("#" + elemID)
-    		.attr('width', $("#" + elemID).parent().width())
-                	.attr('height', 270)
-    		.append('text')
-    			.attr('text','No information is available for these dates')
-    			.attr('x', 3)
-        			.attr('y', 15);
+    	vis = d3.select("#" + elemID).attr('width', $("#" + elemID).parent().width()).attr('height', 270)
+    	vis.append("text")
+           .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+           .attr('x',$("#" + elemID).width()/2)
+           .attr('y',$("#" + elemID).height()/2)
+           .text("No information available for these dates");
     	return;
 	}
-    $("#" + elemID).empty();// Clean previous graph in widget
+
 
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
