@@ -50,9 +50,15 @@ def readConvertAdd(fileName):
         dataset = []
         try:
             for k,v in dict.iteritems():
+                x = float(k[0:4])
+                if (x.is_integer()):
+                    x = int(x)     
+                y = float(v)
+                if (y.is_integer()):
+                    y = int(y)
                 dataset.append({
-                    'x':float(k[0:4]),
-                    'y':float(v)
+                                'x':x,
+                                'y':y
                 })
         except:
             print ''

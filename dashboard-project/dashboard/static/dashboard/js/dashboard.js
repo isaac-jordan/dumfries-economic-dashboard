@@ -254,7 +254,7 @@ app.controller('categoryController', function($scope, $timeout) {
         for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
             var widget = GLOBAL.currentCategoryWidgets[i];
             drawGraph("graph" + widget.pk, widget.dataset, widget.type);
-            add_Trend_Element("graph" + widget.pk);
+            //add_Trend_Element("graph" + widget.pk);
         }
     };
     
