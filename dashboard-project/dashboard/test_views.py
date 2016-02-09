@@ -66,10 +66,26 @@ class TestGraphsView(TestCase):
         vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
         
+    def test_graphs_view_loads(self):
+        response = self.client.get(reverse('graphs'))
+        self.assertTrue(response, "Graph view returned a falsy object.")
+        
     def test_ajax_getGraphs_view_loads(self):
         """Check AJAX getGraphs returns all graphs"""
         response = self.client.get(reverse('ajax_getGraphs'))
         jsonResponse = json.loads(response.content)
         self.assertTrue(len(jsonResponse['widgets']) > 0, "Widget list should be not empty.")
+        
+class TestSearchView(TestCase):
+    def setUp(self):
+        ds1 = Datasource.objects.create(name="test")
+        cat = Category.objects.create(name="CategoryTest")
+        vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
+        DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
+        
+    def test_search_returns_result(self):
+        response = self.client.get(reverse('search', kwargs={"searchTerm": "test" }))
+        self.assertTrue(len(response.context["results"]) == 1, "Search test returned incorrect number of results.")
+        self.assertTrue(response.context["results"][0]["name"] == "TestVis", "Search result has incorrec name")
         
         
