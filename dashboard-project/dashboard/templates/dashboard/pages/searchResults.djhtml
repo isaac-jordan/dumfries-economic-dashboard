@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body"><svg id="graph{{widget.pk}}" class="chart {{widget.type}}" width="200"></svg></div>
+                <div class="panel-body"><svg id="graph{{widget.pk}}" class="chart {{widget.type}}" width="200" height="200"></svg></div>
             </div>
             {% empty %}
             <p>No results to show!</p>
