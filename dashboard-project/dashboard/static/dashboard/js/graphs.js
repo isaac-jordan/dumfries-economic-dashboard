@@ -14,11 +14,11 @@ function drawGraph(elemID, data, type) {
 }
 
 function bargraph(elemID, data) {
-    HEIGHT=0;
+    var HEIGHT=0;
     if ($("#" + elemID).parent().parent().parent().height()-90>1000){
-        HEIGHT = 300
+        HEIGHT = 300;
     }else{
-        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90
+        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90;
     }
     data = data[0];
     $("#" + elemID).empty();
@@ -57,7 +57,8 @@ function bargraph(elemID, data) {
         });
 
 }
-function add_Trend_Element(vis,elemID){
+function add_Trend_Element(elemID){
+    var vis = d3.select("#" + elemID);
 	vis.append("text")
            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
            .attr("transform", "translate("+ ($("#" + elemID).width()-100) +","+(($("#" + elemID).height()-250))+")")  // centre below axis
@@ -71,62 +72,67 @@ function add_Trend_Element(vis,elemID){
 	        .attr('dy', 15)
 	        .text("Lowest was : 100");
 }
-function cleanup_data(data,type,clean_data){
+function cleanup_data(data, type, clean_data){
 	var dates=$('input[name="daterange"]').val();//get daterangepicker's value
-	var e_date = dates.slice(-4);
 	var end_date=new Date();
-	end_date.setYear(e_date);
-	var s_date =dates.substring(6,10);
 	var start_date=new Date();
-	start_date.setYear(s_date);
+	var i,d, c_date, input;
+	
+	if (dates) {
+	    var e_date = dates.slice(-4);
+	    end_date.setYear(e_date);
+	    
+	    var s_date =dates.substring(6,10);
+        start_date.setYear(s_date);
+	} else {
+	    start_date.setYear(1900);
+	    end_date.setYear(2100);
+	}
+	
 	if (type=="normal"){
-		for (i=0; i<data.length; i++) {
-		    	for (i=0; i<data.length; i++) {
-			    	for (var d=0;d<data[i].length; d++) {
-					var c_date=new Date();
-					c_date.setYear(data[i][d].x);
-			    		if(c_date<=end_date && c_date>=start_date) {
-						var input={};
-						input["x"]=c_date;
-						input["y"]=data[i][d].y;
-
-			    			clean_data[i].push(input);
-			    		}
-			    	}
-    			}
+    	for (i=0; i<data.length; i++) {
+	    	for (d=0;d<data[i].length; d++) {
+			c_date=new Date();
+			c_date.setYear(data[i][d].x);
+	    		if(c_date<=end_date && c_date>=start_date) {
+					input={};
+					input.x=c_date;
+					input.y=data[i][d].y;
+		    		clean_data[i].push(input);
+	    		}
 	    	}
-	}else{
+		}
+	} else {
 		for (i=0; i<data.length; i++) {
-		    	for (var d=0;d<data[i].length; d++) {
-				var c_date=new Date(data[i][d].x);
+		    	for (d=0;d<data[i].length; d++) {
+				    c_date=new Date(data[i][d].x);
 		    		if(c_date<=end_date && c_date>=start_date) {
-					var input={};
-					input["x"]=c_date;
-					input["y"]=data[i][d].y;
+    					input={};
+    					input.x=c_date;
+    					input.y=data[i][d].y;
 		    			clean_data[i].push(input);
 		    		}
 		    	}
     		}
 	}
+	
 	return clean_data;
 }
 
 function linegraph(elemID, data) {
-    var dates=$('input[name="daterange"]').val();//get daterangepicker's value
-    var end_date = dates.slice(-4);
-    var start_date =dates.substring(6,10);
+    var vis;
     var c_data=data;//Copy of our data given in
     var type="normal";
     var clean_data=[];
     $("#" + elemID).empty();// Clean previous graph in widget
     for (var i=0;i<data.length;i++) {
      clean_data[i] = [];
-  }
-    if (typeof(data[0][0].x)=="string") type="date_format"//Temporary solution for the different date formats
+    }
+    if (typeof(data[0][0].x)=="string") type="date_format"; //Temporary solution for the different date formats
 
     clean_data=cleanup_data(c_data,type,clean_data);// Sends a copy of our data to be filtered and converts dates to JS Date format
-    if (clean_data[0].length == 0 ) { //It does not add the text !!
-    	vis = d3.select("#" + elemID).attr('width', $("#" + elemID).parent().width()).attr('height', 270)
+    if (clean_data[0].length === 0 ) { //It does not add the text !!
+    	vis = d3.select("#" + elemID).attr('width', $("#" + elemID).parent().width()).attr('height', 270);
     	vis.append("text")
            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
            .attr('x',$("#" + elemID).width()/2)
@@ -134,7 +140,6 @@ function linegraph(elemID, data) {
            .text("No information available for these dates");
     	return;
 	}
-
 
     var xMin = clean_data[0][0].x, xMax = clean_data[0][0].x, yMin = clean_data[0][0].y, yMax = clean_data[0][0].y;
     var xMinCurr, xMaxCurr, yMinCurr, yMaxCurr;
@@ -159,9 +164,9 @@ function linegraph(elemID, data) {
 	xMax=xMax.getFullYear();
     var HEIGHT=0;
     if ($("#" + elemID).parent().parent().parent().height()-90>1000){
-        HEIGHT = 300
+        HEIGHT = 300;
     }else{
-        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90
+        HEIGHT = $("#" + elemID).parent().parent().parent().height()-90;
     }
      var WIDTH = $("#" + elemID).parent().width(),
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
@@ -180,7 +185,7 @@ function linegraph(elemID, data) {
         yAxis = d3.svg.axis()
             .scale(yScale)
             .orient("left");
-        vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
+    vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
     /**var maxw = 0;
     vis.append("svg:g")
         .attr("class", "y axis")
@@ -253,7 +258,6 @@ function linegraph(elemID, data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
-	if (elemID=='graph1') add_Trend_Element(vis,elemID);
 }
 
  

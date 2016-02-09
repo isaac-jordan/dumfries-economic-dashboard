@@ -28,15 +28,15 @@ def ajaxGetGraphs(request):
     return JsonResponse({"widgets": widgets})
 
 def ajaxSearch(request, searchTerm):
-    resultsAsVis = []
     if searchTerm is not None:
         # Search all datasource, categories, and visualisations.
         ds = Datasource.objects.filter(name__icontains=searchTerm);
-        resultsAsVis += Visualisation.objects.filter(Q(dataSource=ds) |
+        resultsAsVis = Visualisation.objects.filter(Q(dataSource=ds) |
                                                     Q(name__icontains=searchTerm) |
                                                     Q(category__name__icontains=searchTerm))
         
-        return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": [o.getWidget() for o in resultsAsVis] })
+        widgets = [o.getWidget() for o in resultsAsVis]
+        return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": widgets, "widgetsJSON": json.dumps(widgets) })
     return render(request, 'dashboard/pages/searchResults.djhtml')
 
 def trends(request, graphName):

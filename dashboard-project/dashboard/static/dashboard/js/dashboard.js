@@ -1,5 +1,5 @@
 /*jshint*/
-/*global angular, drawGraph, console, alert, prompt */
+/*global angular, drawGraph, console, alert, prompt, add_Trend_Element */
 'use strict';
 
 var app = angular.module('dashboard', ['ngRoute', 'gridster']);
@@ -12,6 +12,10 @@ var drawAllGraphs = function() {
     }
     $('[data-toggle="popover"]').popover({html: true});
 };
+
+var showPopover = function(event) {
+        $(event.target).closest('[data-toggle="popover"]').popover("toggle");
+    };
 
 app.run(function($rootScope, $templateCache) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
@@ -55,6 +59,7 @@ app.config(function($routeProvider) {
         templateUrl: function(params) {
             return 'pages/searchResult/' + params.searchTerm;
         },
+        controller: 'searchController'
     })
 
     .when('/register', {
@@ -223,9 +228,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
         $scope.widgets.splice(index, 1);
     };
     
-    $scope.showPopover = function(event) {
-        $(event.target).closest('[data-toggle="popover"]').popover("toggle");
-    };
+    $scope.showPopover = showPopover;
 
     if (!GLOBAL.widgets) {
         $.ajax({
@@ -245,42 +248,29 @@ app.controller('draggableGridController', function($scope, $timeout) {
     }
 
 });
-var drawCategoryGraphs = function() {
-	for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
-        var widget = GLOBAL.currentCategoryWidgets[i];
-        drawGraph("graph" + widget.pk, widget.dataset, widget.type);
-    }
 
-};
 app.controller('categoryController', function($scope, $timeout) {
-
-    //TODO - needs properly implemented
-    console.log("I'm in the category controller!");
+    var drawCategoryGraphs = function() {
+        for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
+            var widget = GLOBAL.currentCategoryWidgets[i];
+            drawGraph("graph" + widget.pk, widget.dataset, widget.type);
+            add_Trend_Element("graph" + widget.pk);
+        }
+    };
     
-    console.log(GLOBAL.currentCategoryWidgets);
     drawCategoryGraphs();
+});
 
-    // You don't want the same graphs that are on the dashboard (and you don't want to mess with them otherwise the dashboard will be messed up).
-    // You should load in, and draw the graphs either through an AJAX call, or using Django templating language.
-    /*$scope.widgets = GLOBAL.widgets;
-
-        if (!GLOBAL.widgets) {
-        $.ajax({
-            type:"GET",
-            url: '/getGraphs',
-            success: function(response){
-                GLOBAL.widgets = response.widgets;
-                $scope.widgets = GLOBAL.widgets;
-                $timeout(drawAllGraphs, 350); // TODO - fix this hacky solution to randomly wait 200ms before drawing graphs.
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
-    } else {
-        $timeout(drawAllGraphs, 200); // TODO - Also fix this hacky solution
-    }*/
-
+app.controller("searchController", function($scope) {
+    var drawSearchGraphs = function() {
+        for (var i=0; i<GLOBAL.currentSearchWidgets.length; i++) {
+            var widget = GLOBAL.currentSearchWidgets[i];
+            drawGraph("graph" + widget.pk, widget.dataset, widget.type);
+        }
+    };
+    $('[data-toggle="popover"]').popover({html: true});
+    $scope.showPopover = showPopover;
+    drawSearchGraphs();
 });
 
 

@@ -3,21 +3,20 @@
         <div class="row">
             <div class="col-sm-12">
             <h2>Search Results For '{{ searchTerm }}'</h2>
-            {% for result in results %}
+            {% for widget in results %}
             <div class="panel panel-default" >
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-sm-8"><h5>{{ result.name }}</h5></div>
+                        <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
                         <div class="col-sm-4">
                             <div class="pull-right">
                                 <a title="settings"><span class="glyphicon glyphicon-cog"></a>
-                                <a title="information"dropdown-menu="ddMenuOptions3" dropdown-model="ddMenuSelected3" dropdown-disabled="dropdownsDisabled"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                <a title="Information" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="Source: <a href='{{ widget.sourceLink }}' target='_blank'>{{ widget.sourceName }}</a>" ng-click="showPopover($event)"><i class="glyphicon glyphicon-info-sign"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                    <!-- TODO: need to modify and implement controller to load graphs -->
-                <div class="panel-body"><svg id="graph{{result.pk}}" class="chart {{result.type}}" width="200" height="50"></svg></div>
+                <div class="panel-body"><svg id="graph{{widget.pk}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
             </div>
             {% empty %}
             <p>No results to show!</p>
@@ -26,3 +25,7 @@
         </div>
     </div>
 </div>
+
+<script>
+GLOBAL.currentSearchWidgets = {{ widgetsJSON | safe }};
+</script>
