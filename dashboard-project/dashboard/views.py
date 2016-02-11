@@ -40,7 +40,12 @@ def ajaxSearch(request, searchTerm):
     return render(request, 'dashboard/pages/searchResults.djhtml')
 
 def trends(request, graphName):
-    graphName = 'Wages'
+    # TODO: greatest increase/decrease trend as well as recent trend
+
+    # biggest trend = max(highest index - its predecessor)/predecessor)
+    # biggest decrease = abs(max(other way round)
+    #recent = latest year etc etc
+    graphName = 'Wages' # gue
     graph = Visualisation.objects.filter(name=graphName)
     datasets = DashboardDataset.objects.filter(visualisation=graph)
     lineNum = 1
@@ -77,11 +82,6 @@ def trends(request, graphName):
         valuesList.append(lines)
     return render(request,'dashboard/pages/category.djhtml', {graphName: valuesList})
 
-
-    # in form 	[{"y": y value, "x": x value}]
-    #for line in dataset:
-        #for value in line:
-
 def categoryList(request):
     categories = Category.objects.all()
     print categories
@@ -113,6 +113,9 @@ def category(request, categoryName):
         error = None
         category = category[0]
     return render(request, "dashboard/pages/category.djhtml", {"category": category, "widgets": widgets, "widgetsJSON": json.dumps(widgets), "error": error})
+
+def addGraphs(request):
+    graphs = Visualisation.objects.filter()
 
 @login_required
 def savedConfigs(request):
