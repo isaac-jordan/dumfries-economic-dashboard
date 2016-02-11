@@ -126,8 +126,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    'dashboard',
     'dataset_importer',
+    'dashboard',
     'csv_processor',
     'api_processor',
     'api_processor.linked_data_processor'
