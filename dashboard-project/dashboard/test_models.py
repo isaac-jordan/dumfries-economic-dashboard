@@ -14,7 +14,7 @@ class TestDashboardModels(TestCase):
 
 class TestVisualisation(TestCase):
     def setUp(self):
-        dataset={
+        dataset=[{
                 "y": 152,
                 "x": 2000
             }, {
@@ -32,13 +32,14 @@ class TestVisualisation(TestCase):
             }, {
                 "y": 176,
                 "x": 2010
-            }
-        cat =Category.objects.get_or_create(name="test_category")
-        ds =DashboardDatasource.objects.get_or_create(name="test_datasource")
-        vis = Visualisation.objects.get_or_create(dataSource=ds,name="testVis",category=cat,type="line",xLabel="Year",sizeY=2,sizeX=2)
-        data = DashboardDataset.object.get_or_create(name='testDataSet',dataJSON=json.dumps(dataset),visualisation=vis)
+            }]
+        JSONdataset2=json.dumps(dataset)
+        cat =Category.objects.get_or_create(name="test_category")[0]
+        ds =DashboardDatasource.objects.get_or_create(name="test_datasource")[0]
+        vis = Visualisation.objects.get_or_create(dataSource=ds,name="testVis",category=cat,type="line",xLabel="Year",sizeY=2,sizeX=2)[0]
+        data = DashboardDataset.objects.get_or_create(name='testDataSet',dataJSON=JSONdataset2,visualisation=vis)[0]
     def testGetWidget(self):
-        dataset={
+        dataset=[{
                 "y": 152,
                 "x": 2000
             }, {
@@ -56,16 +57,17 @@ class TestVisualisation(TestCase):
             }, {
                 "y": 176,
                 "x": 2010
-            }
+            }]
+        JSONdataset=json.dumps(dataset)
         testWidget={
             'name': "testVis",
                            'id': "vis1",
                            'pk': 1,
                            'category': "test_category",
                            'type': "line",
-                           'dataset': dataset,
+                           'dataset': [json.loads(JSONdataset)],
                            'sourceName': "test_datasource",
-                           'sourceLink': None,
+                           'sourceLink': '',
                            'sizeX': 2,
                            'sizeY': 2
         }
@@ -76,14 +78,13 @@ class TestVisualisation(TestCase):
             if(type(testWidget[k]) is dict):
                 for k1 in testWidget[k]:
                     if(k1!=testVisDict[k][k1]):
-                        print "The widgets are not the same"
+                        print "The widgets are not the same1"
                         argument = False
-                        break
             else:
                 if(testWidget[k] != testVisDict[k]):
-                    print "the widgets are not the same"
+                    print testWidget[k],testVisDict[k]
+                    print "the widgets are not the same2"
                     argument = False
-                    break
-        self.assertTrue(argument,"the two widgets are not the same")
+        self.assertTrue(argument,"the two widgets are not the same3")
 
 
