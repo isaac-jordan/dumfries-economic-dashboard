@@ -32,7 +32,13 @@ class CsvFile(Importer):
         
         Returns data in the form of a list containing multiple datasets.
         Each dataset is a list of dictionaries with x, y values.
-        """    
+        """
+        
+        def num(s):
+            try:
+                return int(s)
+            except ValueError:
+                return float(s)
         
         data = []
         xAxisData = []
@@ -54,11 +60,25 @@ class CsvFile(Importer):
                     else:
                         index = 0
                         for row in reader:
-                            if row[dimension.indexForLabel - 1] == dimension.label:
+                            if row[dimension.indexForLabel - 1].lower() == dimension.label.lower():
                                 localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
                                 break;
                             else:
                                 index += 1
+                        
+                        if localData == []:
+                            # Couldn't find exact match, lets check substrings.
+                            csvfile.seek(0)
+                            index = 0
+                            for row in reader:
+                                if row[dimension.indexForLabel - 1].lower() in dimension.label.lower() or dimension.label.lower() in row[dimension.indexForLabel - 1].lower():
+                                    if row[dimension.indexForLabel - 1].lower() is None or row[dimension.indexForLabel - 1].lower() == "":
+                                        continue
+                                    
+                                    localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
+                                    break;
+                                else:
+                                    index += 1
                 else:
                     raise NotImplementedError("No support for Dimension.type of column yet.")
                 
@@ -66,18 +86,18 @@ class CsvFile(Importer):
                 #print localData
                 
                 # Format data!
+                locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
                 if dimension.dataType == "date":
                     # Use dimension.format as a strptime to retrieve DateTime object
                     #print "FORMAT: " + dimension.dataFormat
-                    localData = [datetime.strptime(d, dimension.dataFormat) for d in localData]
+                    localData = [datetime.strptime(d.encode('utf-8'), dimension.dataFormat) for d in localData]
                 elif dimension.dataType == "currency":
                     # Use dimension.format to remove currency markers ($)
                     # and cast to float.
-                    locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
                     localData = [locale.atoi(d.replace(dimension.dataFormat, "")) for d in localData]
-                elif dimension.DataType == "numeric":
+                elif dimension.dataType == "numeric":
                     # Cast data to int or float
-                    pass
+                    localData = [num(d) for d in localData]
                 #...
                 else:
                     pass
@@ -87,7 +107,6 @@ class CsvFile(Importer):
                     xAxisData = localData[:]
                 else:
                     data.append(localData)
-        
         new = []
         #print data
         # [ [ {"y": 48600.0, "x": 2008.0},  {"y": 48600.0, "x": 2008.0}], [] ]

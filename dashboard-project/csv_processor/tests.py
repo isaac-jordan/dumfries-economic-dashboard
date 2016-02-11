@@ -45,6 +45,33 @@ class CSVImportTest(TestCase):
                                         makeXaxisOnGraph = True,
                                         csvFile = csvFile)
         
+        filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "council-stock-testing.csv"))
+        f = File(open(filepath))
+        csvFile = CsvFile.objects.get_or_create(visualisationName="council-stock-testing",
+                                      category = category,
+                                      dataSource = dataSource,
+                                      upload = f,
+                                      source = "http://test2.example.com"
+                                      )[0]
+        Dimension.objects.get_or_create(label="Dumfries",
+                                        indexForLabel = 2,
+                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 8,
+                                        dataType = Dimension.DATA_CHOICES[2][0],
+                                        dataFormat = "",
+                                        makeXaxisOnGraph = False,
+                                        csvFile = csvFile)
+        Dimension.objects.get_or_create(label="Year",
+                                        index = 8,
+                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 8,
+                                        dataType = Dimension.DATA_CHOICES[0][0],
+                                        dataFormat = "%Y",
+                                        makeXaxisOnGraph = True,
+                                        csvFile = csvFile)
+        
     def test_csv_import_data_not_none(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         data = csvFile.importData()
@@ -81,4 +108,9 @@ class CSVImportTest(TestCase):
         vis = Visualisation.objects.get(name=csvFile.visualisationName)
         datasets = DashboardDataset.objects.filter(visualisation=vis)
         self.assertTrue(len(datasets) == 1, "CsvFile.createDashboardInfo created incorrect number of datasets for 2 Dimensions")
+        self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
+        
+    def test_csv_import_numeric(self):
+        csvFile = CsvFile.objects.get(visualisationName="council-stock-testing")
+        csvFile.createDashboardInfo()
         self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
