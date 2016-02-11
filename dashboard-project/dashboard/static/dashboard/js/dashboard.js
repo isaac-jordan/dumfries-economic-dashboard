@@ -68,7 +68,7 @@ app.config(function($routeProvider) {
 });
 
 // create the controller and inject Angular's $scope
-app.controller('mainController', function($scope, $location) {
+app.controller('mainController', function($scope, $location, $timeout) {
     $scope.widgets = GLOBAL.widgets;
     $scope.message = 'Welcome to the Dumfries Dashboard!';
 
@@ -112,11 +112,7 @@ app.controller('mainController', function($scope, $location) {
             }
         });
     };
-    $scope.addWidget = function() {
-        if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
-        console.log($scope.widgets);
-        $scope.widgets.splice(0, $scope.widgets.length);
-		};
+    
     $scope.clear = function() {
         if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
         console.log($scope.widgets);
@@ -137,6 +133,30 @@ app.controller('mainController', function($scope, $location) {
         $scope.$apply();
         console.log($location);
         return false;
+    });
+    
+    $(".addGraph").on("click", function(e) {
+        console.log(e);
+        console.log(this);
+        var $this = $(this);
+        var id = $this.attr("data-pk");
+        
+        $.ajax({
+            type: "GET",
+            url: "/getGraph",
+            data: {
+                id: id
+            },
+            success: function(widget) {
+                console.log(widget);
+                GLOBAL.widgets.push(widget);
+                $scope.$apply();
+                $timeout(drawAllGraphs, 500);
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     });
 
 });
@@ -238,6 +258,22 @@ app.controller('draggableGridController', function($scope, $timeout) {
                 GLOBAL.widgets = response.widgets;
                 $scope.widgets = GLOBAL.widgets;
                 $timeout(drawAllGraphs, 350); // TODO - fix this hacky solution to randomly wait 200ms before drawing graphs. 
+                $scope.$watch("widgets", function(newValue, oldValue) {
+                    $(".addGraph").each(function(index, element) {
+                        var found = false;
+                        for(var i=0; i < newValue.length; i++) {
+                            if (parseInt($(element).attr("data-pk"), 10) === newValue[i].pk) {
+                                $(element).parent().addClass("disabled");
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            $(element).parent().removeClass("disabled");
+                        }
+                    });
+                    
+                }, true);
             },
             error: function(err) {
                 console.log(err);

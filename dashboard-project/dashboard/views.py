@@ -18,14 +18,22 @@ def home(request):
     return render(request, "dashboard/index.djhtml")
 
 def graphs(request):
-    return render(request, 'dashboard/pages/graphs.djhtml')
+    o = []
+    cats = Category.objects.all()
+    for cat in cats:
+        visNames = Visualisation.objects.filter(category=cat).values_list("pk", "name").order_by("name")
+        o.append({"categoryName":cat.name, "visualisations":visNames })
+    return render(request, 'dashboard/pages/graphs.djhtml', { "catList":o })
 
 def ajaxGetGraphs(request):
-    ds = Datasource.objects.all()
-    visualisations = Visualisation.objects.filter(dataSource=ds)
-    datasets = DashboardDataset.objects.filter(visualisation=visualisations).select_related("visualisation")
+    visualisations = Visualisation.objects.all()
     widgets = [o.getWidget() for o in visualisations]
     return JsonResponse({"widgets": widgets})
+
+def ajaxGetGraph(request):
+    id = request.GET["id"]
+    widget = Visualisation.objects.get(pk=id).getWidget()
+    return JsonResponse(widget)
 
 def ajaxSearch(request, searchTerm):
     if searchTerm is not None:
@@ -101,10 +109,7 @@ def category(request, categoryName):
         widget["pk"] = v.pk
         widget["type"] = v.type
         widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)]
-        #trendData = trend_json([json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)])
-        trendData = v.calculateTrendData()
-        widget["maxY"] = trendData["maxY"]
-        widget["minY"] = trendData["minY"]
+        widget["trends"] = v.calculateTrendData()
         widgets.append(widget)
     
     if category.count() < 1:

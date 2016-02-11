@@ -1,17 +1,33 @@
-{% verbatim %}
-<div class="padding"">
+
+<div class="padding" ng-controller="draggableGridController">
     <div class="full col-sm-9">
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <div class="panel panel-default">
+                {% verbatim %}
                     <div class="panel-body">{{ message }}</div>
+                {% endverbatim %}
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div>
-                    <a class="btn btn-default" href="" ng-click="saveConfig()"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
-                    <a class="btn btn-default" href="" ng-click="clear()"><span class="glyphicon glyphicon-trash"></span> Clear</a>
-                    <a class="btn btn-default" href="" ng-click="addWidget()"><span class="glyphicon glyphicon-add"></span> Add</a>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-default" href="" ng-click="saveConfig()"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+                        <button class="btn btn-default" href="" ng-click="clear()"><span class="glyphicon glyphicon-trash"></span> Clear</a>
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Add Graph
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                          {% for cat in catList %}
+                            <li class="dropdown-header">{{ cat.categoryName }}</li>
+                            {% for vis in cat.visualisations %}
+                            <li><a href="" data-pk="{{ vis.0 }}" class="addGraph">{{ vis.1 }}</a></li>
+                            {% endfor %}
+                            <li role="separator" class="divider"></li>
+                          {% endfor %}
+                          </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,34 +37,16 @@
 		<input class="daterange" id="daterange" type="text" name="daterange" />
 	</div>
 	</br>
-	   <div ng-controller="draggableGridController">
+	   <div>
         <div gridster="gridsterOptions">
-            <ul>
-
-                <li gridster-item="widget" ng-repeat="widget in widgets">
-                    <div class="panel panel-default" >
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
-                                <div class="col-sm-4">
-                                    <div class="pull-right">
-                                        <a title="settings"><span class="glyphicon glyphicon-cog"></a>
-                                        <a title="Information" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="Source: <a href='{{ widget.sourceLink }}' target='_blank'>{{ widget.sourceName }}</a>" ng-click="showPopover($event)"><i class="glyphicon glyphicon-info-sign"></i></a>
-                                        <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body"><svg id="{{widget.id}}" class="chart {{widget.type}}" width="200" height="50"></svg></div>
-                    </div>
-                </li>
+            <ul id="graphUL">
+                {% include "dashboard/partials/graphWidget.djhtml" %}
             </ul>
         </div>
         </div>
     </div>
 </div>
 
-{% endverbatim %}
 
 <script type="text/javascript">
     $('#daterange').daterangepicker();
