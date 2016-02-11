@@ -139,6 +139,9 @@ app.controller('mainController', function($scope, $location, $timeout) {
         console.log(e);
         console.log(this);
         var $this = $(this);
+        
+        if ($this.parent().hasClass("disabled")) return;
+        
         var id = $this.attr("data-pk");
         
         $.ajax({
