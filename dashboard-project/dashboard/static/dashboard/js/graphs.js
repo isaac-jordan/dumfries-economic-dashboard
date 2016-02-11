@@ -44,7 +44,14 @@ function bargraph(elemID, data) {
         .attr("width", function(d) {
             return x(d.y);
         })
-        .attr("height", barHeight - 1);
+        .attr("height", barHeight - 1)
+        .on("mouseover", function() {                   //on mouseover the bar is highlighted with light blue
+            d3.select(this).classed("highlight", true);
+        })
+        .on("mouseout", function() {
+            d3.select(this).classed("highlight", false);
+        });
+
 
     bar.append("text")
         .attr("x", function (d) {

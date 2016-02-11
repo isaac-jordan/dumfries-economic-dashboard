@@ -191,6 +191,10 @@ background-color:transparent;
 .chart.bar rect {
   fill: #00254d;
 }
+.chart.bar rect.highlight {
+    fill: #19b5de;
+}
+
 
 .chart.bar text {
   fill: white;
@@ -225,6 +229,10 @@ background-color:transparent;
             font-family: Calibri;
             font-size: 0.6em;
         }
+
+
+
+
 /*
 . dot {
     stroke: #000;
