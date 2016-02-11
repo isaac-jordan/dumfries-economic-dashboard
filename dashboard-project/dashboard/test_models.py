@@ -88,7 +88,28 @@ class TestVisualisation(TestCase):
     def setUp(self):
         setUpEntries()
         
-    def testGetWidget(self):
+    def test_getWidget_returns_correct(self):
+        def deep_sort(obj):
+            """
+            Recursively sort list or dict nested lists
+            """
+        
+            if isinstance(obj, dict):
+                _sorted = {}
+                for key in sorted(obj):
+                    _sorted[key] = deep_sort(obj[key])
+        
+            elif isinstance(obj, list):
+                new_list = []
+                for val in obj:
+                    new_list.append(deep_sort(val))
+                _sorted = sorted(new_list)
+        
+            else:
+                _sorted = obj
+        
+            return _sorted
+    
         dataset=[{
                 "y": 152,
                 "x": 2000
@@ -123,19 +144,11 @@ class TestVisualisation(TestCase):
         }
         testVis= Visualisation.objects.get(name="testVis")
         testVisDict=testVis.getWidget()
-        argument = True
-        for k in testWidget:
-            if(type(testWidget[k]) is dict):
-                for k1 in testWidget[k]:
-                    if(k1!=testVisDict[k][k1]):
-                        print "The widgets are not the same1"
-                        argument = False
-            else:
-                if(testWidget[k] != testVisDict[k]):
-                    print testWidget[k],testVisDict[k]
-                    print "the widgets are not the same2"
-                    argument = False
-        self.assertTrue(argument,"the two widgets are not the same3")
+
+        testVisDict = deep_sort(testVisDict)
+        testWidget = deep_sort(testWidget)
+    
+        self.assertDictEqual(testWidget, testVisDict, "getWidget() did not return the correct widget.")
         
     def test_visualisation_str(self):
         vis = Visualisation.objects.get(name="testVis")
