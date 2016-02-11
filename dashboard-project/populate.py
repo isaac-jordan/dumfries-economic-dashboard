@@ -5,6 +5,10 @@ from csv_processor.fileConverter import findFilePath
 import django
 from django.contrib.auth.models import User
 from django.core.files import File
+from django.core.files import File
+from csv_processor.models import CsvFile, Dimension
+from dashboard.models import Category, Datasource, Visualisation, DashboardDataset
+import os, json
 django.setup()
 
 from dashboard.models import DashboardDataset, DashboardDatasource, Visualisation, Category
@@ -17,6 +21,7 @@ def populate():
     employmentCategory = add_category("Employment")
     housingCategory = add_category("Housing")
     economyCategory = add_category("Economy")
+    healthCategory = add_category("Health")
 
     crimeVis = add_visualisation(datasource, 'Crime', crimeCategory, "bar", "Location", "Num of Crimes")
     add_dataset(crimeVis, dataset = [{
@@ -184,6 +189,15 @@ def populate():
     add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
     csvFile.createDashboardInfo()
 
+    #
+    # realDataSource = add_datasource("Real Data Test", "http://statistics.gov.scot");
+    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock.csv" ))
+    # f = File(open(filepath))
+    # csvFile = add_csvFile("Council Stock", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/council-stock")
+    # add_dimension("Dumfries and Galloway", "row", 3, 17, "currency", "", False, csvFile, indexForLabel=2)
+    # add_dimension("Year", "row", 3, 17, "date", "%Y", True, csvFile, index=8)
+    # csvFile.createDashboardInfo()
+
     # Add some test users
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
@@ -253,16 +267,22 @@ def add_dimension(label, type, dataStartIndex, dataEndIndex, dataType, dataForma
     return d
 
 def importRealData(fileNames):
-    for name in fileNames:
-        #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
-        res = findFilePath(name)
-        category = add_category("Employment")
-        source = add_datasource("Real Data Test", "http://example.com")
-        vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
-        for line in res["data"]:
-            add_dataset(vis, line)
+     for name in fileNames:
+         #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
+         res = findFilePath(name)
+         category = add_category("Employment")
+         source = add_datasource("Real Data Test", "http://example.com")
+         vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
+         for line in res["data"]:
+             print "i am here"
+             add_dataset(vis, line)
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock.csv','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
+    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()
+
+#files updated : hospital-adminssions , council stock , employment, energy consumption, full time employment
+
+
+
