@@ -118,7 +118,18 @@ function cleanup_data(data, type, clean_data){
 	
 	return clean_data;
 }
+function add_legend(elemID,vis,data,colours){
 
+    for (i=0;data[i]!=null ;i++) {
+        vis.append("rect")
+            .attr("width",30)
+            .attr("height",10)
+            .attr("x",50)
+            .attr("y",10)
+            .attr("dy","0.35em")
+            .attr('fill',colours[i]);
+    }
+}
 function linegraph(elemID, data) {
     var vis;
     var c_data=data;//Copy of our data given in
@@ -258,6 +269,7 @@ function linegraph(elemID, data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
+    //add_legend(elemID,vis,clean_data,colours)
 }
 
  

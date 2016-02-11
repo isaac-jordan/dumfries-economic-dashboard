@@ -249,6 +249,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
 
 });
 
+
 app.controller('categoryController', function($scope, $timeout) {
     var drawCategoryGraphs = function() {
         for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
@@ -257,7 +258,9 @@ app.controller('categoryController', function($scope, $timeout) {
             //add_Trend_Element("graph" + widget.pk);
         }
     };
-    
+	$('.daterange').on('apply.daterangepicker', function(ev, picker) {
+	  drawCategoryGraphs();
+	});
     drawCategoryGraphs();
 });
 
