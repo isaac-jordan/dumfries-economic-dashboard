@@ -88,11 +88,6 @@ def categoryList(request):
     return render(request, "dashboard/pages/categoryList.djhtml", {"categories": categories})
 
 def category(request, categoryName):
-    def trend_json(datasets):
-        maxYItem = max(max(d, key=lambda i:i['y']) for d in datasets)
-        minYItem = min(min(d, key=lambda i:i['y']) for d in datasets)
-        return {"maxY": maxYItem, "minY": minYItem }
-
     category = Category.objects.filter(name__iexact=categoryName)
     categoryVis = Visualisation.objects.filter(category=category)
     
@@ -106,7 +101,8 @@ def category(request, categoryName):
         widget["pk"] = v.pk
         widget["type"] = v.type
         widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)]
-        trendData = trend_json([json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)])
+        #trendData = trend_json([json.loads(d.dataJSON) for d in datasets.filter(visualisation=v)])
+        trendData = v.calculateTrendData()
         widget["maxY"] = trendData["maxY"]
         widget["minY"] = trendData["minY"]
         widgets.append(widget)
