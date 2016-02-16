@@ -270,16 +270,18 @@ def importRealData(fileNames):
      for name in fileNames:
          #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
          res = findFilePath(name)
+         print res
+         if res is None:
+             continue
          category = add_category("Employment")
          source = add_datasource("Real Data Test", "http://example.com")
          vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
          for line in res["data"]:
-             print "i am here"
              add_dataset(vis, line)
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
+    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock.csv','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()
 
 #files updated : hospital-adminssions , council stock , employment, energy consumption, full time employment
