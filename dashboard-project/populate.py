@@ -13,7 +13,8 @@ django.setup()
 
 from dashboard.models import DashboardDataset, DashboardDatasource, Visualisation, Category
 from csv_processor.models import CsvFile, Dimension
-import json
+from dataset_importer import util
+import json, datetime
 
 def populate():
     datasource = add_datasource("Fake Data Test", "http://example.com")
@@ -78,62 +79,68 @@ def populate():
     gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds)', economyCategory, "line", "Year", "GDP Per Head", sizeY=2)
     add_dataset(gdpPCVis, dataset = [{
                 "y": 152,
-                "x": 2000
+                "x": datetime.datetime(2000,1,1)
             }, {
                 "y": 189,
-                "x": 2002
+                "x": datetime.datetime(2002,1,1)
             }, {
                 "y": 179,
-                "x": 2004
+                "x": datetime.datetime(2004,1,1)
             }, {
                 "y": 199,
-                "x": 2006
+                "x": datetime.datetime(2006,1,1)
             }, {
                 "y": 134,
-                "x": 2008
+                "x": datetime.datetime(2008,1,1)
             }, {
                 "y": 176,
-                "x": 2010
+                "x": datetime.datetime(2010,1,1)
+            },{
+                "y": 180,
+                "x": datetime.datetime(2012,1,1)
             }])
     add_dataset(gdpPCVis, dataset = [{
                 "y": 16,
-                "x": 2000
+                "x": datetime.datetime(2000,1,1)
             }, {
                 "y": 200,
-                "x": 2002
+                "x": datetime.datetime(2002,1,1)
             }, {
                 "y": 150,
-                "x": 2004
+                "x": datetime.datetime(2004,1,1)
             }, {
                 "y": 230,
-                "x": 2006
+                "x": datetime.datetime(2006,1,1)
             }, {
                 "y": 120,
-                "x": 2008
+                "x": datetime.datetime(2008,1,1)
             }, {
                 "y": 110,
-                "x": 2010
+                "x": datetime.datetime(2010,1,1)
+            },{
+                "y": 150,
+                "x": datetime.datetime(2012,1,1)
             }])
 
     employmentRateVis = add_visualisation(datasource, 'Employment Rate', employmentCategory, "line", "Year", "Percentage Employed", sizeY=2)
     add_dataset(employmentRateVis, [{
                 "y": 20,
-                "x": 2000
+                "x": datetime.datetime(2000,1,1)
             }, {
                 "y": 30,
-                "x": 2002
+                "x": datetime.datetime(2002,1,1)
             }, {
                 "y": 50,
-                "x": 2004
+                "x": datetime.datetime(2004,1,1)
             }, {
                 "y": 70,
-                "x": 2006
+                "x": datetime.datetime(2006,1,1)
             }, {
                 "y": 80,
-                "x": 2008
+                "x": datetime.datetime(2008,1,1)
             }, {
                 "y": 25,
-                "x": 2010
+                "x": datetime.datetime(2010,1,1)
             }])
 
     claimantCountVis = add_visualisation(datasource, 'Claimant Count Numbers', economyCategory, "bar", "Location", "Num of Claimants")
@@ -160,22 +167,22 @@ def populate():
     housePriceVis = add_visualisation(datasource, 'House Price', housingCategory, "line", "Year", "House Prices (1000)", sizeY=2)
     add_dataset(housePriceVis, [{
                 "y": 152,
-                "x": 2000
+                "x": datetime.datetime(2000,1,1)
             }, {
                 "y": 189,
-                "x": 2002
+                "x": datetime.datetime(2002,1,1)
             }, {
                 "y": 179,
-                "x": 2004
+                "x": datetime.datetime(2004,1,1)
             }, {
                 "y": 199,
-                "x": 2006
+                "x": datetime.datetime(2006,1,1)
             }, {
                 "y": 134,
-                "x": 2008
+                "x": datetime.datetime(2008,1,1)
             }, {
                 "y": 176,
-                "x": 2010
+                "x": datetime.datetime(2010,1,1)
             }])
     
     #Add CSV file data
@@ -199,23 +206,38 @@ def populate():
     add_dimension("Year", "row", 3, 8, "date", "%Y", True, csvFile, index=8)
     csvFile.createDashboardInfo()
 
-    # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
-    # f = File(open(filepath))
-    # csvFile = add_csvFile("Full time Employment", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
-    # add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
-    # #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
-    # add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
-    # csvFile.createDashboardInfo()
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Full time Employment", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
+    csvFile.createDashboardInfo()
 
     realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
     filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "energy-consumption.csv" ))
     f = File(open(filepath))
     csvFile = add_csvFile("Energy Consumption", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/energy-consumption")
-    add_dimension("Dumfries and Galloway", "row", 3, 11, "numeric", "", False, csvFile, index=28)
-    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
+    add_dimension("Dumfries and Galloway", "row", 3, 11, "numeric", "", False, csvFile, indexForLabel=2)
     add_dimension("Year", "row", 3, 11, "date", "%Y", True, csvFile, index=9)
     csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "hospital-admissions.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Hospital Admissions", healthCategory, realDataSource, f, "http://statistics.gov.scot/data/hospital-admissions")
+    add_dimension("Dumfries and Galloway", "row", 3, 13, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 13, "date", "%Y", True, csvFile, index=10)
+    csvFile.createDashboardInfo()
+
+    # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "employment.csv" ))
+    # f = File(open(filepath))
+    # csvFile = add_csvFile("Employment General", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/employment")
+    # add_dimension("Dumfries and Galloway", "row", 3, 31, "numeric", "", False, csvFile, indexForLabel=2)
+    # add_dimension("Year", "row", 3, 31, "date", "%Y", True, csvFile, index=9)
+    # csvFile.createDashboardInfo()
 
 
     # Add some test users
@@ -244,7 +266,7 @@ def add_datasource(name, link):
 
 def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
     if JSONdataset == "":
-        JSONdataset = json.dumps(dataset);
+        JSONdataset = json.dumps(dataset, cls=util.DatetimeEncoder);
     d = DashboardDataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)[0]
     return d
 
@@ -286,25 +308,11 @@ def add_dimension(label, type, dataStartIndex, dataEndIndex, dataType, dataForma
                                         index=index)[0]
     return d
 
-def importRealData(fileNames):
-     for name in fileNames:
-         #findFilePath(name) = {"categoryName":"Employment", "visName": usedName, "visType": "line", "visX": "Year", "visY": fileName, "sizeY": 2, "data": data}
-         res = findFilePath(name)
-         print res
-         if res is None:
-             continue
-         category = add_category("Employment")
-         source = add_datasource("Real Data Test", "http://example.com")
-         vis = add_visualisation(source, res["visName"], category, res["visType"], res["visX"], name, sizeY=res["sizeY"])
-         for line in res["data"]:
-             add_dataset(vis, line)
+
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()
-
-#files updated : hospital-adminssions , council stock , employment, energy consumption, full time employment
 
 
 

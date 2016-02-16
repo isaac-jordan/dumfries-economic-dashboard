@@ -102,7 +102,7 @@ class CsvFile(Importer):
                 localData = [locale.atoi(d.replace(dimension.dataFormat, "")) for d in localData]
             elif dimension.dataType == "numeric":
                 # Cast data to int or float
-                localData = [num(d) for d in localData]
+                localData = [num(d.replace(",", "")) for d in localData]
             #...
             else:
                 pass
