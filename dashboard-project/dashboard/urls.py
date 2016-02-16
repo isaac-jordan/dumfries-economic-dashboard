@@ -4,7 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
     url(r'^$', 'dashboard.views.home', name='home'),
     url(r'^pages/home', 'dashboard.views.graphs', name='graphs'),
     url(r'^pages/category/(?P<categoryName>.*)', 'dashboard.views.category', name='category'),
@@ -24,6 +23,4 @@ urlpatterns = patterns('',
     url(r'^account/register', 'dashboard.views.ajax_register', name='ajax_register'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-
-    url(r'test_trends', 'dashboard.views.trends'),
 )

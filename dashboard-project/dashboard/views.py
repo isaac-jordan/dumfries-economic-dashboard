@@ -47,49 +47,6 @@ def ajaxSearch(request, searchTerm):
         return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": widgets, "widgetsJSON": json.dumps(widgets) })
     return render(request, 'dashboard/pages/searchResults.djhtml')
 
-def trends(request, graphName):
-    # TODO: greatest increase/decrease trend as well as recent trend
-
-    # biggest trend = max(highest index - its predecessor)/predecessor)
-    # biggest decrease = abs(max(other way round)
-    #recent = latest year etc etc
-    graphName = 'Wages' # gue
-    graph = Visualisation.objects.filter(name=graphName)
-    datasets = DashboardDataset.objects.filter(visualisation=graph)
-    lineNum = 1
-
-    valuesList = []
-    for dsObj in datasets:
-        values={}
-        lines={}
-        dataset = json.loads(dsObj.dataJSON)
-        maxXPair = dataset[0].copy()
-        maxYPair = dataset[0].copy()
-        lowestYpair=dataset[0].copy()
-        print dataset
-        for point in dataset:
-            if point["x"] is str:
-                dt = json.loads(point["x"], cls=util.DatetimeEncoder)
-                if dt > maxXPair['x']:
-                    maxXPair=point.copy()
-            else:
-                year = point["x"]
-                if point["x"] > maxXPair["x"]:
-                    maxXPair = point.copy()
-
-            if point["y"] > maxYPair["y"]:
-                maxYPair = point.copy()
-            if point["y"] < lowestYpair["y"]:
-                lowestYpair = point.copy()
-        print maxXPair
-        values["maxX"] = maxXPair.copy()
-        values["maxY"] = maxYPair.copy()
-        values["lowestY"] = lowestYpair.copy()
-        lines["line "+str(lineNum)] = values
-        lineNum+=1
-        valuesList.append(lines)
-    return render(request,'dashboard/pages/category.djhtml', {graphName: valuesList})
-
 def categoryList(request):
     categories = Category.objects.all()
     print categories
@@ -102,7 +59,7 @@ def category(request, categoryName):
     widgets = [];
     datasets = DashboardDataset.objects
     for v in categoryVis:
-        widget = {}
+        widget = v.getWidget()
         widget["sizeX"] = v.sizeX
         widget["sizeY"] = v.sizeY
         widget["name"] = v.name
@@ -151,8 +108,8 @@ def ajaxloadSavedConfig(request):
     widgets = [];
     datasets = DashboardDataset.objects
     for graph in savedGraphs:
-        widget = {}
         vis = graph.visualisation
+        widget = vis.getWidget()
         widget["row"] = graph.yPosition
         widget["col"] = graph.xPosition
         widget["sizeX"] = graph.sizeX
