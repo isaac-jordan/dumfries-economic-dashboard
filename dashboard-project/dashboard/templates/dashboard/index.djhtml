@@ -41,14 +41,6 @@
                     </li>
                 </ul>
               
-                <!-- tiny only nav-->
-              <!--<ul class="nav visible-xs" id="xs-menu">
-                    <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                    <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
-                    <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-                </ul>-->
-              
             </div>
             <!-- /sidebar -->
           
@@ -65,9 +57,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                       </button>
-		    
                     </div>
-			
+
                     <nav class="collapse navbar-collapse" role="navigation">
                         <form class="navbar-form navbar-left" id="searchForm" action="/search">
                             <div class="input-group input-group-sm" style="max-width:360px;">

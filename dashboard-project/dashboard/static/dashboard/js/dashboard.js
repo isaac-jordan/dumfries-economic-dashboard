@@ -70,7 +70,6 @@ app.config(function($routeProvider) {
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope, $location, $timeout) {
     $scope.widgets = GLOBAL.widgets;
-    $scope.message = 'Welcome to the Dumfries Dashboard!';
 
     $scope.saveConfig = function() {
         var widgets = GLOBAL.widgets,
