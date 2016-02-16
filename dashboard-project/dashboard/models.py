@@ -78,11 +78,28 @@ class Visualisation(models.Model):
         analysisResults = []
         #{"name":"blah", "lastMonth:":5, "last3Months":10, "last6Months":100, "lastYear":-5}
         for dataset in datasetObjects:
-            datasetResult = {"name": dataset.name}
+            datasetResult = {"name": str(dataset)}
             data = dataset.fromJSON()
             lastDateItem = data[len(data) - 1]
-            print lastDateItem
-            print data
+            
+            if isinstance(data[0]["x"], basestring) or isinstance(data[0]["x"], int):
+                continue
+            
+            # Identify percentage increases/decreases for the 4 time periods.
+            for element in reversed(data):
+                elapsedTime = lastDateItem["x"] - element["x"]
+                days = elapsedTime.days
+                percentageDiff = round(((lastDateItem["y"] - element["y"]) / float(element["y"])) * 100, 1)
+                if days >= 28 and days < (1.5 * 31):
+                    datasetResult["lastMonth"] = percentageDiff
+                elif days >= (3 * 28) and days < (1.5 * 3 * 31):
+                    datasetResult["last3Months"] = percentageDiff
+                elif days >= (6 * 28) and days < (1.5 * 6 * 31):
+                    datasetResult["last6Months"] = percentageDiff
+                elif days >= (12 * 28) and days < (1.5 * 12 * 31):
+                    datasetResult["lastYear"] = percentageDiff
+                elif days >= (1.5 * 12 * 31):
+                    break
             
             analysisResults.append(datasetResult)
             

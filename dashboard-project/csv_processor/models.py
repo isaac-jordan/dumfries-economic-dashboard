@@ -12,6 +12,7 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 from dataset_importer import util as datasetUtil
 import util
+import itertools
 
 from dashboard.models import Visualisation, DashboardDataset, Category
 
@@ -145,18 +146,22 @@ class CsvFile(Importer):
         for this data for use by the dashboard app.
         It imports the data, saves it to json, and creates the database entries.
         """
-        vis, created = Visualisation.objects.get_or_create(name=self.visualisationName,
+        vis = Visualisation.objects.get_or_create(name=self.visualisationName,
                                                   category=self.category,
                                                   type="line",
                                                   dataSource=self.dataSource,
                                                   sizeX=2,
                                                   sizeY=2,
                                                   xLabel="Placeholder",
-                                                  yLabel="Placeholder")
+                                                  yLabel="Placeholder")[0]
+        
+        # Delete any datasets associated with this visualisation already.
         DashboardDataset.objects.filter(visualisation=vis).delete()
+        
         importedDatasets = self.importData()
-        for dataset in importedDatasets:
-            DashboardDataset.objects.create(visualisation=vis, dataJSON=json.dumps(dataset, cls=datasetUtil.DatetimeEncoder))
+        dimensions = self.dimensions.all()
+        for dataset, dimension in itertools.izip(importedDatasets, dimensions):
+            DashboardDataset.objects.create(name=dimension.label, visualisation=vis, dataJSON=json.dumps(dataset, cls=datasetUtil.DatetimeEncoder))
         self.dataJson = json.dumps(self.importData(), cls=datasetUtil.DatetimeEncoder)
         self.save()
         

@@ -43,6 +43,38 @@
                             <div class="panel-body">
                                 <p>Maximum: {{ widget.trends.maxY.y | intcomma }} at {{ widget.trends.maxY.x }}</p>
                                 <p>Minimum: {{ widget.trends.minY.y | intcomma }} at {{ widget.trends.minY.x }}</p>
+                                {% for analysis in widget.trends.analysis %}
+                                <h3>{{ analysis.name }}</h3>
+                                
+                                <p>
+                                    Change on last month:
+                                    {% if analysis.lastMonth > 0 %}<span class="glyphicon glyphicon-chevron-up" style="color:green"></span>
+                                    {% elif analyis.lastMonth < 0 %}<span class="glyphicon glyphicon-chevron-down" style="color:blue"></span>{% endif %}
+                                    {{ analysis.lastMonth }}% 
+                                </p>
+                                
+                                <p>
+                                    Change on last 3 months:
+                                    {% if analysis.last3Months > 0 %}<span class="glyphicon glyphicon-chevron-up" style="color:green"></span>
+                                    {% elif analyis.last3Months < 0 %}<span class="glyphicon glyphicon-chevron-down" style="color:blue"></span>{% endif %} 
+                                    {{ analysis.last3Months }}%
+                                </p>
+                                
+                                <p>
+                                    Change on last 6 months: 
+                                    {% if analysis.last6Months > 0 %}<span class="glyphicon glyphicon-chevron-up" style="color:green"></span>
+                                    {% elif analyis.last6Months < 0 %}<span class="glyphicon glyphicon-chevron-down" style="color:blue"></span>{% endif %}
+                                    {{ analysis.last6Months }}%
+                                </p>
+                                
+                                <p>
+                                    Change on last year:
+                                    {% if analysis.lastYear > 0 %}<span class="glyphicon glyphicon-chevron-up" style="color:green"></span>
+                                    {% elif analyis.lastYear < 0 %}<span class="glyphicon glyphicon-chevron-down" style="color:blue"></span>{% endif %}
+                                    {{ analysis.lastYear }}%
+                                </p>
+                                
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
