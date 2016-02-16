@@ -46,10 +46,9 @@ class CsvFile(Importer):
         data = []
         xAxisData = []
         dimensions = self.dimensions.all()
-        with open(self.upload.path) as csvfile:
-            reader = util.UnicodeReader(csvfile, encoding="iso-8859-1")
-            for dimension in dimensions:
-                csvfile.seek(0)
+        for dimension in dimensions:
+            with open(self.upload.path) as csvfile:
+                reader = util.UnicodeReader(csvfile, encoding="iso-8859-1")
                 localData = []
                 if dimension.type == "row":
                     if dimension.index != None:
@@ -63,11 +62,14 @@ class CsvFile(Importer):
                     else:
                         index = 0
                         for row in reader:
-                            if row[dimension.indexForLabel - 1].lower() == dimension.label.lower():
-                                localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
-                                break;
-                            else:
-                                index += 1
+                            try:
+                                if row[dimension.indexForLabel - 1].lower() == dimension.label.lower():
+                                    localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
+                                    break;
+                                else:
+                                    index += 1
+                            except IndexError:
+                                continue
                         
                         if localData == []:
                             # Couldn't find exact match, lets check substrings.
@@ -84,32 +86,32 @@ class CsvFile(Importer):
                                     index += 1
                 else:
                     raise NotImplementedError("No support for Dimension.type of column yet.")
-                
-                #print "Pre-formatting {0}:".format(dimension.label)
-                #print localData
-                
-                # Format data!
-                locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
-                if dimension.dataType == "date":
-                    # Use dimension.format as a strptime to retrieve DateTime object
-                    #print "FORMAT: " + dimension.dataFormat
-                    localData = [datetime.strptime(d.encode('utf-8'), dimension.dataFormat) for d in localData]
-                elif dimension.dataType == "currency":
-                    # Use dimension.format to remove currency markers ($)
-                    # and cast to float.
-                    localData = [locale.atoi(d.replace(dimension.dataFormat, "")) for d in localData]
-                elif dimension.dataType == "numeric":
-                    # Cast data to int or float
-                    localData = [num(d) for d in localData]
-                #...
-                else:
-                    pass
-                #print "Post formatting:"
-                #print localData
-                if dimension.makeXaxisOnGraph:
-                    xAxisData = localData[:]
-                else:
-                    data.append(localData)
+            
+            #print "Pre-formatting {0}:".format(dimension.label)
+            #print localData
+            
+            # Format data!
+            locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
+            if dimension.dataType == "date":
+                # Use dimension.format as a strptime to retrieve DateTime object
+                #print "FORMAT: " + dimension.dataFormat
+                localData = [datetime.strptime(d.encode('utf-8'), dimension.dataFormat) for d in localData]
+            elif dimension.dataType == "currency":
+                # Use dimension.format to remove currency markers ($)
+                # and cast to float.
+                localData = [locale.atoi(d.replace(dimension.dataFormat, "")) for d in localData]
+            elif dimension.dataType == "numeric":
+                # Cast data to int or float
+                localData = [num(d) for d in localData]
+            #...
+            else:
+                pass
+            #print "Post formatting:"
+            #print localData
+            if dimension.makeXaxisOnGraph:
+                xAxisData = localData[:]
+            else:
+                data.append(localData)
         new = []
         #print data
         # [ [ {"y": 48600.0, "x": 2008.0},  {"y": 48600.0, "x": 2008.0}], [] ]

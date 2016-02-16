@@ -72,6 +72,33 @@ class CSVImportTest(TestCase):
                                         makeXaxisOnGraph = True,
                                         csvFile = csvFile)
         
+        filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "energy-consumption-testing.csv"))
+        f = File(open(filepath))
+        csvFile = CsvFile.objects.get_or_create(visualisationName="energy-consumption-testing",
+                                      category = category,
+                                      dataSource = dataSource,
+                                      upload = f,
+                                      source = "http://test3.example.com"
+                                      )[0]
+        Dimension.objects.get_or_create(label="Dumfries and Galloway",
+                                        indexForLabel = 2,
+                                        type = "row",
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 11,
+                                        dataType = "numeric",
+                                        dataFormat = "",
+                                        makeXaxisOnGraph = False,
+                                        csvFile = csvFile)
+        Dimension.objects.get_or_create(label="Year",
+                                        index = 9,
+                                        type = "row",
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 11,
+                                        dataType = "date",
+                                        dataFormat = "%Y",
+                                        makeXaxisOnGraph = True,
+                                        csvFile = csvFile)
+        
     def test_csv_import_data_not_none(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         data = csvFile.importData()
@@ -112,5 +139,17 @@ class CSVImportTest(TestCase):
         
     def test_csv_import_numeric(self):
         csvFile = CsvFile.objects.get(visualisationName="council-stock-testing")
+        csvFile.createDashboardInfo()
+        self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
+        
+    def test_csv_row_out_of_range(self):
+        """
+        Tests that the following error is resolved:
+        '   
+            if row[dimension.indexForLabel - 1].lower() == dimension.label.lower():
+            IndexError: list index out of range
+        '
+        """
+        csvFile = CsvFile.objects.get(visualisationName="energy-consumption-testing")
         csvFile.createDashboardInfo()
         self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
