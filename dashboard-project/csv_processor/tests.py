@@ -86,10 +86,10 @@ class CSVImportTest(TestCase):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")
         Dimension.objects.get_or_create(label="Scotland",
                                         indexForLabel = 1,
-                                        type = Dimension.TYPE_CHOICES[0][0],
+                                        type = "row",
                                         dataStartIndex = 2,
                                         dataEndIndex = 151,
-                                        dataType = Dimension.DATA_CHOICES[1][0],
+                                        dataType = "currency",
                                         dataFormat = "£",
                                         makeXaxisOnGraph = False,
                                         csvFile = csvFile)

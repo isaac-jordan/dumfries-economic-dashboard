@@ -10,6 +10,8 @@ import os, csv, collections, json, util, locale
 from datetime import datetime
 from django.db.models.signals import pre_delete 
 from django.dispatch import receiver
+from dataset_importer import util as datasetUtil
+import util
 
 from dashboard.models import Visualisation, DashboardDataset, Category
 
@@ -133,7 +135,7 @@ class CsvFile(Importer):
         A shortcut method that imports data, saves it to the
         dataJson field, and returns the json.
         """
-        self.dataJson = json.dumps(self.importData(), cls=util.DatetimeEncoder)
+        self.dataJson = json.dumps(self.importData(), cls=datasetUtil.DatetimeEncoder)
         self.save()
         return self.dataJson
     
@@ -154,8 +156,8 @@ class CsvFile(Importer):
         DashboardDataset.objects.filter(visualisation=vis).delete()
         importedDatasets = self.importData()
         for dataset in importedDatasets:
-            DashboardDataset.objects.create(visualisation=vis, dataJSON=json.dumps(dataset, cls=util.DatetimeEncoder))
-        self.dataJson = json.dumps(self.importData(), cls=util.DatetimeEncoder)
+            DashboardDataset.objects.create(visualisation=vis, dataJSON=json.dumps(dataset, cls=datasetUtil.DatetimeEncoder))
+        self.dataJson = json.dumps(self.importData(), cls=datasetUtil.DatetimeEncoder)
         self.save()
         
 @receiver(pre_delete)

@@ -1,5 +1,6 @@
 from django.db import models
 import json
+import util
 
 class Importer(models.Model):
     name = models.CharField(max_length=100)
@@ -22,7 +23,7 @@ class Dataset(models.Model):
     link = models.URLField(blank=True)
     
     def fromJSON(self):
-        return json.loads(self.dataJSON)
+        return json.loads(self.dataJSON, cls=util.DateTimeDecoder)
     
     def __str__(self):
         if self.name:

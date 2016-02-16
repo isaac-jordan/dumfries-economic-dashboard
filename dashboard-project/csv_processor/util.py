@@ -2,8 +2,7 @@
 A utility module for use in other files.
 """
 
-import csv,codecs,cStringIO, json
-from datetime import datetime
+import csv,codecs,cStringIO
 
 class UTF8Recoder:
     """
@@ -36,18 +35,3 @@ class UnicodeReader:
         return [unicode(s, "utf-8", errors="replace") for s in row]
     def __iter__(self):
         return self
-    
-class DatetimeEncoder(json.JSONEncoder):
-    """
-    A type of JSONEncoder that knows how to handle date and datetime
-    objects. Serialises to a standard ISO format, which is 
-    usable directly in JS.
-    """
-    
-    def default(self, obj):
-        if isinstance(obj, datetime):
-            return obj.strftime('%Y-%m-%dT%H:%M:%SZ')
-        elif isinstance(obj, date):
-            return obj.strftime('%Y-%m-%d')
-        # Let the base class default method raise the TypeError
-        return json.JSONEncoder.default(self, obj)

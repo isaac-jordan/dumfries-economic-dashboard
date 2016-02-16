@@ -70,10 +70,24 @@ class Visualisation(models.Model):
         return widget
     
     def calculateTrendData(self):
-        datasets = [json.loads(d.dataJSON) for d in DashboardDataset.objects.filter(visualisation=self)]
+        datasetObjects = DashboardDataset.objects.filter(visualisation=self)
+        datasets = [json.loads(d.dataJSON) for d in datasetObjects]
         maxYItem = max(max(d, key=lambda i:i['y']) for d in datasets)
         minYItem = min(min(d, key=lambda i:i['y']) for d in datasets)
-        return {"maxY": maxYItem, "minY": minYItem }
+        
+        analysisResults = []
+        #{"name":"blah", "lastMonth:":5, "last3Months":10, "last6Months":100, "lastYear":-5}
+        for dataset in datasetObjects:
+            datasetResult = {"name": dataset.name}
+            data = dataset.fromJSON()
+            lastDateItem = data[len(data) - 1]
+            print lastDateItem
+            print data
+            
+            analysisResults.append(datasetResult)
+            
+        
+        return {"maxY": maxYItem, "minY": minYItem, "analysis": analysisResults}
     
     def __str__(self):
         return self.name

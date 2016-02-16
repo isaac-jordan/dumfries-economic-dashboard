@@ -189,14 +189,15 @@ def populate():
     add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
     csvFile.createDashboardInfo()
 
-    #
-    # realDataSource = add_datasource("Real Data Test", "http://statistics.gov.scot");
-    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock.csv" ))
-    # f = File(open(filepath))
-    # csvFile = add_csvFile("Council Stock", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/council-stock")
-    # add_dimension("Dumfries and Galloway", "row", 3, 17, "currency", "", False, csvFile, indexForLabel=2)
-    # add_dimension("Year", "row", 3, 17, "date", "%Y", True, csvFile, index=8)
-    # csvFile.createDashboardInfo()
+    
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock-testing.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Council Stock", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/council-stock")
+    add_dimension("Dumfries", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2)
+    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
+    add_dimension("Year", "row", 3, 8, "date", "%Y", True, csvFile, index=8)
+    csvFile.createDashboardInfo()
 
     # Add some test users
     add_superuser("test@test.com", "test")
