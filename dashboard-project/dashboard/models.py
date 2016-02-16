@@ -7,6 +7,7 @@ for convenience.
 from django.db import models
 from django.contrib.auth.models import User
 import json
+from dataset_importer import util
 
 from dataset_importer.models import Dataset, Datasource
 
@@ -62,7 +63,7 @@ class Visualisation(models.Model):
                            'pk': self.pk,
                            'category': self.category.name,
                            'type': self.type,
-                           'dataset': [json.loads(d.dataJSON) for d in DashboardDataset.objects.filter(visualisation=self)],
+                           'dataset': [json.loads(d.dataJSON, cls=util.DateTimeDecoder) for d in DashboardDataset.objects.filter(visualisation=self)],
                            'sourceName': self.dataSource.name,
                            'sourceLink': self.dataSource.link,
                            'sizeX': self.sizeX,
@@ -81,9 +82,6 @@ class Visualisation(models.Model):
             datasetResult = {"name": str(dataset)}
             data = dataset.fromJSON()
             lastDateItem = data[len(data) - 1]
-            
-            if isinstance(data[0]["x"], basestring) or isinstance(data[0]["x"], int):
-                continue
             
             # Identify percentage increases/decreases for the 4 time periods.
             for element in reversed(data):

@@ -1,30 +1,31 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from models import DashboardDatasource, Category, Visualisation, DashboardDataset, SavedConfig, SavedGraph
-import json
+from dataset_importer import util
+import json, datetime
 
 def setUpEntries():
     ds = DashboardDatasource.objects.get_or_create(name="test_datasource")[0]
     dataset=[{
                 "y": 152,
-                "x": 2000
+                "x": datetime.datetime(2000, 1, 1)
             }, {
                 "y": 189,
-                "x": 2002
+                "x": datetime.datetime(2002, 1, 1)
             }, {
                 "y": 179,
-                "x": 2004
+                "x": datetime.datetime(2004, 1, 1)
             }, {
                 "y": 199,
-                "x": 2006
+                "x": datetime.datetime(2006, 1, 1)
             }, {
                 "y": 134,
-                "x": 2008
+                "x": datetime.datetime(2008, 1, 1)
             }, {
                 "y": 176,
-                "x": 2010
+                "x": datetime.datetime(2010, 1, 1)
             }]
-    JSONdataset=json.dumps(dataset)
+    JSONdataset=json.dumps(dataset, cls=util.DatetimeEncoder)
     cat = Category.objects.get_or_create(name="test_category")[0]
     vis = Visualisation.objects.get_or_create(dataSource=ds, name="testVis", category=cat, type="line", xLabel="Year", sizeY=2, sizeX=2)[0]
     data = DashboardDataset.objects.get_or_create(name='testDataSet', dataJSON=JSONdataset, visualisation=vis)[0]
@@ -112,31 +113,31 @@ class TestVisualisation(TestCase):
     
         dataset=[{
                 "y": 152,
-                "x": 2000
+                "x": datetime.datetime(2000, 1, 1)
             }, {
                 "y": 189,
-                "x": 2002
+                "x": datetime.datetime(2002, 1, 1)
             }, {
                 "y": 179,
-                "x": 2004
+                "x": datetime.datetime(2004, 1, 1)
             }, {
                 "y": 199,
-                "x": 2006
+                "x": datetime.datetime(2006, 1, 1)
             }, {
                 "y": 134,
-                "x": 2008
+                "x": datetime.datetime(2008, 1, 1)
             }, {
                 "y": 176,
-                "x": 2010
+                "x": datetime.datetime(2010, 1, 1)
             }]
-        JSONdataset=json.dumps(dataset)
+        JSONdataset=json.dumps(dataset, cls=util.DatetimeEncoder)
         testWidget={
             'name': "testVis",
                            'id': "vis1",
                            'pk': 1,
                            'category': "test_category",
                            'type': "line",
-                           'dataset': [json.loads(JSONdataset)],
+                           'dataset': [json.loads(JSONdataset, cls=util.DateTimeDecoder)],
                            'sourceName': "test_datasource",
                            'sourceLink': '',
                            'sizeX': 2,
@@ -157,7 +158,7 @@ class TestVisualisation(TestCase):
     def test_calculateTrendData_minmax_correct(self):
         vis = Visualisation.objects.get(name="testVis")
         trendData = vis.calculateTrendData()
-        self.assertTrue(trendData["maxY"] == {"y": 199,"x": 2006}, "CalculateTrendData returned wrong maxY item.")
-        self.assertTrue(trendData["minY"] == {"y": 134,"x": 2008}, "CalculateTrendData returned wrong minY item.")
+        self.assertTrue(json.dumps(trendData["maxY"], cls=util.DatetimeEncoder) == json.dumps({"y": 199,"x": datetime.datetime(2006, 1, 1)}, cls=util.DatetimeEncoder), "CalculateTrendData returned wrong maxY item.")
+        self.assertTrue(json.dumps(trendData["minY"], cls=util.DatetimeEncoder) == json.dumps({"y": 134,"x": datetime.datetime(2008, 1, 1)}, cls=util.DatetimeEncoder), "CalculateTrendData returned wrong minY item.")
 
 

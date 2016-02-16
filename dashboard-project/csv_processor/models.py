@@ -154,7 +154,7 @@ class CsvFile(Importer):
                                                   dataSource=self.dataSource,
                                                   sizeX=2,
                                                   sizeY=2,
-                                                  xLabel="Placeholder",
+                                                  xLabel="Date",
                                                   yLabel="Placeholder")[0]
         
         # Delete any datasets associated with this visualisation already.
