@@ -199,6 +199,25 @@ def populate():
     add_dimension("Year", "row", 3, 8, "date", "%Y", True, csvFile, index=8)
     csvFile.createDashboardInfo()
 
+    # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
+    # f = File(open(filepath))
+    # csvFile = add_csvFile("Full time Employment", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
+    # add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    # #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
+    # add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
+    # csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "energy-consumption.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Energy Consumption", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/energy-consumption")
+    add_dimension("Dumfries and Galloway", "row", 3, 11, "numeric", "", False, csvFile, index=28)
+    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
+    add_dimension("Year", "row", 3, 11, "date", "%Y", True, csvFile, index=9)
+    csvFile.createDashboardInfo()
+
+
     # Add some test users
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
@@ -282,7 +301,7 @@ def importRealData(fileNames):
 
 if __name__ == '__main__':
     print "Starting population script..."
-    importRealData(['hospital-admissions.csv','energy-consumption.csv','council-stock.csv','council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
+    importRealData(['council-house-sales.csv','child-benefit.csv','births-unmarried.csv','Employment Dumfries and Galloway.csv','Employment Scotland.csv', 'Full-Time Employment Dumfries and Galloway.csv','Full-Time Employment Scotland.csv','wages.csv'])
     populate()
 
 #files updated : hospital-adminssions , council stock , employment, energy consumption, full time employment

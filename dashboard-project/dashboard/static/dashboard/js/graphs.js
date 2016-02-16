@@ -146,6 +146,7 @@ function linegraph(elemID, data) {
     for (var i=0;i<data.length;i++) {
      clean_data[i] = [];
     }
+    if (!data[0][0]) return;
     if (typeof(data[0][0].x)=="string") type="date_format"; //Temporary solution for the different date formats
 
     clean_data=cleanup_data(c_data,type,clean_data);// Sends a copy of our data to be filtered and converts dates to JS Date format
