@@ -94,9 +94,15 @@
         <script src="{% static "dashboard/js/angular.js" %}"></script>
         <script src="{% static "dashboard/js/angular-route.js" %}"></script>
         <script src="{% static "dashboard/js/angular-gridster.min.js" %}"></script>
-        <script src="{% static "dashboard/js/jspdf.min.js" %}"></script>
         <script src="{% static "dashboard/js/daterangepicker_file.js" %}"></script>
         <script src="{% static "dashboard/js/graphs.js" %}"></script>
         <script src="{% static "dashboard/js/dashboard.js" %}"></script>
+        <script src="{% static "dashboard/js/jspdf.min.js" %}"></script>
+        
+        <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script> 
+        <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+        <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script> 
+        <script src="{% static "dashboard/js/svgToPdf.js" %}"></script>
+        <script src="{% static "dashboard/js/svg_todataurl.js" %}"></script>
     </body>
 </html>
