@@ -8,7 +8,7 @@ var drawAllGraphs = function() {
     if (!GLOBAL.widgets) return;
     for (var i = 0; i < GLOBAL.widgets.length; i++) {
         //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
-        drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type);
+        drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels);
     }
     $('[data-toggle="popover"]').popover({html: true});
 };

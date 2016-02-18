@@ -1,14 +1,14 @@
 /*jshint*/
 /*global d3, console */
 
-function drawGraph(elemID, data, type) {
+function drawGraph(elemID, data, type,datasetLabels) {
     if ($("#" + elemID).parent().width() < 0) return;
     switch(type) {
         case "bar":
             bargraph(elemID, data);
             break;
         case "line":
-            linegraph(elemID, data);
+            linegraph(elemID, data,datasetLabels);
             break;
     }
 }
@@ -125,19 +125,26 @@ function cleanup_data(data, type, clean_data){
 	
 	return clean_data;
 }
-function add_legend(elemID,vis,data,colours){
+function add_legend(elemID,vis,data,colours,datasetLabels){
+    y=0
 
     for (i=0;data[i]!=null ;i++) {
+
         vis.append("rect")
             .attr("width",30)
             .attr("height",10)
             .attr("x",50)
-            .attr("y",10)
-            .attr("dy","0.35em")
+            .attr("y",y)
+            .attr("dy","-3.5em")
             .attr('fill',colours[i]);
+        vis.append("text")
+            .attr("x",80)
+            .attr("y",y+11)
+            .text(datasetLabels[i]);
+        y+=11
     }
 }
-function linegraph(elemID, data) {
+function linegraph(elemID, data,datasetLabels) {
     var vis;
     var c_data=data;//Copy of our data given in
     var type="normal";
@@ -191,9 +198,9 @@ function linegraph(elemID, data) {
         colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
 
         MARGINS = {
-            top: 40,
+            top: 30,
             right: 40,
-            bottom: 40,
+            bottom: data.length*10+10,
             left: 50
         },
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]),
@@ -224,12 +231,12 @@ function linegraph(elemID, data) {
 
 	}else if(type!="normal"){
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax+1]);
-        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     }
     if (type!="normal") {}
     xAxis = d3.svg.axis()
         .scale(xScale)
-        .tickFormat(d3.format("date"));
+        .tickFormat(d3.format("date"))
+        .orient("bottom");
     yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
@@ -241,7 +248,7 @@ function linegraph(elemID, data) {
 
     vis.append("svg:g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
+        .attr("transform", "translate(0," + (HEIGHT - MARGINS.top) + ")")
         .call(xAxis);
 
     vis.append("text")
@@ -252,7 +259,7 @@ function linegraph(elemID, data) {
 
     var lineGen = d3.svg.line()
         .x(function(d) {
-            return xScale(d.x.getFullYear()+(d.x.getMonth()-1)/12);
+            return xScale(d.x.getFullYear()+(d.x.getMonth())/12);
         })
         .y(function(d) {
             return yScale(d.y);
@@ -277,7 +284,7 @@ function linegraph(elemID, data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
-    //add_legend(elemID,vis,clean_data,colours)
+    add_legend(elemID,vis,clean_data,colours,datasetLabels)
 }
 
  
