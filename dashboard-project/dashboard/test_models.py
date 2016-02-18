@@ -138,6 +138,7 @@ class TestVisualisation(TestCase):
                            'category': "test_category",
                            'type': "line",
                            'dataset': [json.loads(JSONdataset, cls=util.DateTimeDecoder)],
+                           'datasetLabels': ["testDataSet"],
                            'sourceName': "test_datasource",
                            'sourceLink': '',
                            'sizeX': 2,

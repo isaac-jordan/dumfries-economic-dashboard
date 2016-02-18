@@ -84,6 +84,9 @@ class Visualisation(models.Model):
             data = dataset.fromJSON()
             lastDateItem = data[len(data) - 1]
             
+            if isinstance(lastDateItem["x"], basestring):
+                continue
+            
             # Identify percentage increases/decreases for the 4 time periods.
             for element in reversed(data):
                 elapsedTime = lastDateItem["x"] - element["x"]
