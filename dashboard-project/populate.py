@@ -296,10 +296,10 @@ def add_datasource(name, link):
     d = DashboardDatasource.objects.get_or_create(name=name, link=link)[0]
     return d
 
-def add_dataset(visualisation, dataset={}, JSONdataset="", filename=""):
+def add_dataset(visualisation, dataset={}, JSONdataset="", name="Dumfries And Galloway"):
     if JSONdataset == "":
         JSONdataset = json.dumps(dataset, cls=util.DatetimeEncoder);
-    d = DashboardDataset.objects.get_or_create(visualisation=visualisation, filename=filename, dataJSON=JSONdataset)[0]
+    d = DashboardDataset.objects.get_or_create(visualisation=visualisation, name=name, dataJSON=JSONdataset)[0]
     return d
 
 def add_user(name, password, email="test@example.com"):
