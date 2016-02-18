@@ -64,6 +64,7 @@ class Visualisation(models.Model):
                            'category': self.category.name,
                            'type': self.type,
                            'dataset': [json.loads(d.dataJSON, cls=util.DateTimeDecoder) for d in DashboardDataset.objects.filter(visualisation=self)],
+                           'datasetLabels': [d.name for d in DashboardDataset.objects.filter(visualisation=self)],
                            'sourceName': self.dataSource.name,
                            'sourceLink': self.dataSource.link,
                            'sizeX': self.sizeX,
