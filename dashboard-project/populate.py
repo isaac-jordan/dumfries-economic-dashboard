@@ -209,7 +209,7 @@ def populate():
     realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
     filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
     f = File(open(filepath))
-    csvFile = add_csvFile("Full time Employment", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
+    csvFile = add_csvFile("Full time Employment", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
     add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
     #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
     add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
@@ -229,6 +229,38 @@ def populate():
     csvFile = add_csvFile("Hospital Admissions", healthCategory, realDataSource, f, "http://statistics.gov.scot/data/hospital-admissions")
     add_dimension("Dumfries and Galloway", "row", 3, 13, "numeric", "", False, csvFile, indexForLabel=2)
     add_dimension("Year", "row", 3, 13, "date", "%Y", True, csvFile, index=10)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "neet.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Not in Education, Employment, or Training", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/neet")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "never-worked.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Never Worked", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/never-worked")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=8)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "reconvictions.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Reconvictions", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/reconvictions")
+    add_dimension("Dumfries and Galloway", "row", 3, 12, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 12, "date", "%Y", True, csvFile, index=9)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "recorded-crime.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Recorded Crime", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/recorded-crime")
+    add_dimension("Dumfries and Galloway", "row", 3, 19, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 19, "date", "%Y", True, csvFile, index=8)
     csvFile.createDashboardInfo()
 
     # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
