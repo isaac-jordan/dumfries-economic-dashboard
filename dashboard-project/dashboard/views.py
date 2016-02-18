@@ -163,10 +163,15 @@ def ajax_register(request):
     password = request.POST['password']
     if User.objects.filter(username=username).exists():
         return JsonResponse({'message':'Error: Email address already used.', 'success': False})
-    user = User.objects.create_user(username, username, password)
-    user.save()
-    user = authenticate(username=username, password=password)
-    login(request,user)
+    if password=='':
+        return JsonResponse({'message':'Error: Password must be set.', 'success': False})
+    if username=='':
+        return JsonResponse({'message':'Error: Email address must be set.', 'success': False})
+    else:
+        user = User.objects.create_user(username, username, password)
+        user.save()
+        user = authenticate(username=username, password=password)
+        login(request,user)
     return JsonResponse({'message':'Successfully registered. You will now be logged in.', "success": True})
 
 def registrationPage(request):

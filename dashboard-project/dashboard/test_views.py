@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import SESSION_KEY
 from django.core.urlresolvers import reverse
 
+
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
 
 class TestAuthViews(TestCase):
@@ -40,6 +41,8 @@ class TestAuthViews(TestCase):
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'], True)
         self.assertTrue(SESSION_KEY in self.client.session)
+
+    def test_ajax_login_
         
     def test_logout_view_pass_valid(self):
         """Check logout works when user is logged in."""
@@ -47,6 +50,37 @@ class TestAuthViews(TestCase):
         response = self.client.post(reverse('logout'))
         self.assertRedirects(response, reverse("home"))
         self.assertTrue(SESSION_KEY not in self.client.session)
+
+    def test_ajax_register(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"test"})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],True)
+
+    def test_ajax_register_existing_user(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"user@example.com", "password":"test1234"})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],False)
+
+    def test_ajax_register_emptyEmail(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"", "password":"test"})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],False)
+
+    def test_ajax_register_emptyPassword(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":""})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],False)
+
+    def test_registrationPage(self):
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard/pages/register.djhtml')
+
+    def test_ajax_isAuthenticated(self):
+        self.client.login(username='user@example.com', password='test1234')
+        response = self.client.get(reverse('ajax_checkAuthenticated'))
+        r = json.loads(response.content)
+        self.assertEqual(r['is_authenticated'], True)
         
 class TestSavedConfigView(TestCase):
     def setUp(self):
