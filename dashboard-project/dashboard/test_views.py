@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth import SESSION_KEY
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse, HttpResponse
 
 
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
@@ -97,7 +98,18 @@ class TestGraphsView(TestCase):
         cat = Category.objects.create(name="CategoryTest")
         vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
-        
+
+    def test_ajax_getGraph(self):
+        vis1 = Visualisation.objects.get(name = 'TestVis')
+        response = self.client.get(reverse('ajax_getGraph'), {"id": vis1.pk})
+        jsonResponse=json.loads(response.content)
+        self.assertEqual(jsonResponse["pk"],vis1.pk)
+
+    def test_ajax_getGraph_noID(self):
+        vis1 = Visualisation.objects.get(name='TestVis')
+        response = self.client.get(reverse('ajax_getGraph'))
+        self.assertEqual(response.status_code, 400)
+
     def test_graphs_view_loads(self):
         response = self.client.get(reverse('graphs'))
         self.assertTrue(response, "Graph view returned a falsy object.")
@@ -112,6 +124,7 @@ class TestSearchView(TestCase):
     def setUp(self):
         ds1 = Datasource.objects.create(name="test")
         cat = Category.objects.create(name="CategoryTest")
+        cat2 = Category.objects.create(name="CategoryTest2")
         vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
         
@@ -119,5 +132,19 @@ class TestSearchView(TestCase):
         response = self.client.get(reverse('search', kwargs={"searchTerm": "test" }))
         self.assertTrue(len(response.context["results"]) == 1, "Search test returned incorrect number of results.")
         self.assertTrue(response.context["results"][0]["name"] == "TestVis", "Search result has incorrec name")
+
+    def test_searchTerm_is_None(self):
+        response = self.client.get(reverse('search',kwargs={"searchTerm":None }))
+        self.assertTemplateUsed(response, 'dashboard/pages/searchResults.djhtml')
+
+    def test_category_list(self):
+        testcategories = Category.objects.all()
+        response = self.client.get(reverse('categoryList'))
+        testing = response.context['categories']
+        self.assertTemplateUsed(response, 'dashboard/pages/categoryList.djhtml')
+        for f,b in zip(testing,testcategories):
+            self.assertEqual(f,b)
+
+
         
         
