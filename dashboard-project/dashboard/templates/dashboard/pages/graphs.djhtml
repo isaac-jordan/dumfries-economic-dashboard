@@ -47,8 +47,12 @@
                 </div>
             </div>
             <div class="col-sm-2">
-                <b>Select a date :</b>
-                <input class="daterange" id="daterange" type="text" name="daterange" />
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="daterange">Select dates:</label>
+                    <input class="daterange form-control" id="daterange" type="text" name="daterange" />
+                  </div>
+                </form>
             </div>
         </div>
 	<br>
