@@ -73,7 +73,7 @@ class Visualisation(models.Model):
     
     def calculateTrendData(self):
         datasetObjects = DashboardDataset.objects.filter(visualisation=self)
-        datasets = [json.loads(d.dataJSON) for d in datasetObjects]
+        datasets = [json.loads(d.dataJSON, cls=util.DateTimeDecoder) for d in datasetObjects]
         maxYItem = max(max(d, key=lambda i:i['y']) for d in datasets)
         minYItem = min(min(d, key=lambda i:i['y']) for d in datasets)
         

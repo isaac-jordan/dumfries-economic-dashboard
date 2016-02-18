@@ -12,6 +12,7 @@ from django.db.models import Q
 # Local Imports
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
 from csv_processor import util
+from dataset_importer import util as dateutil
 
 
 def home(request):
@@ -44,7 +45,7 @@ def ajaxSearch(request, searchTerm):
                                                     Q(category__name__icontains=searchTerm))
         
         widgets = [o.getWidget() for o in resultsAsVis]
-        return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": widgets, "widgetsJSON": json.dumps(widgets) })
+        return render(request, 'dashboard/pages/searchResults.djhtml', { "searchTerm": searchTerm, "results": widgets, "widgetsJSON": json.dumps(widgets, cls=dateutil.DatetimeEncoder) })
     return render(request, 'dashboard/pages/searchResults.djhtml')
 
 def categoryList(request):
@@ -74,7 +75,7 @@ def category(request, categoryName):
     else:
         error = None
         category = category[0]
-    return render(request, "dashboard/pages/category.djhtml", {"category": category, "widgets": widgets, "widgetsJSON": json.dumps(widgets), "error": error})
+    return render(request, "dashboard/pages/category.djhtml", {"category": category, "widgets": widgets, "widgetsJSON": json.dumps(widgets, cls=dateutil.DatetimeEncoder), "error": error})
 
 def addGraphs(request):
     graphs = Visualisation.objects.filter()

@@ -2,7 +2,7 @@
 import os
 
 PWD = os.path.dirname(os.path.realpath(__file__ ))
-APP_ROOT = os.path.join(PWD)
+APP_ROOT = os.path.join(PWD, "..")
 
 PROJECT_ROOT = os.path.join(APP_ROOT, "..")
 
@@ -18,7 +18,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(PROJECT_ROOT, "..", "db.sqlite3"),                      # Or path to database file if using sqlite3.
+        'NAME': os.path.join(PROJECT_ROOT, "db.sqlite3"),                      # Or path to database file if using sqlite3.
     }
 }
 

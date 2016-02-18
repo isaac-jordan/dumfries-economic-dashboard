@@ -5,9 +5,10 @@ Test classes for CSV Processor application.
 
 from django.test import TestCase
 from django.core.files import File
+from django.conf import settings
 from csv_processor.models import CsvFile, Dimension
 from dashboard.models import Category, Datasource, Visualisation, DashboardDataset
-import os, json
+import os, json, shutil
 
 class CSVImportTest(TestCase):
     def setUp(self):
@@ -15,6 +16,8 @@ class CSVImportTest(TestCase):
         Creates some entries in the database for use by tests.
         This is ran before every test in this class.
         """
+        self.__old_media_root = settings.MEDIA_ROOT
+        settings.MEDIA_ROOT = os.path.join(settings.MEDIA_ROOT, "TEST_MEDIA")
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
         f = File(open(filepath))
@@ -125,6 +128,11 @@ class CSVImportTest(TestCase):
                                         dataFormat = "%Y",
                                         makeXaxisOnGraph = True,
                                         csvFile = csvFile)
+        
+    def tearDown(self):
+        shutil.rmtree(settings.MEDIA_ROOT)
+        settings.MEDIA_ROOT = self.__old_media_root
+        super(CSVImportTest, self).tearDown()
         
     def test_csv_import_data_not_none(self):
         csvFile = CsvFile.objects.get(visualisationName="test_real_monthly_test")

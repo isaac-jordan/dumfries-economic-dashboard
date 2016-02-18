@@ -102,7 +102,6 @@
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script> 
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script> 
-        <script src="{% static "dashboard/js/svgToPdf.js" %}"></script>
         <script src="{% static "dashboard/js/svg_todataurl.js" %}"></script>
     </body>
 </html>

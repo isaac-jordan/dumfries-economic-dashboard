@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, date
 import dateutil.parser
 
 class DatetimeEncoder(json.JSONEncoder):
@@ -20,12 +20,18 @@ class DatetimeEncoder(json.JSONEncoder):
 class DateTimeDecoder(json.JSONDecoder):
 
     def __init__(self, *args, **kargs):
-        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object,
-                             *args, **kargs)
+        json.JSONDecoder.__init__(self, object_hook=self.dict_to_object, *args, **kargs)
     
     def dict_to_object(self, d):
-        try:
-            dateobj = dateutil.parser.parse(d["x"])
-            return {"y": d["y"], "x": dateobj}
-        except (ValueError, AttributeError):
-            return d
+        if isinstance(d["x"], basestring):
+            try:
+                dateobj = datetime.strptime(d["x"], "%Y-%m-%d")
+                return {"y": d["y"], "x": dateobj}
+            except (ValueError):
+                try:
+                    datetimeobj = dateutil.parser.parse(d["x"])
+                    return {"y": d["y"], "x": datetimeobj}
+                except (ValueError, AttributeError):
+                    return d
+        return d
+        
