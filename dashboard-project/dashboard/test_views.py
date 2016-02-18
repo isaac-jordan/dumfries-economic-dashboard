@@ -41,8 +41,6 @@ class TestAuthViews(TestCase):
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'], True)
         self.assertTrue(SESSION_KEY in self.client.session)
-
-    def test_ajax_login_
         
     def test_logout_view_pass_valid(self):
         """Check logout works when user is logged in."""
