@@ -284,7 +284,7 @@ function linegraph(elemID, data,datasetLabels) {
         .attr('stroke-width', 2)
         .attr('fill', 'none');
     }
-    add_legend(elemID,vis,clean_data,colours,datasetLabels)
+    if(datasetLabels=="undefined")add_legend(elemID,vis,clean_data,colours,datasetLabels)
 }
 
  
