@@ -132,16 +132,16 @@ function add_legend(elemID,vis,data,colours,datasetLabels){
 
         vis.append("rect")
             .attr("width",30)
-            .attr("height",10)
+            .attr("height",12)
             .attr("x",50)
             .attr("y",y)
             .attr("dy","-3.5em")
             .attr('fill',colours[i]);
         vis.append("text")
             .attr("x",80)
-            .attr("y",y+11)
+            .attr("y",y+12)
             .text(datasetLabels[i]);
-        y+=11
+        y+=17
     }
 }
 function linegraph(elemID, data,datasetLabels) {
