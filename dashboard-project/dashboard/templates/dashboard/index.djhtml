@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 <html lang="en" ng-app="dashboard">
+<script>
+var styleFile = "style" + document.cookie.charAt(6) + ".css";
+document.writeln('<link rel="stylesheet" type="text/css" href="' + styleFile + '">');
+</script>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -9,7 +13,9 @@
         <link href="{% static "dashboard/img/favicon.png" %}" rel="shortcut icon" type="image/png" />
         <link href="{% static "dashboard/css/bootstrap.css" %}" rel="stylesheet">
         <link href="{% static "dashboard/css/angular-gridster.min.css" %}" rel="stylesheet">
-        <link href="{% static "dashboard/css/styles.css" %}" rel="stylesheet">
+        <link href="{% static "dashboard/css/styles.css" %}" title="default" rel="stylesheet">
+         <link href="{% static "dashboard/css/style1.css" %}" title="style1" rel="alternate stylesheet">
+         <link href="{% static "dashboard/css/style2.css" %}" title="style2" rel="alternate stylesheet">
 	    <link rel="stylesheet" type="text/css" media="all" href="{% static "dashboard/css/daterangepicker.css" %}" />
 	    <!--<link rel="stylesheet" href="{% static "dist/angular-dropdowns.min.css" %}">-->
 	
@@ -28,7 +34,11 @@
                         </ul>
                        
                         <ul class="nav hidden-xs" id="lg-menu">
-                            <li class="active"><a href="#/"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
+		                <a href="#" onclick="setActiveStyleSheet('default'); return false;">Default  |</a>
+		                <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Style1  |</a>
+		                <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Style2</a>
+
+		                    <li class="active"><a href="#/"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
                             <li><a href="#savedconfigs"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
                             <li><a href="#category"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
                         </ul>
@@ -98,7 +108,8 @@
         <script src="{% static "dashboard/js/graphs.js" %}"></script>
         <script src="{% static "dashboard/js/dashboard.js" %}"></script>
         <script src="{% static "dashboard/js/jspdf.min.js" %}"></script>
-        
+        <script src="{% static "dashboard/js/styleswitcher.js" %}"></script>
+
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script> 
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
         <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script> 
