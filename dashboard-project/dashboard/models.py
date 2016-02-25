@@ -109,15 +109,13 @@ class Visualisation(models.Model):
                 elif days >= (1.5 * 12 * 31 * 5):
                     break
             
-            print datasetResult
             analysisResults.append(datasetResult)
             
-        print analysisResults
         return {"maxY": maxYItem, "minY": minYItem, "analysis": analysisResults}
     
     def getTrendWidget(self):
         trendData = self.calculateTrendData()
-        print trendData
+        
         widget = {'name': self.name,
                            'id': "trend" + str(self.pk),
                            'pk': self.pk,

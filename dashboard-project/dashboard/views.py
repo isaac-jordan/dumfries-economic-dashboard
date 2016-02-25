@@ -64,7 +64,6 @@ def ajaxSearch(request, searchTerm):
 
 def categoryList(request):
     categories = Category.objects.all()
-    print categories
     return render(request, "dashboard/pages/categoryList.djhtml", {"categories": categories})
 
 def category(request, categoryName):
@@ -106,7 +105,7 @@ def saveConfig(request):
     data = json.loads(dataJSON)
     savedConfig = SavedConfig.objects.create(user=request.user, name=name)
     savedConfig.save()
-    print data
+    
     for graph in data:
         vis = Visualisation.objects.filter(id=graph["visPK"])[0]
         
@@ -141,11 +140,10 @@ def ajaxloadSavedConfig(request):
         widget["pk"] = vis.pk
         widget["type"] = vis.type
         if graph.isTrendWidget:
-            widget["trends"] = vis.getTrendWidget()
-            print "Filling in trend!"
-        else:
-            widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=vis)]
+            widget["trends"] = vis.calculateTrendData()
+            del widget["dataset"]
         widgets.append(widget)
+        print widget
     return JsonResponse({"widgets": widgets})
 
 def ajaxDeleteSavedConfig(request):
