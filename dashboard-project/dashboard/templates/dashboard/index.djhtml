@@ -23,7 +23,7 @@ document.writeln('<link rel="stylesheet" type="text/css" href="' + styleFile + '
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
     </head>
-    <body ng-controller="mainController">
+    <body ng-controller="mainController" style="z-index: 1;">
         <div class="wrapper">
             <div class="box">
                 <div class="row row-offcanvas row-offcanvas-left">

@@ -63,7 +63,7 @@
 	   <div>
         <div gridster="gridsterOptions">
             <ul id="graphUL">
-                {% include "dashboard/partials/graphWidget.djhtml" %}
+                {% include "dashboard/partials/widget.djhtml" %}
             </ul>
         </div>
         </div>

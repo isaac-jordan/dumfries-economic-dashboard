@@ -36,6 +36,18 @@ def ajaxGetGraph(request):
         return HttpResponse(status=400)
     id = request.GET["id"]
     widget = Visualisation.objects.get(pk=id).getWidget()
+    widget["row"] = 0;
+    widget["col"] = 0;
+    
+    return JsonResponse(widget)
+
+def ajaxGetTrend(request):
+    if request.GET.get("id") is None:
+        return HttpResponse(status=400)
+    id = request.GET["id"]
+    widget = Visualisation.objects.get(pk=id).getTrendWidget()
+    widget["row"] = 0;
+    widget["col"] = 0;
     return JsonResponse(widget)
 
 def ajaxSearch(request, searchTerm):
@@ -97,7 +109,14 @@ def saveConfig(request):
     print data
     for graph in data:
         vis = Visualisation.objects.filter(id=graph["visPK"])[0]
-        savedGraph = SavedGraph.objects.create(visualisation=vis, savedConfig=savedConfig, xPosition=graph["xPosition"], yPosition=graph["yPosition"], sizeX=graph["sizeX"], sizeY=graph["sizeY"])
+        
+        savedGraph = SavedGraph.objects.create(visualisation=vis, 
+                                               savedConfig=savedConfig, 
+                                               isTrendWidget = graph["isTrendWidget"],
+                                               xPosition=graph["xPosition"], 
+                                               yPosition=graph["yPosition"], 
+                                               sizeX=graph["sizeX"], 
+                                               sizeY=graph["sizeY"])
         savedGraph.save()
     return JsonResponse({'message':'Added new Saved Configuration.', "success": True})
 
@@ -121,7 +140,11 @@ def ajaxloadSavedConfig(request):
         widget["id"] = "vis" + str(vis.pk)
         widget["pk"] = vis.pk
         widget["type"] = vis.type
-        widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=vis)]
+        if graph.isTrendWidget:
+            widget["trends"] = vis.getTrendWidget()
+            print "Filling in trend!"
+        else:
+            widget["dataset"] = [json.loads(d.dataJSON) for d in datasets.filter(visualisation=vis)]
         widgets.append(widget)
     return JsonResponse({"widgets": widgets})
 

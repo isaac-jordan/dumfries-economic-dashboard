@@ -8,7 +8,10 @@ var drawAllGraphs = function() {
     if (!GLOBAL.widgets) return;
     for (var i = 0; i < GLOBAL.widgets.length; i++) {
         //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
-        drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels);
+        if (GLOBAL.widgets[i].dataset) {
+            drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels);
+        }
+        
     }
     $('[data-toggle="popover"]').popover({html: true});
 };
@@ -91,6 +94,7 @@ app.controller('mainController', function($scope, $location, $timeout) {
                     object.yPosition = widgets[i].row;
                     object.sizeX = widgets[i].sizeX;
                     object.sizeY = widgets[i].sizeY;
+                    object.isTrendWidget = widgets[i].trends ? true : false;
                     data.push(object);
                 }
                 console.log(data);
@@ -116,6 +120,26 @@ app.controller('mainController', function($scope, $location, $timeout) {
         if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
         console.log($scope.widgets);
         $scope.widgets.splice(0, $scope.widgets.length);
+    };
+    
+    $scope.getTrendData = function(graphID) {
+        if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
+        console.log("Getting data for graph: " + graphID);
+        $.ajax({
+            type: "GET",
+            url: "/getTrend",
+            data: {
+                id: graphID
+            },
+            success: function(widget) {
+                console.log(widget);
+                GLOBAL.widgets.unshift(widget);
+                $scope.$apply();
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
     };
     
     $("#searchForm").submit(function(event) {
@@ -151,7 +175,7 @@ app.controller('mainController', function($scope, $location, $timeout) {
             },
             success: function(widget) {
                 console.log(widget);
-                GLOBAL.widgets.push(widget);
+                GLOBAL.widgets.unshift(widget);
                 $scope.$apply();
                 $timeout(drawAllGraphs, 500);
             },

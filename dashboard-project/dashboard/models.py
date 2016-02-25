@@ -67,6 +67,8 @@ class Visualisation(models.Model):
                            'datasetLabels': [d.name for d in DashboardDataset.objects.filter(visualisation=self)],
                            'sourceName': self.dataSource.name,
                            'sourceLink': self.dataSource.link,
+                           'xLabel': self.xLabel,
+                           'yLabel': self.yLabel,
                            'sizeX': self.sizeX,
                            'sizeY': self.sizeY}
         return widget
@@ -100,13 +102,34 @@ class Visualisation(models.Model):
                     datasetResult["last6Months"] = percentageDiff
                 elif days >= (12 * 28) and days < (1.5 * 12 * 31):
                     datasetResult["lastYear"] = percentageDiff
-                elif days >= (1.5 * 12 * 31):
+                elif days >= (12 * 28 * 3) and days < (1.5 * 12 * 31 * 3):
+                    datasetResult["last3Years"] = percentageDiff
+                elif days >= (12 * 28 * 5) and days < (1.5 * 12 * 31 * 5):
+                    datasetResult["last5Years"] = percentageDiff
+                elif days >= (1.5 * 12 * 31 * 5):
                     break
             
+            print datasetResult
             analysisResults.append(datasetResult)
             
-        
+        print analysisResults
         return {"maxY": maxYItem, "minY": minYItem, "analysis": analysisResults}
+    
+    def getTrendWidget(self):
+        trendData = self.calculateTrendData()
+        print trendData
+        widget = {'name': self.name,
+                           'id': "trend" + str(self.pk),
+                           'pk': self.pk,
+                           'category': self.category.name,
+                           'type': self.type,
+                           'trends': trendData,
+                           'sourceName': self.dataSource.name,
+                           'sourceLink': self.dataSource.link,
+                           'sizeX': self.sizeX,
+                           'sizeY': 4}
+        return widget
+        
     
     def __str__(self):
         return self.name
@@ -143,6 +166,7 @@ class SavedGraph(models.Model):
     """
     
     visualisation = models.ForeignKey(Visualisation)
+    isTrendWidget = models.BooleanField(default=False)
     savedConfig = models.ForeignKey(SavedConfig)
     xPosition = models.IntegerField()
     yPosition = models.IntegerField()

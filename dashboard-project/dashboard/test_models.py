@@ -141,6 +141,8 @@ class TestVisualisation(TestCase):
                            'datasetLabels': ["testDataSet"],
                            'sourceName': "test_datasource",
                            'sourceLink': '',
+                           'xLabel': "Year",
+                           'yLabel': "",
                            'sizeX': 2,
                            'sizeY': 2
         }
