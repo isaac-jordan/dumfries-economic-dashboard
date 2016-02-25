@@ -1,9 +1,12 @@
-import json
+import json, datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth import SESSION_KEY
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse, HttpResponse
+from csv_processor import util
+from dataset_importer import util as dateutil
+from dateutil.tz import *
 
 
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
@@ -123,15 +126,18 @@ class TestGraphsView(TestCase):
 class TestSearchView(TestCase):
     def setUp(self):
         ds1 = Datasource.objects.create(name="test")
+        ds2 = Datasource.objects.create(name="STUFF")
         cat = Category.objects.create(name="CategoryTest")
-        cat2 = Category.objects.create(name="CategoryTest2")
+        cat2 = Category.objects.create(name="STUFF")
         vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
-        DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":5,"y":10},{"x":7,"y":15}]))
-        
+        DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":20,"y":152},{"x":20,"y":185}]))
+        vis2 = Visualisation.objects.create(dataSource=ds2, category=cat2, name="STUFF", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
+        DashboardDataset.objects.create(visualisation=vis2, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":152},{"x":datetime.datetime(2002,1,1),"y":185}],cls=dateutil.DatetimeEncoder))
+
     def test_search_returns_result(self):
         response = self.client.get(reverse('search', kwargs={"searchTerm": "test" }))
         self.assertTrue(len(response.context["results"]) == 1, "Search test returned incorrect number of results.")
-        self.assertTrue(response.context["results"][0]["name"] == "TestVis", "Search result has incorrec name")
+        self.assertTrue(response.context["results"][0]["name"] == "TestVis", "Search result has incorrect name")
 
     def test_searchTerm_is_None(self):
         response = self.client.get(reverse('search',kwargs={"searchTerm":None }))
@@ -144,6 +150,45 @@ class TestSearchView(TestCase):
         self.assertTemplateUsed(response, 'dashboard/pages/categoryList.djhtml')
         for f,b in zip(testing,testcategories):
             self.assertEqual(f,b)
+
+    def test_category_view(self):
+         response = self.client.get(reverse('category', kwargs={"categoryName" : "STUFF" }))
+         self.assertTemplateUsed(response, 'dashboard/pages/category.djhtml')
+         self.assertTrue(response.context['error'] is None)
+         testList = [{'sourceName': u'STUFF', 'sizeX': 2, 'sizeY': 2, 'dataset': [[{u'y': 152, u'x': u'2000-01-01T00:00:00Z'}, {u'y': 185, u'x': u'2002-01-01T00:00:00Z'}]], 'trends': {'minY': {'y': 152, 'x': datetime.datetime(2000, 1, 1, 0, 0, tzinfo=tzutc())}, 'maxY': {'y': 185, 'x': datetime.datetime(2002, 1, 1, 0, 0, tzinfo=tzutc())}, 'analysis': [{'name': 'Dashboard Dataset 2'}]}, 'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis2', 'category': u'STUFF', 'name': u'STUFF', 'sourceLink': u'', 'datasetLabels': [None], 'pk': 2, 'type': u''}]
+         self.assertTrue(response.context['category'].name == "STUFF")
+         def deep_sort(obj):
+            """
+            Recursively sort list or dict nested lists
+            """
+
+            if isinstance(obj, dict):
+                _sorted = {}
+                for key in sorted(obj):
+                    _sorted[key] = deep_sort(obj[key])
+
+            elif isinstance(obj, list):
+                new_list = []
+                for val in obj:
+                    new_list.append(deep_sort(val))
+                _sorted = sorted(new_list)
+
+            else:
+                _sorted = obj
+
+            return _sorted
+         testDict = deep_sort(testList[0])
+         testDict2=deep_sort(response.context['widgets'][0])
+         self.assertDictEqual(testDict, testDict2, "getWidget() did not return the correct widget.")
+
+    def test_category_view_less_than_one_category(self):
+        response = self.client.get(reverse('category', kwargs={"categoryName" : "NONETest" }))
+
+        self.assertTrue(response.context['error']=="Category 'NONETest' name not found.")
+
+
+
+
 
 
         

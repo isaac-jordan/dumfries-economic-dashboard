@@ -69,7 +69,6 @@ def categoryList(request):
 def category(request, categoryName):
     category = Category.objects.filter(name__iexact=categoryName)
     categoryVis = Visualisation.objects.filter(category=category)
-    
     widgets = [];
     datasets = DashboardDataset.objects
     for v in categoryVis:
