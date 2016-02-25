@@ -174,6 +174,7 @@ function linegraph(elemID, data,datasetLabels) {
     //Date comparison to find min and max values
     for (x=0;x<clean_data.length;x++){
 	    for (i=0; i<clean_data[x].length; i++) {
+
     		xMinCurr = clean_data[x][i].x;
     		xMaxCurr = clean_data[x][i].x;
     		yMinCurr = clean_data[x][i].y;
@@ -188,6 +189,8 @@ function linegraph(elemID, data,datasetLabels) {
 	//For now just get the year value
 	xMin=xMin.getFullYear();
 	xMax=xMax.getFullYear();
+
+
     var HEIGHT=0;
     if ($("#" + elemID).parent().parent().parent().height()-90>1000){
         HEIGHT = 300;
@@ -233,10 +236,15 @@ function linegraph(elemID, data,datasetLabels) {
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax+1]);
     }
     if (type!="normal") {}
+    var datelength=xMax-xMin;
+    console.log(datelength+" "+" "+HEIGHT+" "+xMin+" "+xMax);
+    var meow=(WIDTH-90)/30;
+    console.log(meow);
     xAxis = d3.svg.axis()
         .scale(xScale)
         .tickFormat(d3.format("date"))
-        .orient("bottom");
+        .orient("bottom")
+        .ticks((WIDTH-90)/30);
     yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
