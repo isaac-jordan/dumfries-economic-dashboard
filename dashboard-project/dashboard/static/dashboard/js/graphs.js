@@ -84,18 +84,18 @@ function cleanup_data(data, type, clean_data){
 	var end_date=new Date();
 	var start_date=new Date();
 	var i,d, c_date, input;
-	
+
 	if (dates) {
 	    var e_date = dates.slice(-4);
 	    end_date.setYear(e_date);
-	    
+
 	    var s_date =dates.substring(6,10);
         start_date.setYear(s_date);
 	} else {
 	    start_date.setYear(1900);
 	    end_date.setYear(2100);
 	}
-	
+
 	if (type=="normal"){
     	for (i=0; i<data.length; i++) {
 	    	for (d=0;d<data[i].length; d++) {
@@ -122,7 +122,7 @@ function cleanup_data(data, type, clean_data){
 		    	}
     		}
 	}
-	
+
 	return clean_data;
 }
 function add_legend(elemID,vis,data,colours,datasetLabels){
@@ -253,7 +253,7 @@ function linegraph(elemID, data,datasetLabels) {
 
     vis.append("text")
            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-           .attr("transform", "translate("+ (WIDTH/2) +","+((HEIGHT+10)-(MARGINS.bottom/3))+")")  // centre below axis
+           .attr("transform", "translate("+ (WIDTH/2) +","+((HEIGHT))+")")  // centre below axis
            .text("Year");
 
 
