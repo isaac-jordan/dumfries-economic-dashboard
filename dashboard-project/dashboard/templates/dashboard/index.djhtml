@@ -63,19 +63,22 @@ document.writeln('<link rel="stylesheet" type="text/css" href="' + styleFile + '
                                 <span class="icon-bar"></span>
                               </button>
                             </div>
-        
+        <div id="example1-xy" class="mouse-xy">MOUSE XY</div>
                             <nav class="collapse navbar-collapse" role="navigation">
         
                             </nav>
                         </div>
                         <!-- /top nav -->
-                        
+
+
                         <div class="main-content">
                             <div ng-view></div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- script references -->

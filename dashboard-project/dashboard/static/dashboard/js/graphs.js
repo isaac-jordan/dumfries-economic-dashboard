@@ -264,8 +264,11 @@ function linegraph(elemID, data,datasetLabels) {
         .y(function(d) {
             return yScale(d.y);
         })
-        .interpolate("basis");
-
+        var div = d3.select("body")
+	.append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+var bisectDate = d3.bisector(function(d) { return d.y; }).left;
      //In case of 1 element we append a circle with just a text
      if (clean_data[0].length==1){
 	vis.append('circle')
@@ -277,18 +280,69 @@ function linegraph(elemID, data,datasetLabels) {
 	   .text(clean_data[0][0].y+" for "+clean_data[0][0].x.getFullYear());
 	return;
 	}
+     var focus = vis.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+
+  focus.append("circle")
+      .attr("r", 4.5);
+
+  focus.append("text")
+      .attr("x", 9)
+      .attr("dy", ".35em");
+
     for (i=0; i<clean_data.length; i++) {
         vis.append('svg:path')
         .attr('d', lineGen(clean_data[i]))
         .attr('stroke', colours[i])
         .attr('stroke-width', 2)
-        .attr('fill', 'none');
-    }
+        .attr('fill', 'none')
+        .on("mouseover", mousemove)
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(10)
+                .style("opacity", 0.9);
+        })  }
+  function mousemove() {
+      var a = 0;
+      for (a = 0; a < clean_data.length; a++) {
 
-    console.log(datasetLabels)
+          var x0 = xScale.invert(d3.mouse(this)[a]).toFixed(0);
+          var y = yScale.invert(d3.mouse(this)[1]).toFixed(0),
+              i = bisectDate(clean_data, x0, a),
+              d0 = clean_data[i - 1],
+              d1 = clean_data[i + a],
+              d = x0 - d0 > d1 - x0 ? d1 : d0;
+
+
+          var x2 = Math.round(xScale(x0));
+          var y2 = Math.ceil(y / 10) * 10;
+          console.log(x0);
+          console.log(y2);
+          div.transition()
+
+              .duration(200)
+              .style("opacity", 0);
+          div.html("<b/>" + "X axis: " + x0 + "<br/>" + "Y axis: " + y)
+              .style("left", (d3.event.pageX) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+
+          /*vis.append('circle')
+           .attr('fill', "transparent")
+           .attr('stroke', colours[i])
+           .attr('stroke-width', 2)
+           .attr("cx", xScale(x0) )
+           .attr("cy",yScale(y2) )
+
+           .attr("r", 3.5);      }
+           */
+      }
+  }
+    console.log(datasetLabels);
    if(typeof datasetLabels !== 'undefined' || datasetLabels !=null){
        add_legend(elemID,vis,clean_data,colours,datasetLabels)
 };
+
 }
 
  
