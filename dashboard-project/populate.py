@@ -190,7 +190,7 @@ def populate():
     basepath = os.path.dirname(__file__)
     filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
     f = File(open(filepath))
-    csvFile = add_csvFile("CSV Real Monthly Sept 2015", housingCategory, realDataSource, f, "http://example.com")
+    csvFile = add_csvFile("Monthly House Pricing Sept 2015", housingCategory, realDataSource, f, "http://example.com")
     add_dimension("Dumfries and Galloway", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
     add_dimension("Scotland", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
     add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
