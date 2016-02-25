@@ -298,11 +298,13 @@ var bisectDate = d3.bisector(function(d) { return d.y; }).left;
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .on("mouseover", mousemove)
-        .on("mouseout", function(d) {
+.on("mousemove", function(d) {
             div.transition()
                 .duration(10)
-                .style("opacity", 0.9);
-        })  }
+                .style("opacity", 1)
+                .delay(1000)
+                .style("opacity",0);
+        }) }
   function mousemove() {
       var a = 0;
       for (a = 0; a < clean_data.length; a++) {
@@ -317,17 +319,13 @@ var bisectDate = d3.bisector(function(d) { return d.y; }).left;
 
           var x2 = Math.round(xScale(x0));
           var y2 = Math.ceil(y / 10) * 10;
-          console.log(x0);
-          console.log(y2);
-          div.transition()
-
-              .duration(200)
-              .style("opacity", 0);
+           div.transition()
+                .duration(200)
+                .style("opacity",0.9)
           div.html("<b/>" + "X axis: " + x0 + "<br/>" + "Y axis: " + y)
               .style("left", (d3.event.pageX) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
-
-          /*vis.append('circle')
+                        /*vis.append('circle')
            .attr('fill', "transparent")
            .attr('stroke', colours[i])
            .attr('stroke-width', 2)

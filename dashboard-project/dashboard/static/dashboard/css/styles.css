@@ -230,24 +230,7 @@ background-color:transparent;
             font-size: 0.6em;
         }
 
-.mouse-xy {
-    width: 150px;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: white;
-}
-.mouse-click {
-    margin-top: 10px;
-    width: 500px;
-    height: 200px;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: #ccc;
-}
-.focus circle {
-  fill: none;
-  stroke: steelblue;
-}
+
 .tooltip {
   line-height: 1;
   font-weight: bold;
@@ -257,25 +240,9 @@ background-color:transparent;
   border-radius: 2px;
 }
 
-/* Creates a small triangle extender for the tooltip */
-.tooltip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
 
-/* Style northward tooltips differently */
-.tooltip.n:after {
-  margin: 10px 10px 0 0;
-  top: 100%;
-  right: 10;
-}
+
+
 /*
 . dot {
     stroke: #000;
