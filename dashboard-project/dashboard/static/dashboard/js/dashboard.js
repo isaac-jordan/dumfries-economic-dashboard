@@ -9,7 +9,7 @@ var drawAllGraphs = function() {
     for (var i = 0; i < GLOBAL.widgets.length; i++) {
         //console.log("Drawing graph: " + GLOBAL.widgets[i].id);
         if (GLOBAL.widgets[i].dataset) {
-            drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels);
+            drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels,GLOBAL.widgets[i].xLabel,GLOBAL.widgets[i].yLabel);
         }
         
     }
@@ -414,7 +414,7 @@ app.controller('categoryController', function($scope, $timeout) {
     var drawCategoryGraphs = function() {
         for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
             var widget = GLOBAL.currentCategoryWidgets[i];
-            drawGraph("graph" + widget.pk, widget.dataset, widget.type,widget.datasetLabels);
+            drawGraph("graph" + widget.pk, widget.dataset, widget.type,widget.datasetLabels,widget.xLabel,widget.yLabel);
             //add_Trend_Element("graph" + widget.pk);
         }
     };
