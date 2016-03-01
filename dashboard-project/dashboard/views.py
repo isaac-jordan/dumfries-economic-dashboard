@@ -89,9 +89,6 @@ def category(request, categoryName):
         category = category[0]
     return render(request, "dashboard/pages/category.djhtml", {"category": category, "widgets": widgets, "widgetsJSON": json.dumps(widgets, cls=dateutil.DatetimeEncoder), "error": error})
 
-def addGraphs(request):
-    graphs = Visualisation.objects.filter()
-
 @login_required
 def savedConfigs(request):
     configs = SavedConfig.objects.filter(user=request.user)
