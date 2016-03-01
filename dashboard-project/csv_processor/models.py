@@ -16,6 +16,20 @@ import itertools
 
 from dashboard.models import Visualisation, DashboardDataset, Category
 
+def convertCustomFormattingToStrpTime(dateString, formatString):
+    if "%Q" in formatString:
+        # %Q matches 'Q1', 'Q2', 'Q3', and 'Q4'.
+        dateString = dateString.replace("Q1", "Mar")
+        dateString = dateString.replace("Q2", "Jun")
+        dateString = dateString.replace("Q3", "Sep")
+        dateString = dateString.replace("Q4", "Dec")
+    return dateString
+
+def convertCustomFormattingToStrpTimeFormat(formatString):
+    if "%Q" in formatString:
+        formatString = formatString.replace("%Q", "%b")
+    return formatString
+
 class CsvFile(Importer):
     """
     A subclass of Importer.
@@ -93,6 +107,10 @@ class CsvFile(Importer):
             # Format data!
             locale.setlocale(locale.LC_ALL, 'en_GB.UTF8')
             if dimension.dataType == "date":
+                # Custom Format Specifiers
+                localData = [convertCustomFormattingToStrpTime(d.encode('utf-8'), dimension.dataFormat)  for d in localData]
+                
+                dimension.dataFormat = convertCustomFormattingToStrpTimeFormat(dimension.dataFormat)
                 # Use dimension.format as a strptime to retrieve DateTime object
                 #print "FORMAT: " + dimension.dataFormat
                 localData = [datetime.strptime(d.encode('utf-8'), dimension.dataFormat) for d in localData]

@@ -129,6 +129,33 @@ class CSVImportTest(TestCase):
                                         makeXaxisOnGraph = True,
                                         csvFile = csvFile)
         
+        filepath = os.path.abspath(os.path.join(basepath, "static", "csv_processor", "test", "data", "employment-quarters-testing.csv"))
+        f = File(open(filepath))
+        csvFile = CsvFile.objects.get_or_create(visualisationName="employment-quarters",
+                                      category = category,
+                                      dataSource = dataSource,
+                                      upload = f,
+                                      source = "http://test5.example.com"
+                                      )[0]
+        Dimension.objects.get_or_create(label="Dumfries and Galloway",
+                                        indexForLabel = 2,
+                                        type = "row",
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 31,
+                                        dataType = "numeric",
+                                        dataFormat = "",
+                                        makeXaxisOnGraph = False,
+                                        csvFile = csvFile)
+        Dimension.objects.get_or_create(label="Year-Quarter",
+                                        index = 9,
+                                        type = "row",
+                                        dataStartIndex = 3,
+                                        dataEndIndex = 31,
+                                        dataType = "date",
+                                        dataFormat = "%Y-%Q",
+                                        makeXaxisOnGraph = True,
+                                        csvFile = csvFile)
+        
     def tearDown(self):
         shutil.rmtree(settings.MEDIA_ROOT)
         settings.MEDIA_ROOT = self.__old_media_root
@@ -186,5 +213,10 @@ class CSVImportTest(TestCase):
         '
         """
         csvFile = CsvFile.objects.get(visualisationName="hospital-admissions")
+        csvFile.createDashboardInfo()
+        self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
+        
+    def test_csv_import_quarters_date_format(self):
+        csvFile = CsvFile.objects.get(visualisationName="employment-quarters")
         csvFile.createDashboardInfo()
         self.assertTrue(len(json.loads(csvFile.dataJson)) == 1, "CsvFile.createDashboardInfo made dataJson incorrect for 2 Dimensions")
