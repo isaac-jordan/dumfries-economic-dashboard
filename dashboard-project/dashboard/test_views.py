@@ -27,6 +27,10 @@ class TestAuthViews(TestCase):
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'dashboard/pages/login.djhtml')
+        response = self.client.get(reverse('savedConfigs'))
+        self.assertTemplateUsed(response, 'dashboard/pages/savedConfigs.djhtml')
+        print response.context['configurations']
+        self.assertTrue(not response.context['configurations'])
 
     def test_ajax_login_view_fails_blank(self):
         """Check AJAX login handles blank data dictionary."""
@@ -138,9 +142,10 @@ class TestSearchView(TestCase):
         response = self.client.get(reverse('search', kwargs={"searchTerm": "test" }))
         self.assertTrue(len(response.context["results"]) == 1, "Search test returned incorrect number of results.")
         self.assertTrue(response.context["results"][0]["name"] == "TestVis", "Search result has incorrect name")
+        self.assertTemplateUsed(response,'dashboard/pages/searchResults.djhtml')
 
     def test_searchTerm_is_None(self):
-        response = self.client.get(reverse('search',kwargs={"searchTerm":None }))
+        response = self.client.get(reverse('search',kwargs={"searchTerm":'' }))
         self.assertTemplateUsed(response, 'dashboard/pages/searchResults.djhtml')
 
     def test_category_list(self):
@@ -183,8 +188,21 @@ class TestSearchView(TestCase):
 
     def test_category_view_less_than_one_category(self):
         response = self.client.get(reverse('category', kwargs={"categoryName" : "NONETest" }))
-
         self.assertTrue(response.context['error']=="Category 'NONETest' name not found.")
+
+    def test_ajax_GetTrend(self):
+        vis1 = Visualisation.objects.get(name='STUFF')
+        response = self.client.get(reverse('ajax_getTrend'),{"id": vis1.pk})
+        jsonResponse=json.loads(response.content)
+        self.assertEqual(jsonResponse["pk"],vis1.pk)
+
+    def test_ajax_getTrend_noID(self):
+        vis1 = Visualisation.objects.get(name='STUFF')
+        response = self.client.get(reverse('ajax_getTrend'))
+        self.assertEqual(response.status_code, 400)
+
+
+
 
 
 
