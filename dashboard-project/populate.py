@@ -1,7 +1,6 @@
 # coding=UTF8
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard.settings')
-from csv_processor.fileConverter import findFilePath
 import django
 from django.contrib.auth.models import User
 from django.core.files import File
