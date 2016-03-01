@@ -6,12 +6,12 @@
             <div class="col-sm-4">
                 <div class="pull-right">
                     <div class="btn-group"> 
-                        <a title="settings dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span class="glyphicon glyphicon-cog" ></a>
+                        <a title="settings dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" href=""><span class="glyphicon glyphicon-cog" ></a>
                         <ul class="dropdown-menu">
                             <li><a href="" ng-click="getTrendData(widget.pk);">Add Trend</a></li>
                         </ul>
                         <a title="Information" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="Source: <a href='{{ widget.sourceLink }}' target='_blank'>{{ widget.sourceName }}</a>" ng-click="showPopover($event)"><i class="glyphicon glyphicon-info-sign"></i></a>
-                        <a title="Remove widget" ng-click="deleteWidget($index)"><span class="glyphicon glyphicon-remove"></a>
+                        <a title="Remove widget" ng-click="deleteWidget($index)" href=""><span class="glyphicon glyphicon-remove"></a>
                     </div>
                 </div>
             </div>

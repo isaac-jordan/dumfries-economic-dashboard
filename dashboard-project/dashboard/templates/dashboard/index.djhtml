@@ -108,6 +108,7 @@ document.writeln('<link rel="stylesheet" type="text/css" href="' + styleFile + '
         <script src="{% static "dashboard/js/angular-gridster.min.js" %}"></script>
         <script src="{% static "dashboard/js/daterangepicker_file.js" %}"></script>
         <script src="{% static "dashboard/js/graphs.js" %}"></script>
+        <script src="{% static "dashboard/js/generate-pdf.js" %}"></script>
         <script src="{% static "dashboard/js/dashboard.js" %}"></script>
         <script src="{% static "dashboard/js/jspdf.min.js" %}"></script>
         <script src="{% static "dashboard/js/styleswitcher.js" %}"></script>
