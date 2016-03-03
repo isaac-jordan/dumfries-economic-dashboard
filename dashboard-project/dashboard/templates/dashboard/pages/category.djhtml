@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <p>Maximum: {{ widget.trends.maxY.y | intcomma }} at {{ widget.trends.maxY.x }}</p>
-                                <p>Minimum: {{ widget.trends.minY.y | intcomma }} at {{ widget.trends.minY.x }}</p>
+                                <p>Maximum: {{ widget.trends.maxY.y | intcomma }} at {{ widget.trends.maxY.x | date:"d M Y" }}</p>
+                                <p>Minimum: {{ widget.trends.minY.y | intcomma }} at {{ widget.trends.minY.x | date:"d M Y" }}</p>
                                 {% for analysis in widget.trends.analysis %}
                                 <h3>{{ analysis.name }} Line Statistics</h3>
                                 

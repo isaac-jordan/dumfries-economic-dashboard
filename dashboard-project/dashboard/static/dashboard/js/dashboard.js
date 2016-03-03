@@ -143,6 +143,18 @@ app.controller('mainController', function($scope, $location, $timeout) {
         });
     };
     
+    $scope.getStringFromPossibleDateTime = function(input) {
+        var timestamp=Date.parse(input);
+
+        if (isNaN(timestamp) === false)
+        {
+            var d = new Date(timestamp);
+            var options = { year: "numeric", month: "short", day: "2-digit" };
+            return d.toLocaleDateString("en-GB", options);
+        }
+        return input;
+    };
+    
     $("#searchForm").submit(function(event) {
         
         /* stop form from submitting normally */

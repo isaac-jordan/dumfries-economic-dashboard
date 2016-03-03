@@ -12,8 +12,8 @@
         </div>
     </div>
     <div class="panel-body">
-        <p>Maximum: {{ widget.trends.maxY.y | number:1 }} at {{ widget.trends.maxY.x }}</p>
-        <p>Minimum: {{ widget.trends.minY.y | number:1 }} at {{ widget.trends.minY.x }}</p>
+        <p>Maximum: {{ widget.trends.maxY.y | number:1 }} at {{ getStringFromPossibleDateTime(widget.trends.maxY.x) }}</p>
+        <p>Minimum: {{ widget.trends.minY.y | number:1 }} at {{ getStringFromPossibleDateTime(widget.trends.minY.x) }}</p>
         
         <div ng-repeat="analysis in widget.trends.analysis">
             <h3>{{ analysis.name }} Line Statistics</h3>
