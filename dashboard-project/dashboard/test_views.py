@@ -99,8 +99,7 @@ class TestSavedConfigView(TestCase):
         DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":34},{"x":datetime.datetime(2002,1,1),"y":532}],cls=dateutil.DatetimeEncoder))
         vis2 = Visualisation.objects.create(dataSource=ds2, category=cat2, name="STUFF", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         DashboardDataset.objects.create(visualisation=vis2, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":152},{"x":datetime.datetime(2002,1,1),"y":185}],cls=dateutil.DatetimeEncoder))
-        testingData=[{u'yPosition': 0, u'sizeX': 2, u'sizeY': 1, u'xPosition': 0, u'isTrendWidget': False, u'visPK': 1},
-                     {u'yPosition': 0, u'sizeX': 2, u'sizeY': 1, u'xPosition': 2, u'isTrendWidget': False, u'visPK': 2}]
+        testingData=[{u'yPosition': 0, u'sizeX': 2, u'sizeY': 1, u'xPosition': 0, u'isTrendWidget': False, u'visPK': 1}]
         user1=User.objects.get(username='test@example.com')
         savedConfig=SavedConfig.objects.create(name='test',user = user1)
         for graph in testingData:
@@ -159,11 +158,14 @@ class TestSavedConfigView(TestCase):
         self.assertEqual(json.loads(response.content)['success'], False)
 
     def test_ajaxLoadSavedConfig(self):
-        testing = '[{"category": "CategoryTest", "name": "TestVis", "sourceName": "test", "sourceLink": "", "sizeX": 2, "sizeY": 1, "dataset": [[{"y": 34, "x": "2000-01-01T00:00:00Z"}, {"y": 532, "x": "2002-01-01T00:00:00Z"}]], "col": 0, "xLabel": "X-Label", "yLabel": "Y-Label", "datasetLabels": [null], "pk": 1, "type": "", "id": "vis1", "row": 0}, {"category": "STUFF", "name": "STUFF", "sourceName": "STUFF", "sourceLink": "", "sizeX": 2, "sizeY": 1, "dataset": [[{"y": 152, "x": "2000-01-01T00:00:00Z"}, {"y": 185, "x": "2002-01-01T00:00:00Z"}]], "col": 2, "xLabel": "X-Label", "yLabel": "Y-Label", "datasetLabels": [null], "pk": 2, "type": "", "id": "vis2", "row": 0}]'
+        testing = [{'sourceName': u'test', 'sizeX': 2, 'sizeY': 1,
+                    'dataset': [[{u'y': 34, u'x': u'2000-01-01T00:00:00Z'}, {u'y': 532, u'x': u'2002-01-01T00:00:00Z'}]],
+                    'datasetLink': u'', 'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis1', 'row': 0, 'category': u'CategoryTest',
+                    'datasetName': None, 'name': u'TestVis', 'sourceLink': u'',
+                    'datasetLabels': [None], 'pk': 1, 'type': u'', 'col': 0}]
         self.client.login(username='test@example.com', password='test')
         response=self.client.post(reverse('ajax_loadSavedConfig'),{'id':1})
         jsonResponse = json.loads(response.content)
-        new = json.loads(testing)
         def deep_sort(obj):
             """
             Recursively sort list or dict nested lists
@@ -184,9 +186,11 @@ class TestSavedConfigView(TestCase):
                 _sorted = obj
 
             return _sorted
-        testDict = deep_sort(new[0])
+        testDict = deep_sort(testing[0])
         testDict2=deep_sort(jsonResponse['widgets'][0])
-        self.assertDictEqual(testDict, testDict2, "getWidget() did not return the correct widget.")
+        from unittest import TestCase
+        TestCase.maxDiff = None
+        self.assertDictEqual(testDict, testDict2)
 
     def test_ajaxLoadSaved_different_User(self):
         self.client.login(username='test2@example.com', password='test2')
@@ -286,9 +290,6 @@ class TestSearchView(TestCase):
             return _sorted
          testDict = deep_sort(testList[0])
          testDict2=deep_sort(response.context['widgets'][0])
-         print
-         print testDict
-         print testDict2
          self.assertDictEqual(testDict, testDict2, "getWidget() did not return the correct widget.")
 
     def test_category_view_less_than_one_category(self):
