@@ -270,34 +270,50 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
             .attr('stroke', colours[i])
             .attr('stroke-width', 2)
             .attr('fill', 'none')
+.on("mousemove", function(d) {
+            div.transition()
+                .duration(10)
+                .style("opacity", 1)
+                .delay(1000)
+                .style("opacity",0);
+        })
             .on("mouseover", mousemove)
-            .on("mousemove", function(d) {
-                div.transition()
-                    .duration(10)
-                    .style("opacity", 1)
-                    .delay(1000)
-                    .style("opacity",0);
-            }) }
+
+            }
+
+    function kiklos() {
+        for (var a = 0; a < clean_data.length; a++) {
+            for (var i = 0; i < clean_data[a].length; i++) {
+        vis.append('circle')
+            .attr("cx", xScale(clean_data[a][i].x.getFullYear()+(clean_data[a][i].x.getMonth())/12))
+            .attr("cy", yScale(clean_data[a][i].y))
+            .attr("r", 4.5);
+
+            }
+        }
+    }
     function mousemove() {
         var a = 0;
         for (a = 0; a < clean_data.length; a++) {
 
-            var x0 = xScale.invert(d3.mouse(this)[a]).toFixed(0);
+            var x0 = xScale.invert(d3.mouse(this)[0]).toFixed(0);
             var y = yScale.invert(d3.mouse(this)[1]).toFixed(0),
                 i = bisectDate(clean_data, x0, a),
                 d0 = clean_data[i - 1],
                 d1 = clean_data[i + a],
                 d = x0 - d0 > d1 - x0 ? d1 : d0;
-
-
+            console.log(yLabel);
             var x2 = Math.round(xScale(x0));
             var y2 = Math.ceil(y / 10) * 10;
             div.transition()
-                .duration(200)
+                .duration(10)
                 .style("opacity",0.9)
-            div.html("<b/>" + "X axis: " + x0 + "<br/>" + "Y axis: " + y)
+            div.html(yLabel+"<b/>" +": " + y+  "<br/>"  + xLabel +": " +x0)
+
                 .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
+                .style("top", (d3.event.pageY - 28) + "px")
+
+
             /*vis.append('circle')
              .attr('fill', "transparent")
              .attr('stroke', colours[i])
