@@ -197,8 +197,7 @@ background-color:transparent;
 
 
 .chart.bar text {
-  fill: white;
-  font: 10px sans-serif;  /*Leaving this as px for now since it's not the final graph format*/
+  font: 12px sans-serif;  /*Leaving this as px for now since it's not the final graph format*/
   text-anchor: end;
 }
 

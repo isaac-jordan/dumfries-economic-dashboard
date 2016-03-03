@@ -54,16 +54,32 @@ function bargraph(elemID, data,xLabel,yLabel) {
 
 
     bar.append("text")
+        .attr("fill","white")
         .attr("x", function (d) {
             return x(d.y) - 3;
         })
         .attr("y", barHeight / 2)
         .attr("dy", ".35em")
         .text(function (d) {
-            return d.y;
+            return (d.x+" "+d.y);
         });
+    console.log(yLabel);
 }
-
+function add_Trend_Element(elemID){
+    var vis = d3.select("#" + elemID);
+    vis.append("text")
+        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ ($("#" + elemID).width()-100) +","+(($("#" + elemID).height()-250))+")")  // centre below axis
+        .text("Highest Value was : 500")
+        .append('svg:tspan')
+        .attr('x', -40)
+        .attr('dy', 15)
+        .text("Now is : 300")
+        .append('svg:tspan')
+        .attr('x', -40)
+        .attr('dy', 15)
+        .text("Lowest was : 100");
+}
 function cleanup_data(data, type, clean_data){
     var dates=$('input[name="daterange"]').val();//get daterangepicker's value
     var end_date=new Date();
@@ -210,6 +226,7 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     }else if(type!="normal"){
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax+1]);
     }
+    if (type!="normal") {}
     var datelength=xMax-xMin;
     xAxis = d3.svg.axis()
         .scale(xScale)
@@ -229,6 +246,9 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         .attr("class", "x axis")
         .attr("transform", "translate(0," + (HEIGHT - MARGINS.top) + ")")
         .call(xAxis);
+
+
+
 
     var lineGen = d3.svg.line()
         .x(function(d) {
@@ -345,4 +365,4 @@ function add_axis_labels(vis,xLabel,yLabel,WIDTH,HEIGHT,MARGINS){
         .text(xLabel);
 }
 
- 
+
