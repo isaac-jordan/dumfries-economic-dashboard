@@ -28,7 +28,7 @@ def setUpEntries():
     JSONdataset=json.dumps(dataset, cls=util.DatetimeEncoder)
     cat = Category.objects.get_or_create(name="test_category")[0]
     vis = Visualisation.objects.get_or_create(dataSource=ds, name="testVis", category=cat, type="line", xLabel="Year", sizeY=2, sizeX=2)[0]
-    data = DashboardDataset.objects.get_or_create(name='testDataSet', dataJSON=JSONdataset, visualisation=vis)[0]
+    data = DashboardDataset.objects.get_or_create(name='testDataSet', dataJSON=JSONdataset, visualisation=vis, link="http://example.com")[0]
     
     user = User.objects.create_user(username='test', email='test@...', password='top_secret')
     savedconfig = SavedConfig.objects.get_or_create(name="testSavedConfig", user=user)[0]
@@ -141,6 +141,8 @@ class TestVisualisation(TestCase):
                            'datasetLabels': ["testDataSet"],
                            'sourceName': "test_datasource",
                            'sourceLink': '',
+                           'datasetName': "testDataSet",
+                           'datasetLink': "http://example.com",
                            'xLabel': "Year",
                            'yLabel': "",
                            'sizeX': 2,

@@ -136,7 +136,7 @@ class TestSearchView(TestCase):
         vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
         DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":20,"y":152},{"x":20,"y":185}]))
         vis2 = Visualisation.objects.create(dataSource=ds2, category=cat2, name="STUFF", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
-        DashboardDataset.objects.create(visualisation=vis2, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":152},{"x":datetime.datetime(2002,1,1),"y":185}],cls=dateutil.DatetimeEncoder))
+        DashboardDataset.objects.create(visualisation=vis2, name="dataset", link="http://example.com", dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":152},{"x":datetime.datetime(2002,1,1),"y":185}],cls=dateutil.DatetimeEncoder))
 
     def test_search_returns_result(self):
         response = self.client.get(reverse('search', kwargs={"searchTerm": "test" }))
@@ -160,7 +160,14 @@ class TestSearchView(TestCase):
          response = self.client.get(reverse('category', kwargs={"categoryName" : "STUFF" }))
          self.assertTemplateUsed(response, 'dashboard/pages/category.djhtml')
          self.assertTrue(response.context['error'] is None)
-         testList = [{'sourceName': u'STUFF', 'sizeX': 2, 'sizeY': 2, 'dataset': [[{u'y': 152, u'x': u'2000-01-01T00:00:00Z'}, {u'y': 185, u'x': u'2002-01-01T00:00:00Z'}]], 'trends': {'minY': {'y': 152, 'x': datetime.datetime(2000, 1, 1, 0, 0, tzinfo=tzutc())}, 'maxY': {'y': 185, 'x': datetime.datetime(2002, 1, 1, 0, 0, tzinfo=tzutc())}, 'analysis': [{'name': 'Dashboard Dataset 2'}]}, 'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis2', 'category': u'STUFF', 'name': u'STUFF', 'sourceLink': u'', 'datasetLabels': [None], 'pk': 2, 'type': u''}]
+         testList = [{'sourceName': u'STUFF', 'sizeX': 2, 'sizeY': 2,
+                      'dataset': [[{u'y': 152, u'x': u'2000-01-01T00:00:00Z'}, {u'y': 185, u'x': u'2002-01-01T00:00:00Z'}]],
+                      'trends': {'minY': {'y': 152, 'x': datetime.datetime(2000, 1, 1, 0, 0, tzinfo=tzutc())},
+                                 'maxY': {'y': 185, 'x': datetime.datetime(2002, 1, 1, 0, 0, tzinfo=tzutc())},
+                                 'analysis': [{'name': 'dataset'}]},
+                      'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis2', 'category': u'STUFF',
+                      'name': u'STUFF', 'sourceLink': u'', "datasetName":"dataset", "datasetLink":"http://example.com",
+                      'datasetLabels': ["dataset"], 'pk': 2, 'type': u''}]
          self.assertTrue(response.context['category'].name == "STUFF")
          def deep_sort(obj):
             """
@@ -184,6 +191,9 @@ class TestSearchView(TestCase):
             return _sorted
          testDict = deep_sort(testList[0])
          testDict2=deep_sort(response.context['widgets'][0])
+         print
+         print testDict
+         print testDict2
          self.assertDictEqual(testDict, testDict2, "getWidget() did not return the correct widget.")
 
     def test_category_view_less_than_one_category(self):
