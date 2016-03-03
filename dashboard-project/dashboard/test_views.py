@@ -7,7 +7,7 @@ from django.http import JsonResponse, HttpResponse
 from csv_processor import util
 from dataset_importer import util as dateutil
 from dateutil.tz import *
-
+from django.db.models import Q
 
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
 
@@ -29,7 +29,6 @@ class TestAuthViews(TestCase):
         self.assertTemplateUsed(response, 'dashboard/pages/login.djhtml')
         response = self.client.get(reverse('savedConfigs'))
         self.assertTemplateUsed(response, 'dashboard/pages/savedConfigs.djhtml')
-        print response.context['configurations']
         self.assertTrue(not response.context['configurations'])
 
     def test_ajax_login_view_fails_blank(self):
@@ -90,13 +89,109 @@ class TestAuthViews(TestCase):
         
 class TestSavedConfigView(TestCase):
     def setUp(self):
-        User.objects.create_user("user", "test@example.com", "test")
+        User.objects.create_user("test@example.com", password="test")
+        User.objects.create_user("test2@example.com", password="test2")
+        ds1 = Datasource.objects.create(name="test")
+        ds2 = Datasource.objects.create(name="STUFF")
+        cat = Category.objects.create(name="CategoryTest")
+        cat2 = Category.objects.create(name="STUFF")
+        vis1 = Visualisation.objects.create(dataSource=ds1, category=cat, name="TestVis", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
+        DashboardDataset.objects.create(visualisation=vis1, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":34},{"x":datetime.datetime(2002,1,1),"y":532}],cls=dateutil.DatetimeEncoder))
+        vis2 = Visualisation.objects.create(dataSource=ds2, category=cat2, name="STUFF", sizeX=2, sizeY=2, yLabel="Y-Label", xLabel="X-Label")
+        DashboardDataset.objects.create(visualisation=vis2, dataJSON=json.dumps([{"x":datetime.datetime(2000,1,1),"y":152},{"x":datetime.datetime(2002,1,1),"y":185}],cls=dateutil.DatetimeEncoder))
+        testingData=[{u'yPosition': 0, u'sizeX': 2, u'sizeY': 1, u'xPosition': 0, u'isTrendWidget': False, u'visPK': 1},
+                     {u'yPosition': 0, u'sizeX': 2, u'sizeY': 1, u'xPosition': 2, u'isTrendWidget': False, u'visPK': 2}]
+        user1=User.objects.get(username='test@example.com')
+        savedConfig=SavedConfig.objects.create(name='test',user = user1)
+        for graph in testingData:
+            vis = Visualisation.objects.filter(id=graph["visPK"])[0]
+
+            savedGraph = SavedGraph.objects.create(visualisation=vis,
+                                               savedConfig=savedConfig,
+                                               isTrendWidget = graph["isTrendWidget"],
+                                               xPosition=graph["xPosition"],
+                                               yPosition=graph["yPosition"],
+                                               sizeX=graph["sizeX"],
+                                               sizeY=graph["sizeY"])
+            savedGraph.save()
+
+    def test_save_config(self):
+        vis1 = Visualisation.objects.get(name='STUFF')
+        vis2 = Visualisation.objects.get(name='TestVis')
+        user = User.objects.get(username='test@example.com')
+        data = [{"visPK":1,"xPosition":0,"yPosition":0,"sizeX":2,"sizeY":1,"isTrendWidget":False},
+                {"visPK":2,"xPosition":2,"yPosition":0,"sizeX":2,"sizeY":1,"isTrendWidget":False}]
+        jsondata=json.dumps(data)
+        self.client.login(username='test@example.com', password='test')
+        response = self.client.post(reverse('saveConfig'),{'name':'test1',"data":jsondata})
+        savedConfig = SavedConfig.objects.get(name="test1")
+        testSaved = SavedGraph.objects.filter(savedConfig=savedConfig)
+        self.assertEqual(testSaved.count()>0,True)
+        self.assertEqual(json.loads(response.content)['message'],'Added new Saved Configuration.')
+        self.assertEqual(json.loads(response.content)['success'],True)
+
+    def test_save_config_empty_name(self):
+        self.client.login(username='test@example.com', password='test')
+        data = [{"visPK":1,"xPosition":0,"yPosition":0,"sizeX":2,"sizeY":1,"isTrendWidget":False},
+                {"visPK":2,"xPosition":2,"yPosition":0,"sizeX":2,"sizeY":1,"isTrendWidget":False}]
+        jsondata=json.dumps(data)
+        response = self.client.post(reverse('saveConfig'),{'name':'','data':jsondata})
+        self.assertEqual(json.loads(response.content)['message'],"Failed to add new Saved Config name must be specified")
+        self.assertEqual(json.loads(response.content)['success'], False)
+
+    def test_save_config_not_list(self):
+        self.client.login(username='test@example.com', password='test')
+        response = self.client.post(reverse('saveConfig'),{'name':'test2','data':'sdsfdsfs'})
+        self.assertEqual(json.loads(response.content)['message'],"Failed to add new Saved Config incorrect data format")
+        self.assertEqual(json.loads(response.content)['success'], False)
+
+    def test_save_config_not_dict_in_list(self):
+        self.client.login(username='test@example.com', password='test')
+        response = self.client.post(reverse('saveConfig'),{'name':'test3','data':'[sdsfdsfs,fsdfsdfsd]'})
+        self.assertEqual(json.loads(response.content)['message'],"Failed to add new Saved Config incorrect data format")
+        self.assertEqual(json.loads(response.content)['success'], False)
     
     def test_savedConfig_view_denies_anonymous(self):
         """Check that savedConfigs denies anonymous users and redirects to login page."""
         response = self.client.get(reverse('savedConfigs'), follow=True)
         self.assertRedirects(response, reverse('login') + "/?next=" + reverse('savedConfigs'))
         response = self.client.post(reverse('ajax_login'), follow=True)
+        self.assertEqual(json.loads(response.content)['success'], False)
+
+    def test_ajaxLoadSavedConfig(self):
+        testing = '[{"category": "CategoryTest", "name": "TestVis", "sourceName": "test", "sourceLink": "", "sizeX": 2, "sizeY": 1, "dataset": [[{"y": 34, "x": "2000-01-01T00:00:00Z"}, {"y": 532, "x": "2002-01-01T00:00:00Z"}]], "col": 0, "xLabel": "X-Label", "yLabel": "Y-Label", "datasetLabels": [null], "pk": 1, "type": "", "id": "vis1", "row": 0}, {"category": "STUFF", "name": "STUFF", "sourceName": "STUFF", "sourceLink": "", "sizeX": 2, "sizeY": 1, "dataset": [[{"y": 152, "x": "2000-01-01T00:00:00Z"}, {"y": 185, "x": "2002-01-01T00:00:00Z"}]], "col": 2, "xLabel": "X-Label", "yLabel": "Y-Label", "datasetLabels": [null], "pk": 2, "type": "", "id": "vis2", "row": 0}]'
+        self.client.login(username='test@example.com', password='test')
+        response=self.client.post(reverse('ajax_loadSavedConfig'),{'id':1})
+        jsonResponse = json.loads(response.content)
+        new = json.loads(testing)
+        def deep_sort(obj):
+            """
+            Recursively sort list or dict nested lists
+            """
+
+            if isinstance(obj, dict):
+                _sorted = {}
+                for key in sorted(obj):
+                    _sorted[key] = deep_sort(obj[key])
+
+            elif isinstance(obj, list):
+                new_list = []
+                for val in obj:
+                    new_list.append(deep_sort(val))
+                _sorted = sorted(new_list)
+
+            else:
+                _sorted = obj
+
+            return _sorted
+        testDict = deep_sort(new[0])
+        testDict2=deep_sort(jsonResponse['widgets'][0])
+        self.assertDictEqual(testDict, testDict2, "getWidget() did not return the correct widget.")
+
+    def test_ajaxLoadSaved_different_User(self):
+        self.client.login(username='test2@example.com', password='test2')
+        response = self.client.post(reverse('ajax_loadSavedConfig'),{'id':1})
+        self.assertEqual(json.loads(response.content)['message'],'Error: This Saved Configuration does not belong to you.')
         self.assertEqual(json.loads(response.content)['success'], False)
         
 class TestGraphsView(TestCase):

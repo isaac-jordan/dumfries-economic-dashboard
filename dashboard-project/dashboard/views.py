@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
 
+
+
 # Local Imports
 from models import Datasource, DashboardDataset, Visualisation, SavedConfig, SavedGraph, Category
 from csv_processor import util
@@ -94,13 +96,18 @@ def savedConfigs(request):
     configs = SavedConfig.objects.filter(user=request.user)
     return render(request, "dashboard/pages/savedConfigs.djhtml", {"configurations": configs})
 
+@login_required
 def saveConfig(request):
     dataJSON = request.POST["data"]
     name = request.POST["name"]
-    data = json.loads(dataJSON)
+    try:
+        data = json.loads(dataJSON)
+    except:
+        return JsonResponse({'message':"Failed to add new Saved Config incorrect data format",'success':False})
+    if name =='':
+        return JsonResponse({'message':"Failed to add new Saved Config name must be specified",'success':False})
     savedConfig = SavedConfig.objects.create(user=request.user, name=name)
     savedConfig.save()
-    
     for graph in data:
         vis = Visualisation.objects.filter(id=graph["visPK"])[0]
         
@@ -113,7 +120,7 @@ def saveConfig(request):
                                                sizeY=graph["sizeY"])
         savedGraph.save()
     return JsonResponse({'message':'Added new Saved Configuration.', "success": True})
-
+@login_required
 def ajaxloadSavedConfig(request):
     scid = request.POST["id"]
     savedConfig = SavedConfig.objects.filter(id=scid)[0]
@@ -138,7 +145,6 @@ def ajaxloadSavedConfig(request):
             widget["trends"] = vis.calculateTrendData()
             del widget["dataset"]
         widgets.append(widget)
-        print widget
     return JsonResponse({"widgets": widgets})
 
 def ajaxDeleteSavedConfig(request):
