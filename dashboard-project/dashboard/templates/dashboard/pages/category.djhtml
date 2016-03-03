@@ -24,7 +24,6 @@
                                     <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
                                     <div class="col-sm-4">
                                         <div class="pull-right">
-                                            <a title="settings"><span class="glyphicon glyphicon-cog"></a>
                                             <a title="Information" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" data-content="Source: <a href='{{ widget.sourceLink }}' target='_blank'>{{ widget.sourceName }}</a>" ng-click="showPopover($event)"><i class="glyphicon glyphicon-info-sign"></i></a>
                                         </div>
                                     </div>

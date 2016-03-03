@@ -58,6 +58,9 @@ class Visualisation(models.Model):
         """
         Returns all the required info for displaying this visualisation.
         """
+        
+        firstDataset = DashboardDataset.objects.filter(visualisation=self)[0]
+        
         widget = {'name': self.name,
                            'id': "vis" + str(self.pk),
                            'pk': self.pk,
@@ -67,6 +70,8 @@ class Visualisation(models.Model):
                            'datasetLabels': [d.name for d in DashboardDataset.objects.filter(visualisation=self)],
                            'sourceName': self.dataSource.name,
                            'sourceLink': self.dataSource.link,
+                           'datasetName': firstDataset.name,
+                           'datasetLink': firstDataset.link,
                            'xLabel': self.xLabel,
                            'yLabel': self.yLabel,
                            'sizeX': self.sizeX,
@@ -116,6 +121,19 @@ class Visualisation(models.Model):
     def getTrendWidget(self):
         trendData = self.calculateTrendData()
         
+        count = sum(len(v) for v in trendData["analysis"])
+        
+        if (count < 1):
+            sizeY = 1
+        elif (count < 5):
+            sizeY = 2
+        elif (count < 10):
+            sizeY = 3
+        else:
+            sizeY = 4
+            
+        firstDataset = DashboardDataset.objects.filter(visualisation=self)[0]
+        
         widget = {'name': self.name,
                            'id': "trend" + str(self.pk),
                            'pk': self.pk,
@@ -124,8 +142,10 @@ class Visualisation(models.Model):
                            'trends': trendData,
                            'sourceName': self.dataSource.name,
                            'sourceLink': self.dataSource.link,
+                           'datasetName': firstDataset.name,
+                           'datasetLink': firstDataset.link,
                            'sizeX': self.sizeX,
-                           'sizeY': 4}
+                           'sizeY': sizeY}
         return widget
         
     

@@ -13,12 +13,13 @@ var drawAllGraphs = function() {
         }
         
     }
-    $('[data-toggle="popover"]').popover({html: true});
+    
 };
 
 var showPopover = function(event) {
-        $(event.target).closest('[data-toggle="popover"]').popover("toggle");
-    };
+    $('[data-toggle="popover"]').popover({html: true});
+    $(event.target).closest('[data-toggle="popover"]').popover("toggle");
+};
 
 app.run(function($rootScope, $templateCache) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
@@ -326,6 +327,8 @@ app.controller('categoryController', function($scope, $timeout) {
 	  drawCategoryGraphs();
 	});
     drawCategoryGraphs();
+    
+    $scope.showPopover = showPopover;
 });
 
 app.controller("searchController", function($scope) {

@@ -62,7 +62,6 @@ function bargraph(elemID, data,xLabel,yLabel) {
         .text(function (d) {
             return d.y;
         });
-    console.log(yLabel);
 }
 function add_Trend_Element(elemID){
     var vis = d3.select("#" + elemID);

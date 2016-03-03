@@ -181,7 +181,7 @@ class CsvFile(Importer):
         importedDatasets = self.importData()
         dimensions = self.dimensions.all()
         for dataset, dimension in itertools.izip(importedDatasets, dimensions):
-            DashboardDataset.objects.create(name=dimension.label, visualisation=vis, dataJSON=json.dumps(dataset, cls=datasetUtil.DatetimeEncoder))
+            DashboardDataset.objects.create(name=dimension.label, visualisation=vis, dataJSON=json.dumps(dataset, cls=datasetUtil.DatetimeEncoder), link=self.source)
         self.dataJson = json.dumps(self.importData(), cls=datasetUtil.DatetimeEncoder)
         self.save()
         
