@@ -94,7 +94,6 @@ def savedConfigs(request):
     configs = SavedConfig.objects.filter(user=request.user)
     return render(request, "dashboard/pages/savedConfigs.djhtml", {"configurations": configs})
 
-#TODO: Optimise database requests
 def saveConfig(request):
     dataJSON = request.POST["data"]
     name = request.POST["name"]

@@ -320,7 +320,6 @@ app.controller('categoryController', function($scope, $timeout) {
         for (var i=0; i<GLOBAL.currentCategoryWidgets.length; i++) {
             var widget = GLOBAL.currentCategoryWidgets[i];
             drawGraph("graph" + widget.pk, widget.dataset, widget.type,widget.datasetLabels,widget.xLabel,widget.yLabel);
-            //add_Trend_Element("graph" + widget.pk);
         }
     };
 	$('.daterange').on('apply.daterangepicker', function(ev, picker) {
