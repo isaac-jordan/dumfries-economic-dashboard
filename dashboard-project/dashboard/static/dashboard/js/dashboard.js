@@ -332,7 +332,7 @@ app.controller("searchController", function($scope) {
     var drawSearchGraphs = function() {
         for (var i=0; i<GLOBAL.currentSearchWidgets.length; i++) {
             var widget = GLOBAL.currentSearchWidgets[i];
-            drawGraph("graph" + widget.pk, widget.dataset, widget.type);
+            drawGraph("graph" + widget.pk, widget.dataset, widget.type,widget.datasetLabels,widget.xLabel,widget.yLabel);
         }
     };
     $('[data-toggle="popover"]').popover({html: true});
