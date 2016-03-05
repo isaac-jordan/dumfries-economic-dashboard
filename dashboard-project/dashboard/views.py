@@ -146,7 +146,7 @@ def ajaxloadSavedConfig(request):
             del widget["dataset"]
         widgets.append(widget)
     return JsonResponse({"widgets": widgets})
-
+@login_required
 def ajaxDeleteSavedConfig(request):
     scid = request.POST["id"]
     savedConfig = SavedConfig.objects.filter(id=scid)[0]

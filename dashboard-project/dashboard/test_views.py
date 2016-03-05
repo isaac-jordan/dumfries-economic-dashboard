@@ -14,6 +14,7 @@ from models import Datasource, DashboardDataset, Visualisation, SavedConfig, Sav
 class TestAuthViews(TestCase):
     def setUp(self):
         User.objects.create_user("user@example.com", password="test1234")
+        User.objects.create_user('user2@example.com', password='test1234')
 
     def test_login_view_loads_anonymous(self):
         """Check login page loads when user is anonymous."""
@@ -48,6 +49,12 @@ class TestAuthViews(TestCase):
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'], True)
         self.assertTrue(SESSION_KEY in self.client.session)
+
+    def test_ajax_login_view_user_inactive(self):
+        response = self.client.post(reverse('ajax_login'), {"email":"user23@example.com", "password":"test1234"})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'], False)
+
         
     def test_logout_view_pass_valid(self):
         """Check logout works when user is logged in."""
@@ -113,6 +120,19 @@ class TestSavedConfigView(TestCase):
                                                sizeX=graph["sizeX"],
                                                sizeY=graph["sizeY"])
             savedGraph.save()
+        testingData2=[{u'yPosition': 1, u'sizeX': 2, u'sizeY': 1, u'xPosition': 1, u'isTrendWidget': True, u'visPK': 2}]
+        savedConfig2=SavedConfig.objects.create(name='test2',user = user1)
+        for graph in testingData2:
+            vis = Visualisation.objects.filter(id=graph["visPK"])[0]
+
+            savedGraph = SavedGraph.objects.create(visualisation=vis,
+                                               savedConfig=savedConfig2,
+                                               isTrendWidget = graph["isTrendWidget"],
+                                               xPosition=graph["xPosition"],
+                                               yPosition=graph["yPosition"],
+                                               sizeX=graph["sizeX"],
+                                               sizeY=graph["sizeY"])
+            savedGraph.save()
 
     def test_save_config(self):
         vis1 = Visualisation.objects.get(name='STUFF')
@@ -157,9 +177,10 @@ class TestSavedConfigView(TestCase):
         response = self.client.post(reverse('ajax_login'), follow=True)
         self.assertEqual(json.loads(response.content)['success'], False)
 
-    def test_ajaxLoadSavedConfig(self):
+    def test_ajaxLoadSavedConfig_isTrend_False(self):
         testing = [{'sourceName': u'test', 'sizeX': 2, 'sizeY': 1,
-                    'dataset': [[{u'y': 34, u'x': u'2000-01-01T00:00:00Z'}, {u'y': 532, u'x': u'2002-01-01T00:00:00Z'}]],
+                    'dataset': [[{u'y': 34, u'x': u'2000-01-01T00:00:00Z'},
+                                 {u'y': 532, u'x': u'2002-01-01T00:00:00Z'}]],
                     'datasetLink': u'', 'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis1', 'row': 0, 'category': u'CategoryTest',
                     'datasetName': None, 'name': u'TestVis', 'sourceLink': u'',
                     'datasetLabels': [None], 'pk': 1, 'type': u'', 'col': 0}]
@@ -192,11 +213,60 @@ class TestSavedConfigView(TestCase):
         TestCase.maxDiff = None
         self.assertDictEqual(testDict, testDict2)
 
+    def test_ajaxLoadSavedConfig_isTrend_True(self):
+        self.client.login(username='test@example.com',password = 'test')
+        response = self.client.post(reverse('ajax_loadSavedConfig'),{'id':2})
+        testing = [{'sourceName': u'STUFF', 'sizeX': 2, 'sizeY': 1,
+                    'trends': {'minY': {'y': 152, 'x': u'2000-01-01T00:00:00Z'},
+                               'maxY': {'y': 185, 'x': u'2002-01-01T00:00:00Z'},
+                               'analysis': [{'name': 'Dashboard Dataset 2'}]}, 'datasetLink': u'', 'xLabel': u'X-Label',
+                    'yLabel': u'Y-Label', 'id': 'vis2', 'row': 1, 'category': u'STUFF', 'datasetName': None, 'name': u'STUFF',
+                    'sourceLink': u'', 'datasetLabels': [None], 'pk': 2, 'type': u'', 'col': 1}]
+        jsonResponse = json.loads(response.content)
+        def deep_sort(obj):
+            """
+            Recursively sort list or dict nested lists
+            """
+
+            if isinstance(obj, dict):
+                _sorted = {}
+                for key in sorted(obj):
+                    _sorted[key] = deep_sort(obj[key])
+
+            elif isinstance(obj, list):
+                new_list = []
+                for val in obj:
+                    new_list.append(deep_sort(val))
+                _sorted = sorted(new_list)
+
+            else:
+                _sorted = obj
+
+            return _sorted
+        testDict = deep_sort(testing[0])
+        testDict2= deep_sort(jsonResponse['widgets'][0])
+        self.assertDictEqual(testDict,testDict2)
+
     def test_ajaxLoadSaved_different_User(self):
         self.client.login(username='test2@example.com', password='test2')
         response = self.client.post(reverse('ajax_loadSavedConfig'),{'id':1})
         self.assertEqual(json.loads(response.content)['message'],'Error: This Saved Configuration does not belong to you.')
         self.assertEqual(json.loads(response.content)['success'], False)
+
+    def test_ajax_DeleteSaved_differentUser(self):
+        self.client.login(username='test2@example.com', password = 'test2')
+        response=self.client.post(reverse('ajax_deleteSavedConfig'),{'id':1})
+        self.assertEqual(json.loads(response.content)['message'],'Error: This Saved Configuration does not belong to you.')
+        self.assertEqual(json.loads(response.content)['success'], False)
+
+    def test_ajax_DeleteSaved(self):
+        self.client.login(username='test@example.com', password = 'test')
+        response=self.client.post(reverse('ajax_deleteSavedConfig'),{'id':1})
+        self.assertEqual(json.loads(response.content)['message'],'Deleted Saved Configuration.')
+        self.assertEqual(json.loads(response.content)['success'], True)
+        self.assertEqual(SavedConfig.objects.filter(name="test1").exists(),False)
+
+
         
 class TestGraphsView(TestCase):
     def setUp(self):
@@ -244,7 +314,7 @@ class TestSearchView(TestCase):
         self.assertTemplateUsed(response,'dashboard/pages/searchResults.djhtml')
 
     def test_searchTerm_is_None(self):
-        response = self.client.get(reverse('search',kwargs={"searchTerm":'' }))
+        response = self.client.get(reverse('search',kwargs={"searchTerm":None }))
         self.assertTemplateUsed(response, 'dashboard/pages/searchResults.djhtml')
 
     def test_category_list(self):
