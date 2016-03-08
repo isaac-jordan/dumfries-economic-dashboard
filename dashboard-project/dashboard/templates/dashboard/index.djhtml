@@ -34,6 +34,7 @@
                             <li><a href="#savedconfigs"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
                             <li><a href="#category"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
                             <li><a href="http://crichtonobservatory.org.uk/" target="_blank"><i class="glyphicon glyphicon-home"></i> Crichton Institute</a></li>
+                            <li><a href="#help"><i class="glyphicon glyphicon-info-sign"></i> Help / Documentation</a></li>
                         </ul>
                         <br/>
                         <div>

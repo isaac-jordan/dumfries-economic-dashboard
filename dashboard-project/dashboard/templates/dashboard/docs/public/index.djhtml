@@ -1,0 +1,11 @@
+<div class="padding">
+    <div class="full col-sm-9">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Dashboard Help Documentation</h1>
+                <p>This page acts as a user guide. It should list all available features of the website, and how they may be used.</p>
+                <p>It is currently a work-in-progress.</p>
+            </div>
+        </div>
+    </div>
+</div>

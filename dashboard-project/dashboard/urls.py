@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 admin.autodiscover()
 
@@ -22,6 +23,9 @@ urlpatterns = patterns('',
     url(r'^account/checkAuthenticated', 'dashboard.views.ajax_isAuthenticated', name='ajax_checkAuthenticated'),
     url(r'^account/login', 'dashboard.views.ajax_login', name='ajax_login'),
     url(r'^account/register', 'dashboard.views.ajax_register', name='ajax_register'),
+    
+    url(r'^pages/help', TemplateView.as_view(template_name="dashboard/docs/public/index.djhtml"), name='docs_index'),
+    
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -65,6 +65,10 @@ app.config(function($routeProvider) {
         },
         controller: 'searchController'
     })
+    
+    .when('/help', {
+        templateUrl: 'pages/help'
+    })
 
     .when('/register', {
         templateUrl: 'pages/register'
