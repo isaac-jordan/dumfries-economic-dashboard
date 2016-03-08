@@ -30,17 +30,26 @@
                         </ul>
                        
                         <ul class="nav hidden-xs" id="lg-menu">
-		                <a href="#" onclick="setActiveStyleSheet('default'); return false;">Default  |</a>
-		                <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Style1  |</a>
-		                <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Style2</a>
-
 		                    <li class="active"><a href="#/"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
                             <li><a href="#savedconfigs"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
                             <li><a href="#category"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
+                            <li><a href="http://crichtonobservatory.org.uk/" target="_blank"><i class="glyphicon glyphicon-home"></i> Crichton Institute</a></li>
                         </ul>
+                        <br/>
+                        <div>
+                            <h3>Dumfries & Galloway Dashboard</h3>
+                            <p>This is the Crichton Institute economic dashboard for the area of Dumfries and Galloway.</p>
+                            <p>This dashboard aims to provide a comprehensive and easy-to-use overview of the economic situation in Dumfries and Galloway.</p>
+                        </div>
+                        
                         <ul class="list-unstyled hidden-xs" id="sidebar-footer">
                             <li>
-                              <a href="/admin"><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
+                                <a href="/admin" target="_blank"><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="setActiveStyleSheet('default'); return false;"><i class="glyphicon glyphicon-eye-open"></i> Blue  |</a>
+                                <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Purple  |</a>
+                                <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Large</a>
                             </li>
                         </ul>
                       
