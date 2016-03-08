@@ -9,7 +9,7 @@
         </div>
         <br/>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <form class="" id="searchForm" action="/search">
                         <div class="input-group input-group-sm" style="max-width:360px;">
                             <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
@@ -46,11 +46,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <form class="form-inline">
                   <div class="form-group">
-                    <label for="daterange">Select dates:</label>
-                    <input class="daterange form-control" id="daterange" type="text" name="daterange" />
+                    <div id="daterange" class="pull-right daterange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                        <span></span> <b class="caret"></b>
+                    </div>
                   </div>
                 </form>
             </div>

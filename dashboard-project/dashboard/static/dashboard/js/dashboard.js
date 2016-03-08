@@ -98,7 +98,7 @@ app.controller('mainController', function($scope, $location, $timeout) {
                     object.isTrendWidget = widgets[i].trends ? true : false;
                     data.push(object);
                 }
-                console.log(data);
+                //console.log(data);
                 $.ajax({
                     type: "POST",
                     url: '/saveConfig',
@@ -119,13 +119,13 @@ app.controller('mainController', function($scope, $location, $timeout) {
     
     $scope.clear = function() {
         if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
-        console.log($scope.widgets);
+        //console.log($scope.widgets);
         $scope.widgets.splice(0, $scope.widgets.length);
     };
     
     $scope.getTrendData = function(graphID) {
         if (!$scope.widgets) $scope.widgets = GLOBAL.widgets;
-        console.log("Getting data for graph: " + graphID);
+        //console.log("Getting data for graph: " + graphID);
         $.ajax({
             type: "GET",
             url: "/getTrend",
@@ -133,7 +133,7 @@ app.controller('mainController', function($scope, $location, $timeout) {
                 id: graphID
             },
             success: function(widget) {
-                console.log(widget);
+                //console.log(widget);
                 GLOBAL.widgets.unshift(widget);
                 $scope.$apply();
             },
@@ -167,13 +167,13 @@ app.controller('mainController', function($scope, $location, $timeout) {
         
         $location.path("/search/" + searchVal).replace();
         $scope.$apply();
-        console.log($location);
+        //console.log($location);
         return false;
     });
     
     $(".addGraph").on("click", function(e) {
-        console.log(e);
-        console.log(this);
+        //console.log(e);
+        //console.log(this);
         var $this = $(this);
         
         if ($this.parent().hasClass("disabled")) return;
@@ -187,7 +187,7 @@ app.controller('mainController', function($scope, $location, $timeout) {
                 id: id
             },
             success: function(widget) {
-                console.log(widget);
+                //console.log(widget);
                 GLOBAL.widgets.unshift(widget);
                 $scope.$apply();
                 $timeout(drawAllGraphs, 500);
@@ -228,10 +228,10 @@ app.controller('savedConfigController', function($scope, $route) {
                 id: id
             },
             success: function(response) {
-                console.log(response);
+                //console.log(response);
                 GLOBAL.widgets = response.widgets;
                 var el = $("#config" + id);
-                console.log(el);
+                //console.log(el);
                 el.removeClass("glyphicon-import");
                 el.addClass("glyphicon-saved");
                 el.addClass("icon-success");
@@ -266,7 +266,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
             resize: function(event, $element, widget) {},
             stop: function(event, $element, widget) {
                 $timeout(drawAllGraphs, 500);
-		        console.log("REDRAWING GRAPHS");
+		        //console.log("REDRAWING GRAPHS");
             }
         },
         minSizeX: 2,
