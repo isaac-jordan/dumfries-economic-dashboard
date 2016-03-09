@@ -52,7 +52,7 @@
                                 <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Purple  |</a>
                                 <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Large</a>
                             </li>
-                            <img src="{% static "dashboard/img/logo.jpg" %}" alt="Crichton Institute Banner" class="img-responsive" id="banner">
+                            <img src="{% static "dashboard/img/logo.png" %}" alt="Crichton Institute Banner" class="img-responsive" id="banner">
                         </ul>
                       
                     </div>
