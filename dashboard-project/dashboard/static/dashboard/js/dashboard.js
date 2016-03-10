@@ -29,6 +29,13 @@ app.run(function($rootScope, $templateCache) {
     });
 });
 
+app.run(function($rootScope, $location, $anchorScroll) {
+  //when the route is changed scroll to the proper element.
+  $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+    if($location.hash()) $anchorScroll();  
+  });
+});
+
 app.run(['gridsterConfig', '$rootScope', function(gridsterConfig, $rootScope) {
     gridsterConfig.resizable.stop = function(event, uiWidget, $element) {
         $rootScope.$broadcast('resize');

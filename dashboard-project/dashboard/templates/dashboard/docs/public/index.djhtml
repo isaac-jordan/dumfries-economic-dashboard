@@ -5,11 +5,54 @@
                 <h1>Dashboard Help Documentation</h1>
                 <p>This page acts as a user guide. It should list all available features of the website, and how they may be used.</p>
                 <p>It is currently a work-in-progress.</p>
-
-                 <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
-                 <li><a href="#"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
-                 <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
-                 <li><a href="#"><i class="glyphicon glyphicon-export"></i> Export To PDF</a></li>
+                
+                <h3>Summary</h3>
+                <ul>
+                     <li><a href="#/help#dashboardInfo"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
+                     <li><a href="#/help#savedConfigInfo"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
+                     <li><a href="#/help#dataCategoryInfo"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
+                     <li><a href="#/help#exportToPdfInfo"><i class="glyphicon glyphicon-export"></i> Export To PDF</a></li>
+                </ul>
+                 
+                <div id="dashboardInfo">
+                    <h2>
+                        <i class="glyphicon glyphicon-list-alt"></i> Dashboard
+                    </h2>
+                    
+                    <p>
+                        Info on dashboard in general here.
+                    </p>
+                </div>
+                 
+                <div id="savedConfigInfo">
+                    <h2>
+                        <i class="glyphicon glyphicon-list"></i> Saved Configurations
+                    </h2>
+                    
+                    <p>
+                        Info on how saved configurations work here.
+                    </p>
+                </div>
+                 
+                <div id="dataCategoryInfo">
+                    <h2>
+                        <i class="glyphicon glyphicon-paperclip"></i>  Data Categories
+                    </h2>
+                    
+                    <p>
+                        Info on what data categories are here.
+                    </p>
+                </div>
+                 
+                <div id="exportToPdfInfo">
+                    <h2>
+                        <i class="glyphicon glyphicon-export"></i> Export To PDF
+                    </h2>
+                    
+                    <p>
+                        Info on how export to PDF works here.
+                    </p>
+                </div>
 
             </div>
         </div>
