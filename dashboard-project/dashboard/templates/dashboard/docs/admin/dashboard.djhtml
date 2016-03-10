@@ -1,0 +1,7 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block content %}
+<h1>Administrator help for Dashboard Management</h1>
+
+{% endblock content %}

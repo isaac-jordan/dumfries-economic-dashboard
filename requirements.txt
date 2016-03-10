@@ -2,6 +2,7 @@ Django==1.8.5
 SPARQLWrapper==1.7.6
 coverage==4.0.2
 django-jenkins==0.18.1
+docutils==0.12
 html5lib==0.9999999
 isodate==0.5.4
 keepalive==0.5

@@ -26,6 +26,9 @@ urlpatterns = patterns('',
     
     url(r'^pages/help', TemplateView.as_view(template_name="dashboard/docs/public/index.djhtml"), name='docs_index'),
     
+    url(r'^admin/help/csvprocessor', TemplateView.as_view(template_name="dashboard/docs/admin/csvprocessor.djhtml"), name='admin_docs_csvprocessor'),
+    url(r'^admin/help/dashboard', TemplateView.as_view(template_name="dashboard/docs/admin/dashboard.djhtml"), name='admin_docs_csvprocessor'),
+    
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

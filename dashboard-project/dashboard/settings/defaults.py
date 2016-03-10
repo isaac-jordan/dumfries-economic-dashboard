@@ -123,14 +123,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
     'dataset_importer',
     'dashboard',
     'csv_processor',
     'api_processor',
-    'api_processor.linked_data_processor'
+    'api_processor.linked_data_processor',
+    'django.contrib.admin'
 )
 
 PROJECT_APPS = (

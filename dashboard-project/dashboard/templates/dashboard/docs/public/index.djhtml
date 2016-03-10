@@ -37,6 +37,20 @@
                         to resize that graph.
                     </p>
                     <p>
+                        Statistical information about a graph can be retrieved by clicking the cog icon, and clicking "Add Trend".
+                        This will add a new widget to the dashboard with the statistical data. This widget can be moved around, removed, and
+                        resized in the same fashion as the graphs.
+                    </p>
+                    <p>
+                        The source of a graph can be retrieved by clicking the "i" icon. This will display links to the original
+                        data source, as well as to the specific dataset (where available).
+                    </p>
+                    <p>
+                        Removed graphs can be added back to the dashboard by clicking the "Add Graph" button. This will display a dropdown
+                        list of all available graphs. Graphs that are already visible will be greyed out, and graphs that are removed will
+                        be clickable. Clicking on the name of a removed graph will add it back to the top of the dashboard at the default size.
+                    </p>
+                    <p>
                         When changing the layout of the dashboard all graphs in the dashboard will move around to make
                         the layout work and fit in the current screen space. On slower computers, this may cause some
                         noticeable lag. On very slow machines or mobile devices, this can make the dashboard difficult to use.

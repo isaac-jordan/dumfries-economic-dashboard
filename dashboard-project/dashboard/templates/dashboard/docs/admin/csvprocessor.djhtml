@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static %}
+
+{% block content %}
+<h1>Administrator help for CSV Importing and Processing</h1>
+
+<p>
+    This page aims to provide a comprehensive guide for any administrators who
+    needs to import new data to the dashboard.
+</p>
+
+<h2>Step-By-Step Guide</h2>
+
+<ul>
+    <li>
+        <h3>Navigate to the "Add" page</h3>
+        <p>
+            From the root admin page, click on "Csv files" under the "Csv_Processor"
+            heading. This will display all added CSV files to date.
+        </p>
+        <p>
+            Click on "Add csv file" in the top right of the page to begin the process.
+        </p>
+    </li>
+    <li>
+        <h3>Fill in the details</h3>
+        <p>
+            Now...
+        </p>
+    </li>
+</ul>
+
+{% endblock content %}
