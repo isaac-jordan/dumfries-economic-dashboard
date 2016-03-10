@@ -5,6 +5,12 @@
                 <h1>Dashboard Help Documentation</h1>
                 <p>This page acts as a user guide. It should list all available features of the website, and how they may be used.</p>
                 <p>It is currently a work-in-progress.</p>
+
+                 <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> Dashboard</a></li>
+                 <li><a href="#"><i class="glyphicon glyphicon-list"></i> Saved Configurations</a></li>
+                 <li><a href="#"><i class="glyphicon glyphicon-paperclip"></i> Data Categories</a></li>
+                 <li><a href="#"><i class="glyphicon glyphicon-export"></i> Export To PDF</a></li>
+
             </div>
         </div>
     </div>
