@@ -205,7 +205,6 @@ function add_legend(elemID,vis,data,colours,datasetLabels,MARGINS){
     rect_height=12;
     //for every data add coressponidng
     for (i=0;data[i]!=null ;i++) {
-
         vis.append("rect")
             .attr("width",30)
             .attr("height",rect_height)
@@ -214,6 +213,7 @@ function add_legend(elemID,vis,data,colours,datasetLabels,MARGINS){
             .attr("dy","-3.5em")
             .attr('fill',colours[i]);
         vis.append("text")
+            .attr("font-size","0.75vw")
             .attr("x",MARGINS.left+data_width)
             .attr("y",y+rect_height)
             .text(datasetLabels[i]);

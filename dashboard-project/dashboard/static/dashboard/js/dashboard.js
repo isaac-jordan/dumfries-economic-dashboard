@@ -281,7 +281,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
             }
         },
         minSizeX: 2,
-        minSizeY: 1,
+        minSizeY: 2,
         swapping: true, // whether or not to have items of the same size switch places instead of pushing down if they are the same size
         width: 'auto', // can be an integer or 'auto'. 'auto' scales gridster to be the full width of its containing element
         colWidth: 'auto', // can be an integer or 'auto'.  'auto' uses the pixel width of the element divided by 'columns'

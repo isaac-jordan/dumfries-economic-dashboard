@@ -2,7 +2,7 @@
 <div class="panel panel-default" ng-if="widget.dataset">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-sm-8"><h5>{{ widget.name }}</h5></div>
+            <div class="col-sm-8" font-size=0.5em ><h5>{{ widget.name }}</h5></div>
             <div class="col-sm-4">
                 <div class="pull-right">
                     <div class="btn-group"> 
