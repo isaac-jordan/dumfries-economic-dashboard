@@ -118,7 +118,6 @@ hr {
 #sidebar, #sidebar a, #sidebar-footer a {
     color:#ffffff;
     background-color: #03050a;
-	text-shadow:0 0 0.5em #b4b4b4;
     padding-left:5px;
         font-size: 150;
 
@@ -141,7 +140,6 @@ hr {
   font-weight:700;
   text-align:center;
   text-decoration:none;
-  text-shadow:0 0 1px;
   border-radius:2px;
 }
 #sidebar-footer {
@@ -306,6 +304,14 @@ a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+}
+#instructions
+{
+
+    color:#ffffff;
+    background-color: #1a3366;
+    font-size: 13px;
+    font-style: italic;
 }
 /*
 . dot {

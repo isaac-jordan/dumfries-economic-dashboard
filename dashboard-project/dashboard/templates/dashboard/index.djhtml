@@ -2,6 +2,8 @@
 {% load staticfiles %}
 <html lang="en" ng-app="dashboard">
     <head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="-1">
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>Dashboard</title>
@@ -49,9 +51,14 @@
                                 <a href="/admin" target="_blank"><i class="glyphicon glyphicon-console"></i> Admin Panel</a>
                             </li>
                             <li>
-                                <a href="#" onclick="setActiveStyleSheet('default'); return false;"><i class="glyphicon glyphicon-eye-open"></i> Blue  |</a>
+
+                                <a href="#" onclick="setActiveStyleSheet('default'); return false; window.location.reload();"><i class="glyphicon glyphicon-eye-open"></i> Blue  |</a>
                                 <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Purple  |</a>
-                                <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Large</a>
+                                <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Large |</a>
+                                <a href="#"  onClick="location.reload()"><i class="glyphicon glyphicon-refresh"></i></a>
+                                <p id="instructions">In order new style to be loaded click refresh button</p>
+
+
                             </li>
                         </ul>
                       

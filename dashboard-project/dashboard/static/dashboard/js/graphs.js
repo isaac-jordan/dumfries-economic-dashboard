@@ -1,5 +1,78 @@
 /*jshint*/
+
 /*global d3, console */
+function setActiveStyleSheet(title) {
+  var i, a, main;
+  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+    if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
+      a.disabled = true;
+      if(a.getAttribute("title") == title) a.disabled = false;
+
+    }
+
+  }
+}
+function reload(){
+}
+function getActiveStyleSheet() {
+  var i, a;
+  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+    if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title") && !a.disabled) return a.getAttribute("title");
+  }
+  return null;
+}
+
+function getPreferredStyleSheet() {
+  var i, a;
+  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+    if(a.getAttribute("rel").indexOf("style") != -1
+       && a.getAttribute("rel").indexOf("alt") == -1
+       && a.getAttribute("title")
+       ) return a.getAttribute("title");
+  }
+  return null;
+}
+
+function createCookie(name,value,days) {
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime()+(days*24*60*60*1000));
+    var expires = "; expires="+date.toGMTString();
+  }
+  else expires = "";
+  document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  }
+  return null;
+}
+
+window.onload = function(e) {
+  var cookie = readCookie("style");
+  var title = cookie ? cookie : getPreferredStyleSheet();
+  setActiveStyleSheet(title);
+
+}
+
+window.onunload = function(e) {
+  var title = getActiveStyleSheet();
+  createCookie("style", title, 365);
+}
+
+var cookie = readCookie("style");
+var title = cookie ? cookie : getPreferredStyleSheet();
+setActiveStyleSheet(title);
+
+console.log(getActiveStyleSheet());
+
+//console.log(getPreferredStyleSheet());
 
 function drawGraph(elemID, data, type,datasetLabels,xLabel,yLabel) {
     if ($("#" + elemID).parent().width() < 0) return;
@@ -206,16 +279,28 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     }else{
         HEIGHT = $("#" + elemID).parent().parent().parent().height()-tool_bar_height;
     }
-    var WIDTH = $("#" + elemID).parent().parent().width(),
-        colours = ['#00264d', ' #0064cc' , '#0066cc',' #3399ff',' #fff'],
-
-        MARGINS = {
+    if(getActiveStyleSheet()=="default") {
+        var WIDTH = $("#" + elemID).parent().parent().width(),
+            colours = ['#00264d', ' #0064cc' , '#0066cc', ' #3399ff', ' #fff'],
+            MARGINS = {
             top: 30,
             right: 25,
             bottom: data.length*10+10,
             left: 60
         }
 
+            }else {
+        var WIDTH = $("#" + elemID).parent().parent().width(),
+            colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'],
+            MARGINS = {
+                top: 30,
+                right: 25,
+                bottom: data.length * 10 + 10,
+                left: 60
+
+            }
+
+    }
     //Create svg element
     vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
 
@@ -299,7 +384,7 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
 
     }
 
-
+    //finds and display the current coordinates mouse is on
     function mousemove() {
         var a=0;
         for (a = 0; a < clean_data.length; a++) {
@@ -344,3 +429,4 @@ function add_axis_labels(vis,xLabel,yLabel,WIDTH,HEIGHT,MARGINS){
 }
 
 
+                reload();
