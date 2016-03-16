@@ -26,6 +26,7 @@
                     <!-- sidebar -->
                     <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
                         <ul class="nav">
+                            <img src="{% static "dashboard/img/logo.png" %}" alt="Crichton Institute Banner" class="img-responsive" width="300" height="250" id="banner">
                             <li><a href="" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
                         </ul>
                        
@@ -52,7 +53,6 @@
                                 <a href="#" onclick="setActiveStyleSheet('style1'); return false;"> Purple  |</a>
                                 <a href="#" onclick="setActiveStyleSheet('style2'); return false;"> Large</a>
                             </li>
-                            <img src="{% static "dashboard/img/logo.png" %}" alt="Crichton Institute Banner" class="img-responsive" width="300" height="250" id="banner">
                         </ul>
                       
                     </div>
