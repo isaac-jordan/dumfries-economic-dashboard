@@ -35,7 +35,6 @@ def populate():
     add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
     csvFile.createDashboardInfo()
 
-    
     realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
     filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock-testing.csv" ))
     f = File(open(filepath))
