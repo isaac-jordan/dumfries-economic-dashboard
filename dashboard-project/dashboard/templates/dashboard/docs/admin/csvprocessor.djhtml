@@ -25,8 +25,45 @@
     <li>
         <h3>Fill in the details</h3>
         <p>
-            Now...
+            First, fill in the general details of the new CSV file. An explanation of all the fields is in the table below.
         </p>
+        <table>
+          <tr>
+            <th>Field Name</th>
+            <th>Description</th> 
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>A name for this CSV file.</td> 
+            <td>Electricity Prices Jan 2016</td>
+          </tr>
+          <tr>
+            <td>Visualisation Name</td>
+            <td>This name will be the publicly visible graph name. This name must be unique, meaning there are no other visualisations with the same name.</td> 
+            <td>Electricity Prices</td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td>Which category this data belongs to. If no category is a good fit, new categories can be created from the Admin section.</td> 
+            <td>Housing</td>
+          </tr>
+          <tr>
+            <td>DataSource</td>
+            <td>A name for this CSV file.</td> 
+            <td>Electricity Prices</td>
+          </tr>
+          <tr>
+            <td>Upload</td>
+            <td>A name for this CSV file.</td>
+            <td>Electricity Prices</td>
+          </tr>
+          <tr>
+            <td>Source</td>
+            <td>A name for this CSV file.</td> 
+            <td>Electricity Prices</td>
+          </tr>
+        </table>
     </li>
 </ul>
 
