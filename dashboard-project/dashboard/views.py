@@ -186,12 +186,15 @@ def logoutUser(request):
 def ajax_register(request):
     username = request.POST['email']
     password = request.POST['password']
+    repeatPass = request.POST['repeatPass']
     if User.objects.filter(username=username).exists():
         return JsonResponse({'message':'Error: Email address already used.', 'success': False})
     if password=='':
         return JsonResponse({'message':'Error: Password must be set.', 'success': False})
     if username=='':
         return JsonResponse({'message':'Error: Email address must be set.', 'success': False})
+    if password != repeatPass:
+        return JsonResponse({'message':'Error: Passwords do not match.', 'success': False})
     else:
         user = User.objects.create_user(username, username, password)
         user.save()
