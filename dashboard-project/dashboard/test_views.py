@@ -193,7 +193,7 @@ class TestSavedConfigView(TestCase):
                                  {u'y': 532, u'x': u'2002-01-01T00:00:00Z'}]],
                     'datasetLink': u'', 'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis1', 'row': 0, 'category': u'CategoryTest',
                     'datasetName': None, 'name': u'TestVis', 'sourceLink': u'',
-                    'datasetLabels': [None], 'pk': 1, 'type': u'', 'col': 0}]
+                    'datasetLabels': [None], 'pk': 1, 'type': u'', 'col': 0, "description": ""}]
         self.client.login(username='test@example.com', password='test')
         response=self.client.post(reverse('ajax_loadSavedConfig'),{'id':1})
         jsonResponse = json.loads(response.content)
@@ -231,7 +231,7 @@ class TestSavedConfigView(TestCase):
                                'maxY': {'y': 185, 'x': u'2002-01-01T00:00:00Z'},
                                'analysis': [{'name': 'Dashboard Dataset 2'}]}, 'datasetLink': u'', 'xLabel': u'X-Label',
                     'yLabel': u'Y-Label', 'id': 'vis2', 'row': 1, 'category': u'STUFF', 'datasetName': None, 'name': u'STUFF',
-                    'sourceLink': u'', 'datasetLabels': [None], 'pk': 2, 'type': u'', 'col': 1}]
+                    'sourceLink': u'', 'datasetLabels': [None], 'pk': 2, 'type': u'', 'col': 1, "description":""}]
         jsonResponse = json.loads(response.content)
         def deep_sort(obj):
             """
@@ -346,7 +346,7 @@ class TestSearchView(TestCase):
                                  'analysis': [{'name': 'dataset'}]},
                       'xLabel': u'X-Label', 'yLabel': u'Y-Label', 'id': 'vis2', 'category': u'STUFF',
                       'name': u'STUFF', 'sourceLink': u'', "datasetName":"dataset", "datasetLink":"http://example.com",
-                      'datasetLabels': ["dataset"], 'pk': 2, 'type': u''}]
+                      'datasetLabels': ["dataset"], 'pk': 2, 'type': u'', 'description':""}]
          self.assertTrue(response.context['category'].name == "STUFF")
          def deep_sort(obj):
             """

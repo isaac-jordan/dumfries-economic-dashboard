@@ -143,6 +143,7 @@ class TestVisualisation(TestCase):
                            'sourceLink': '',
                            'datasetName': "testDataSet",
                            'datasetLink': "http://example.com",
+                           "description": "",
                            'xLabel': "Year",
                            'yLabel': "",
                            'sizeX': 2,

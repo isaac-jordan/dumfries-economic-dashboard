@@ -11,6 +11,7 @@ class DashboardDatasourceAdmin(admin.ModelAdmin):
     
 class VisualisationAdmin(admin.ModelAdmin):
     list_display = Visualisation._meta.get_all_field_names()
+    list_display.insert(0, list_display.pop(list_display.index("name")))
     list_display.remove("savedgraph")
     list_display.remove("dashboarddataset")
     

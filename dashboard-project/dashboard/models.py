@@ -47,6 +47,7 @@ class Visualisation(models.Model):
     """
     dataSource = models.ForeignKey(Datasource)
     name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
     category = models.ForeignKey(Category)
     type = models.CharField(max_length=100)
     sizeX = models.IntegerField()
@@ -72,6 +73,7 @@ class Visualisation(models.Model):
                            'sourceLink': self.dataSource.link,
                            'datasetName': firstDataset.name,
                            'datasetLink': firstDataset.link,
+                           'description': self.description,
                            'xLabel': self.xLabel,
                            'yLabel': self.yLabel,
                            'sizeX': self.sizeX,
