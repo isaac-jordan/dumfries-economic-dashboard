@@ -1780,6 +1780,8 @@ pre code {
   }
   .col-sm-8 {
     width: 66.66666667%;
+    white-space: nowrap;
+    overflow: hidden;
   }
   .col-sm-7 {
     width: 58.33333333%;

@@ -309,7 +309,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
             success: function(response) {
                 GLOBAL.widgets = response.widgets;
                 $scope.widgets = GLOBAL.widgets;
-                $timeout(drawAllGraphs, 500); // TODO - fix this hacky solution to randomly wait 500ms before drawing graphs. 
+                $timeout(drawAllGraphs, 500); // TODO - fix this hacky solution to randomly wait 500ms before drawing graphs.
                 $scope.$watch("widgets", function(newValue, oldValue) {
                     $(".addGraph").each(function(index, element) {
                         var found = false;
