@@ -25,11 +25,11 @@ def populate():
     healthCategory = add_category("Health")
     
     #Add CSV file data
-    realDataSource = add_datasource("Monthly House Price Statistics", "https://www.ros.gov.uk/property-data/property-statistics/monthly-house-price-statistics");
+    realDataSource = add_datasource("Monthly House Price Statistics", "https://www.ros.gov.uk/");
     basepath = os.path.dirname(__file__)
     filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
     f = File(open(filepath))
-    csvFile = add_csvFile("Monthly House Pricing Sept 2015","Monthly house price figures for Dumfries and Galloway from April 2003.", housingCategory, realDataSource, f, "https://www.ros.gov.uk/property-data/property-statistics/monthly-house-price-statistics")
+    csvFile = add_csvFile("Average House Pricing","Monthly house price figures for Dumfries and Galloway from April 2003 untill 2015.", housingCategory, realDataSource, f, "https://www.ros.gov.uk/property-data/property-statistics/monthly-house-price-statistics")
     add_dimension("Dumfries and Galloway", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
     add_dimension("Scotland", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
     add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
