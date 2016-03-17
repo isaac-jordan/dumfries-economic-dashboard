@@ -64,22 +64,32 @@ class TestAuthViews(TestCase):
         self.assertTrue(SESSION_KEY not in self.client.session)
 
     def test_ajax_register(self):
-        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"test"})
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"test", "repeatPass":"test"})
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'],True)
 
     def test_ajax_register_existing_user(self):
-        response = self.client.post(reverse('ajax_register'),{'email':"user@example.com", "password":"test1234"})
+        response = self.client.post(reverse('ajax_register'),{'email':"user@example.com", "password":"test1234", "repeatPass":"test1234"})
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'],False)
 
     def test_ajax_register_emptyEmail(self):
-        response = self.client.post(reverse('ajax_register'),{'email':"", "password":"test"})
+        response = self.client.post(reverse('ajax_register'),{'email':"", "password":"test", "repeatPass":"test"})
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'],False)
 
     def test_ajax_register_emptyPassword(self):
-        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":""})
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"", "repeatPass":""})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],False)
+
+    def test_ajax_register_emptyRepeatPassword(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"test", "repeatPass":""})
+        jsonResponse = json.loads(response.content)
+        self.assertEqual(jsonResponse['success'],False)
+
+    def test_ajax_register_passwordMismatch(self):
+        response = self.client.post(reverse('ajax_register'),{'email':"test@test.com", "password":"test", "repeatPass":"tester"})
         jsonResponse = json.loads(response.content)
         self.assertEqual(jsonResponse['success'],False)
 
