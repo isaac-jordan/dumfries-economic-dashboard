@@ -11,7 +11,6 @@ var drawAllGraphs = function() {
         if (GLOBAL.widgets[i].dataset) {
             drawGraph(GLOBAL.widgets[i].id, GLOBAL.widgets[i].dataset, GLOBAL.widgets[i].type,GLOBAL.widgets[i].datasetLabels,GLOBAL.widgets[i].xLabel,GLOBAL.widgets[i].yLabel);
         }
-        
     }
     
 };
@@ -301,6 +300,22 @@ app.controller('draggableGridController', function($scope, $timeout) {
     $scope.showPopover = showPopover;
     
     $scope.exportToPDF = dashboardToPDF;
+    
+    function checkAddedGraphs() {
+        $(".addGraph").each(function(index, element) {
+            var found = false;
+            for(var i=0; i < GLOBAL.widgets.length; i++) {
+                if (parseInt($(element).attr("data-pk"), 10) === GLOBAL.widgets[i].pk) {
+                    $(element).parent().addClass("disabled");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                $(element).parent().removeClass("disabled");
+            }
+        });
+    }
 
     if (!GLOBAL.widgets) {
         $.ajax({
@@ -326,6 +341,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
                     });
                     
                 }, true);
+                checkAddedGraphs();
             },
             error: function(err) {
                 console.log(err);
@@ -333,6 +349,7 @@ app.controller('draggableGridController', function($scope, $timeout) {
         });
     } else {
         $timeout(drawAllGraphs, 500); // TODO - Also fix this hacky solution
+        checkAddedGraphs();
     }
 
 });
