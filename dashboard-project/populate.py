@@ -17,14 +17,102 @@ from dataset_importer import util
 import json, datetime
 
 def populate():
-    datasource = add_datasource("Fake Data Test", "http://example.com")
+    datasource = add_datasource("Bar graph datasource", "http://example.com")
     crimeCategory = add_category("Crime")
     employmentCategory = add_category("Employment")
     housingCategory = add_category("Housing")
     economyCategory = add_category("Economy")
     healthCategory = add_category("Health")
+    
+    #Add CSV file data
+    realDataSource = add_datasource("Monthly House Price Statistics", "https://www.ros.gov.uk/property-data/property-statistics/monthly-house-price-statistics");
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Monthly House Pricing Sept 2015","Monthly house price figures for Dumfries and Galloway from April 2003.", housingCategory, realDataSource, f, "https://www.ros.gov.uk/property-data/property-statistics/monthly-house-price-statistics")
+    add_dimension("Dumfries and Galloway", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
+    add_dimension("Scotland", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
+    add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
+    csvFile.createDashboardInfo()
 
-    crimeVis = add_visualisation(datasource, 'Crime', crimeCategory, "bar", "Location", "Num of Crimes")
+    
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock-testing.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Council Stock","Yearly Council stock figures for Dumfries and Galloway", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/council-stock")
+    add_dimension("Dumfries", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 8, "date", "%Y", True, csvFile, index=8)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Full time Employment","Number, of people in full time employment in Dumfries and Galloway", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "energy-consumption.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Energy Consumption","Consumption (GWh) by energy (gas and electricity) and customer type (domestic and commercial) for Dumfries and Galloway", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/energy-consumption")
+    add_dimension("Dumfries and Galloway", "row", 3, 11, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 11, "date", "%Y", True, csvFile, index=9)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "hospital-admissions.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Hospital Admissions","Number of admissions to non-psychiatric/non-obstetric hospitals in Dumfries and Galloway.", healthCategory, realDataSource, f, "http://statistics.gov.scot/data/hospital-admissions")
+    add_dimension("Dumfries and Galloway", "row", 3, 13, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 13, "date", "%Y", True, csvFile, index=10)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "neet.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Not in Education, Employment, or Training","Number, and percent, of young people (16-19) who were not in education, employment or training in Dumfries and Galloway", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/neet")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "never-worked.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Never Worked","Number, and percent, of people aged 16+ who have never had a paid or unpaid job in Dumfries and Galloway", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/never-worked")
+    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=8)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "reconvictions.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Reconvictions","Yearly Reconviction rates of all genders in Dumfries and Galloway", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/reconvictions")
+    add_dimension("Dumfries and Galloway", "row", 3, 12, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 12, "date", "%Y", True, csvFile, index=9)
+    csvFile.createDashboardInfo()
+
+    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "recorded-crime.csv" ))
+    f = File(open(filepath))
+    csvFile = add_csvFile("Recorded Crime","Number, and rate per 10,000 population, of crimes and offences recorded by the police in Dumfries and Galloway", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/recorded-crime")
+    add_dimension("Dumfries and Galloway", "row", 3, 19, "numeric", "", False, csvFile, indexForLabel=2)
+    add_dimension("Year", "row", 3, 19, "date", "%Y", True, csvFile, index=8)
+    csvFile.createDashboardInfo()
+
+    # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
+    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "employment.csv" ))
+    # f = File(open(filepath))
+    # csvFile = add_csvFile("Employment General", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/employment")
+    # add_dimension("Dumfries and Galloway", "row", 3, 31, "numeric", "", False, csvFile, indexForLabel=2)
+    # add_dimension("Year", "row", 3, 31, "date", "%Y", True, csvFile, index=9)
+    # csvFile.createDashboardInfo()
+
+
+
+
+
+    crimeVis = add_visualisation(datasource, 'Crime',"Average crime rate in Edinburgh , Glasgow , London, Leeds and Dublin", crimeCategory, "bar", "Location", "Num of Crimes")
     add_dataset(crimeVis, dataset = [{
                 "y": 32,
                 "x": "Edinburgh"
@@ -42,7 +130,7 @@ def populate():
                 "x": "Dublin"
             }])
 
-    employmentNatureVis = add_visualisation(datasource, 'Employment Nature', employmentCategory, "bar", "Nature", "Num of Employments")
+    employmentNatureVis = add_visualisation(datasource, 'Employment Nature',"Average employment nature in Edinburgh , Glasgow , London and Leeds", employmentCategory, "bar", "Nature", "Num of Employments")
     add_dataset(employmentNatureVis, dataset = [{
                 "y": 5,
                 "x": "Edinburgh"
@@ -57,7 +145,7 @@ def populate():
                 "x": "Leeds"
             }])
 
-    unemploymentVis = add_visualisation(datasource, 'Unemployment', employmentCategory, "bar", "Location", "Num of Unemployments")
+    unemploymentVis = add_visualisation(datasource, 'Unemployment',"the Average unemployment rate in Edinburgh, Glasgow , London, Leeds and Dublin", employmentCategory, "bar", "Location", "Num of Unemployments")
     add_dataset(unemploymentVis, dataset = [{
                 "y": 4,
                 "x": "Edinburgh"
@@ -75,75 +163,7 @@ def populate():
                 "x": "Dublin"
             }])
 
-    # One graph with two lines
-    gdpPCVis = add_visualisation(datasource, 'GDP Per Head (Pounds)', economyCategory, "line", "Year", "GDP Per Head", sizeY=2)
-    add_dataset(gdpPCVis, dataset = [{
-                "y": 152,
-                "x": datetime.datetime(2000,1,1)
-            }, {
-                "y": 189,
-                "x": datetime.datetime(2002,1,1)
-            }, {
-                "y": 179,
-                "x": datetime.datetime(2004,1,1)
-            }, {
-                "y": 199,
-                "x": datetime.datetime(2006,1,1)
-            }, {
-                "y": 134,
-                "x": datetime.datetime(2008,1,1)
-            }, {
-                "y": 176,
-                "x": datetime.datetime(2010,1,1)
-            },{
-                "y": 180,
-                "x": datetime.datetime(2012,1,1)
-            }])
-    add_dataset(gdpPCVis, dataset = [{
-                "y": 16,
-                "x": datetime.datetime(2000,1,1)
-            }, {
-                "y": 200,
-                "x": datetime.datetime(2002,1,1)
-            }, {
-                "y": 150,
-                "x": datetime.datetime(2004,1,1)
-            }, {
-                "y": 230,
-                "x": datetime.datetime(2006,1,1)
-            }, {
-                "y": 120,
-                "x": datetime.datetime(2008,1,1)
-            }, {
-                "y": 110,
-                "x": datetime.datetime(2010,1,1)
-            },{
-                "y": 150,
-                "x": datetime.datetime(2012,1,1)
-            }])
-
-    employmentRateVis = add_visualisation(datasource, 'Employment Rate', employmentCategory, "line", "Year", "Percentage Employed", sizeY=2)
-    add_dataset(employmentRateVis, [{
-                "y": 20,
-                "x": datetime.datetime(2000,1,1)
-            }, {
-                "y": 30,
-                "x": datetime.datetime(2002,1,1)
-            }, {
-                "y": 50,
-                "x": datetime.datetime(2004,1,1)
-            }, {
-                "y": 70,
-                "x": datetime.datetime(2006,1,1)
-            }, {
-                "y": 80,
-                "x": datetime.datetime(2008,1,1)
-            }, {
-                "y": 25,
-                "x": datetime.datetime(2010,1,1)
-            }])
-
-    claimantCountVis = add_visualisation(datasource, 'Claimant Count Numbers', economyCategory, "bar", "Location", "Num of Claimants")
+    claimantCountVis = add_visualisation(datasource, 'Claimant Count Numbers',"Average Claimant Count Numbers in Edinburgh, Glasgow, London, Leeds, Dublin and Manchester", economyCategory, "bar", "Location", "Num of Claimants")
     add_dataset(claimantCountVis, [{
                 "y": 152,
                 "x": "Edinburgh"
@@ -164,121 +184,15 @@ def populate():
                 "x": "Manchester"
             }])
 
-    housePriceVis = add_visualisation(datasource, 'House Price', housingCategory, "line", "Year", "House Prices (1000)", sizeY=2)
-    add_dataset(housePriceVis, [{
-                "y": 152,
-                "x": datetime.datetime(2000,1,1)
-            }, {
-                "y": 189,
-                "x": datetime.datetime(2002,1,1)
-            }, {
-                "y": 179,
-                "x": datetime.datetime(2004,1,1)
-            }, {
-                "y": 199,
-                "x": datetime.datetime(2006,1,1)
-            }, {
-                "y": 134,
-                "x": datetime.datetime(2008,1,1)
-            }, {
-                "y": 176,
-                "x": datetime.datetime(2010,1,1)
-            }])
-    
-    #Add CSV file data
-    realDataSource = add_datasource("Real Data Test", "http://example.com");
-    basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "csv_processor", "static", "csv_processor", "test", "data", "test_real_monthly.csv"))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Monthly House Pricing Sept 2015", housingCategory, realDataSource, f, "http://example.com")
-    add_dimension("Dumfries and Galloway", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
-    add_dimension("Scotland", "row", 2, 151, "currency", "£", False, csvFile, indexForLabel=1)
-    add_dimension("Month-Year", "row", 2, 151, "date", "%b-%y", True, csvFile, index=5)
-    csvFile.createDashboardInfo()
-
-    
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "council-stock-testing.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Council Stock", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/council-stock")
-    add_dimension("Dumfries", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2)
-    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
-    add_dimension("Year", "row", 3, 8, "date", "%Y", True, csvFile, index=8)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "full time employment.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Full time Employment", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/full-time-employment")
-    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
-    #add_dimension("Scotland", "row", 3, 8, "numeric", "", False, csvFile, indexForLabel=2) # Does not scale well on graph at all.
-    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "energy-consumption.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Energy Consumption", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/energy-consumption")
-    add_dimension("Dumfries and Galloway", "row", 3, 11, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 11, "date", "%Y", True, csvFile, index=9)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "hospital-admissions.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Hospital Admissions", healthCategory, realDataSource, f, "http://statistics.gov.scot/data/hospital-admissions")
-    add_dimension("Dumfries and Galloway", "row", 3, 13, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 13, "date", "%Y", True, csvFile, index=10)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "neet.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Not in Education, Employment, or Training", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/neet")
-    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=7)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "never-worked.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Never Worked", employmentCategory, realDataSource, f, "http://statistics.gov.scot/data/never-worked")
-    add_dimension("Dumfries and Galloway", "row", 3, 10, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 10, "date", "%Y", True, csvFile, index=8)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "reconvictions.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Reconvictions", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/reconvictions")
-    add_dimension("Dumfries and Galloway", "row", 3, 12, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 12, "date", "%Y", True, csvFile, index=9)
-    csvFile.createDashboardInfo()
-
-    realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "recorded-crime.csv" ))
-    f = File(open(filepath))
-    csvFile = add_csvFile("Recorded Crime", crimeCategory, realDataSource, f, "http://statistics.gov.scot/data/recorded-crime")
-    add_dimension("Dumfries and Galloway", "row", 3, 19, "numeric", "", False, csvFile, indexForLabel=2)
-    add_dimension("Year", "row", 3, 19, "date", "%Y", True, csvFile, index=8)
-    csvFile.createDashboardInfo()
-
-    # realDataSource = add_datasource("Scottish Government Statistics Beta", "http://statistics.gov.scot");
-    # filepath = os.path.abspath(os.path.join(basepath, "dashboard", "static","dashboard","data", "employment.csv" ))
-    # f = File(open(filepath))
-    # csvFile = add_csvFile("Employment General", economyCategory, realDataSource, f, "http://statistics.gov.scot/data/employment")
-    # add_dimension("Dumfries and Galloway", "row", 3, 31, "numeric", "", False, csvFile, indexForLabel=2)
-    # add_dimension("Year", "row", 3, 31, "date", "%Y", True, csvFile, index=9)
-    # csvFile.createDashboardInfo()
-
 
     # Add some test users
     add_superuser("test@test.com", "test")
     add_user("joe@test.com", "test")
 
-def add_visualisation(dataSource, name, category, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
+def add_visualisation(dataSource, name,description, category, dataType, xLabel, yLabel, filename="", sizeX=2, sizeY=1):
     d = Visualisation.objects.get_or_create(dataSource=dataSource,
                                       name=name,
+                                      description = description,
                                       category=category,
                                       type=dataType,
                                       sizeX=sizeX,
@@ -318,8 +232,9 @@ def add_superuser(name, password):
     u.save()
     return u
 
-def add_csvFile(visualisationName, category, dataSource, file, source):
+def add_csvFile(visualisationName,description, category, dataSource, file, source):
     c = CsvFile.objects.get_or_create(name=visualisationName,
+                                      description = description,
                                       visualisationName=visualisationName,
                                       category=category,
                                       dataSource=dataSource,

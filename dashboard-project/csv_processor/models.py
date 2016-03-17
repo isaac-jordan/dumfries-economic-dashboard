@@ -38,6 +38,7 @@ class CsvFile(Importer):
     """
     
     visualisationName = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
     category = models.ForeignKey(Category)
     dataSource = models.ForeignKey(Datasource)
     upload = models.FileField()
@@ -168,6 +169,7 @@ class CsvFile(Importer):
         """
         vis = Visualisation.objects.get_or_create(name=self.visualisationName,
                                                   category=self.category,
+                                                  description = self.description,
                                                   type="line",
                                                   dataSource=self.dataSource,
                                                   sizeX=2,
