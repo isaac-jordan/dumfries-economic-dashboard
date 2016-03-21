@@ -147,6 +147,38 @@ to the project.
 
 We should talk about the building stages of the site, making the build component based, availability of APIs
 
+In software engineering there are many ways to implement a project but there are certain tools that are more advatageous over
+others. For our team project we were asked to build a web application, so in doing so we had to deicde on a web framework that
+we could use as the basis of our project. We chose the Python-based Django framework as we have all have had previous experience
+in developing web applications using this as part of a unviersity course. There were options where we could have used an alternative
+framework such as Java Spring, and whilst we are all proficient as team members in the use of Java, there would be too much time
+wasted on learning the basics of Spring. In choosing Django it allowed us to spend more time on the project itself. Our project
+used a variety of languages such as HTML, CSS, Bootstrap and Javascript, all in which we have had previous experience using.
+We also used new technologies such as Angular JS, d3 for graph visualisation and Grdister for the movement and resizing of graph
+elements.
+
+The starting point of our project was to create a base template for the site: we found a Boostrap template that was a good starting
+point in terms of a colour scheme and layout that was both simplistic yet professional. Next was to decide how to implement the
+graphs: we decided upon using d3 for graph visualisation as this was mentioned by a lecturer in another course we were currently
+taking at university. To begin with the graphs were taken from a demonstration website with hard-coded data as more of a proof
+of concept that we could implement bar and line graphs. After this we wanted a way of making the dashboard customisable, so we
+found Grdister to be very effective in terms of moving and resizing graphs. By the deadline of the first iteration this was
+achieved and was a great starting point to develop our site upon.
+
+The next issue we had to deal with is how we can use real data in these graphs. We started by researching the various websites
+suggested by our customer such as NOMIS Scotland. We found that most of these sites were difficult to use in terms of extracting
+exactly the kind of data that we needed. Eventually we came across Statistics beta which was a site being set up on behalf of
+the Scottish Government to be used as a centralised access point to informatiob. In this, we were able to find data on
+hundreds of economic indicators in CSV format. We created a script that would process these files, extract only the data collected
+on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on
+our site's database. This was a major step in our project in terms of using real data, however our main issue here was that the
+data was static, and at the time of download was outdated. In addition to this the files all used inconsistent date formats (e.g.
+one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement
+being that users want to access the latest available data as well as looking back on previous years. We raised this issue
+with our customers and they were aware of this issue beforehand, this was a relief.
+
+
+
 %==============================================================================
 \section{Process Improvements}
 \label{managing}
