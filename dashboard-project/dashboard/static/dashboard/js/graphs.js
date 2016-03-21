@@ -1,69 +1,69 @@
 /*jshint*/
 
-/*global d3, console */
+/*global d3, console, GLOBAL */
 function setActiveStyleSheet(title) {
-  var i, a, main;
-  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-    if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
-      a.disabled = true;
-      if(a.getAttribute("title") == title) a.disabled = false;
+    var i, a, main;
+    for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+        if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title")) {
+            a.disabled = true;
+            if(a.getAttribute("title") == title) a.disabled = false;
+
+        }
 
     }
-
-  }
 }
 function reload(){
 }
 function getActiveStyleSheet() {
-  var i, a;
-  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-    if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title") && !a.disabled) return a.getAttribute("title");
-  }
-  return null;
+    var i, a;
+    for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+        if(a.getAttribute("rel").indexOf("style") != -1 && a.getAttribute("title") && !a.disabled) return a.getAttribute("title");
+    }
+    return null;
 }
 
 function getPreferredStyleSheet() {
-  var i, a;
-  for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-    if(a.getAttribute("rel").indexOf("style") != -1
-       && a.getAttribute("rel").indexOf("alt") == -1
-       && a.getAttribute("title")
-       ) return a.getAttribute("title");
-  }
-  return null;
+    var i, a;
+    for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
+        if(a.getAttribute("rel").indexOf("style") != -1
+            && a.getAttribute("rel").indexOf("alt") == -1
+            && a.getAttribute("title")
+            ) return a.getAttribute("title");
+    }
+    return null;
 }
 
 function createCookie(name,value,days) {
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime()+(days*24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-  }
-  else expires = "";
-  document.cookie = name+"="+value+expires+"; path=/";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
 }
 
 function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for(var i=0;i < ca.length;i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1,c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-  }
-  return null;
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
 }
 
 window.onload = function(e) {
-  var cookie = readCookie("style");
-  var title = cookie ? cookie : getPreferredStyleSheet();
-  setActiveStyleSheet(title);
+    var cookie = readCookie("style");
+    var title = cookie ? cookie : getPreferredStyleSheet();
+    setActiveStyleSheet(title);
 
 }
 
 window.onunload = function(e) {
-  var title = getActiveStyleSheet();
-  createCookie("style", title, 365);
+    var title = getActiveStyleSheet();
+    createCookie("style", title, 365);
 }
 
 var cookie = readCookie("style");
@@ -154,19 +154,14 @@ function add_Trend_Element(elemID){
         .text("Lowest was : 100");
 }
 function cleanup_data(data, type, clean_data){
-    var dates=$('input[name="daterange"]').val();//get daterangepicker's value
-    var end_date=new Date();
-    var start_date=new Date();
+    var end_date = GLOBAL.endDateRange;
+    var start_date = GLOBAL.startDateRange;
     var i,d, c_date, input;
 
-    if (dates) {
-        var e_date = dates.slice(-4);
-        end_date.setYear(e_date);
-
-        var s_date =dates.substring(6,10);
-        start_date.setYear(s_date);
-    } else {
+    if (!end_date || !start_date) {
+        start_date = new Date();
         start_date.setYear(1900);
+        end_date.setYear(2100);
         end_date.setYear(2100);
     }
     //Check date type
@@ -283,13 +278,13 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         var WIDTH = $("#" + elemID).parent().parent().width(),
             colours = ['#00264d', ' #0064cc' , '#0066cc', ' #3399ff', ' #fff'],
             MARGINS = {
-            top: 30,
-            right: 25,
-            bottom: data.length*10+10,
-            left: 60
-        }
+                top: 30,
+                right: 25,
+                bottom: data.length*10+10,
+                left: 60
+            }
 
-            }else {
+    }else {
         var WIDTH = $("#" + elemID).parent().parent().width(),
             colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'],
             MARGINS = {
@@ -318,9 +313,9 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     //Specify x axis
     xAxis = d3.svg.axis()
         .scale(xScale)
-        .tickFormat(d3.format("date"))
-        .orient("bottom")
-        .ticks((WIDTH-90)/30);
+        .tickFormat(d3.format("date"));
+        //.orient("bottom");
+        //.ticks((WIDTH-90)/30);
 
     //Specify y axis
     yAxis = d3.svg.axis()
@@ -351,7 +346,8 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         .append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
-    var bisectDate = d3.bisector(function(d) { return d.y; }).left;
+
+    var bisectDate = d3.bisector(function(d) { console.log(d.y);return d.y; }).left;
 
     //In case of 1 element we append a circle with just a text
     if (clean_data[0].length==1){
@@ -380,7 +376,7 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
                     .delay(1000)
                     .style("opacity",0);
             })
-            .on("mouseover", mousemove)
+            .on("mouseover", mousemove);
 
     }
 
@@ -388,9 +384,10 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     function mousemove() {
         var a=0;
         for (a = 0; a < clean_data.length; a++) {
-            var x0 = xScale.invert(d3.mouse(this)[0]).toFixed(0);
+            var x0 = xScale.invert(d3.mouse(this)[0]-(MARGINS.left)).toFixed(0);
             var y = yScale.invert(d3.mouse(this)[1]).toFixed(0),
                 i = bisectDate(clean_data, x0, a),
+
                 d0 = clean_data[i - 1],
                 d1 = clean_data[i + a],
                 d = x0 - d0 > d1 - x0 ? d1 : d0;
@@ -398,11 +395,12 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
             var y2 = Math.ceil(y / 10) * 10;
             div.transition()
                 .duration(10)
-                .style("opacity",0.9)
+                .style("opacity",0.9);
             div.html(yLabel+"<b/>" +": " + y+  "<br/>"  + xLabel +": " +x0)
 
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px")
+
         }
     }
 
@@ -429,4 +427,4 @@ function add_axis_labels(vis,xLabel,yLabel,WIDTH,HEIGHT,MARGINS){
 }
 
 
-                reload();
+reload();

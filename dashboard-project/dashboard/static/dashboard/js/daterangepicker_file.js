@@ -34,6 +34,7 @@ var applyDatePickerStats=function(){
 	}, cb);
 	
 	$('.daterange').on('apply.daterangepicker', function(ev, picker) {
+        console.log("applied");
 	  drawAllGraphs();
 	});
 };
