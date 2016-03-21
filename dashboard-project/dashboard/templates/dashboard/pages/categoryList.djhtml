@@ -6,7 +6,7 @@
                 {% for cat in categories %}
                     <a href="#category/{{ cat.name }}">
                         <div class="panel panel-default">
-                          <div class="panel-body category">
+                          <div class="panel-heading category">
                             {{ cat.name }}
                           </div>
                         </div>
