@@ -25,19 +25,20 @@ function getActiveStyleSheet() {
 function getPreferredStyleSheet() {
     var i, a;
     for(i=0; (a = document.getElementsByTagName("link")[i]); i++) {
-        if(a.getAttribute("rel").indexOf("style") != -1
-            && a.getAttribute("rel").indexOf("alt") == -1
-            && a.getAttribute("title")
+        if(a.getAttribute("rel").indexOf("style") != -1 &&
+            a.getAttribute("rel").indexOf("alt") == -1 &&
+            a.getAttribute("title")
             ) return a.getAttribute("title");
     }
     return null;
 }
 
 function createCookie(name,value,days) {
+    var expires;
     if (days) {
         var date = new Date();
         date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        expires = "; expires="+date.toGMTString();
     }
     else expires = "";
     document.cookie = name+"="+value+expires+"; path=/";
@@ -49,7 +50,7 @@ function readCookie(name) {
     for(var i=0;i < ca.length;i++) {
         var c = ca[i];
         while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
     }
     return null;
 }
@@ -58,13 +59,12 @@ window.onload = function(e) {
     var cookie = readCookie("style");
     var title = cookie ? cookie : getPreferredStyleSheet();
     setActiveStyleSheet(title);
-
-}
+};
 
 window.onunload = function(e) {
     var title = getActiveStyleSheet();
     createCookie("style", title, 365);
-}
+};
 
 var cookie = readCookie("style");
 var title = cookie ? cookie : getPreferredStyleSheet();
@@ -195,11 +195,14 @@ function cleanup_data(data, type, clean_data){
     return clean_data;
 }
 function add_legend(elemID,vis,data,colours,datasetLabels,MARGINS){
-    y=0;
-    data_width=40;
-    rect_height=12;
+    var y=0;
+    var data_width=40;
+    var rect_height=12;
     //for every data add coressponidng
-    for (i=0;data[i]!=null ;i++) {
+    for (var i=0; i < data.length;i++) {
+        if (data[i] === null) {
+            continue;
+        }
         vis.append("rect")
             .attr("width",30)
             .attr("height",rect_height)
@@ -212,7 +215,7 @@ function add_legend(elemID,vis,data,colours,datasetLabels,MARGINS){
             .attr("x",MARGINS.left+data_width)
             .attr("y",y+rect_height)
             .text(datasetLabels[i]);
-        y+=17
+        y+=17;
     }
 }
 function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
@@ -268,57 +271,59 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
 
 
     var HEIGHT=0;
+    var WIDTH, colours, MARGINS;
     var tool_bar_height=100;
     if ($("#" + elemID).parent().parent().parent().height()-tool_bar_height>1000){
         HEIGHT = 300;
     }else{
         HEIGHT = $("#" + elemID).parent().parent().parent().height()-tool_bar_height;
     }
-    if(getActiveStyleSheet()=="default") {
-        var WIDTH = $("#" + elemID).parent().parent().width(),
-            colours = ['#00264d', ' #0064cc' , '#0066cc', ' #3399ff', ' #fff'],
-            MARGINS = {
-                top: 30,
-                right: 25,
-                bottom: data.length*10+10,
-                left: 60
-            }
+    if(getActiveStyleSheet() === "default") {
+        WIDTH = $("#" + elemID).parent().parent().width();
+        colours = ['#00264d', ' #0064cc' , '#0066cc', ' #3399ff', ' #fff'];
+        MARGINS = {
+            top: 30,
+            right: 25,
+            bottom: data.length*10+10,
+            left: 60
+        };
 
     }else {
-        var WIDTH = $("#" + elemID).parent().parent().width(),
-            colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'],
-            MARGINS = {
-                top: 30,
-                right: 25,
-                bottom: data.length * 10 + 10,
-                left: 60
-
-            }
+        WIDTH = $("#" + elemID).parent().parent().width();
+        colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'];
+        MARGINS = {
+            top: 30,
+            right: 25,
+            bottom: data.length * 10 + 10,
+            left: 60
+        };
 
     }
     //Create svg element
     vis = d3.select("#" + elemID).attr("width", WIDTH).attr("height", HEIGHT);
 
-    xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
-    yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
+    var xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
+    var yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
+    
+    console.log(xMin);
+    console.log(xMax);
 
     if (clean_data[0].length==1) {// In case of 1 element margin domain changes
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
         yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMax/2, yMax*2]);
-
-    }else if(type!="normal"){
+    }else if(type !== "normal"){
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax+1]);
     }
 
     //Specify x axis
-    xAxis = d3.svg.axis()
+    var xAxis = d3.svg.axis()
         .scale(xScale)
-        .tickFormat(d3.format("date"));
-        //.orient("bottom");
-        //.ticks((WIDTH-90)/30);
+        .tickFormat(d3.format("date"))
+        .orient("bottom")
+        .ticks((WIDTH-90)/30);
 
     //Specify y axis
-    yAxis = d3.svg.axis()
+    var yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left");
 
@@ -341,7 +346,8 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         })
         .y(function(d) {
             return yScale(d.y);
-        })
+        });
+    
     var div = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -384,28 +390,20 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     function mousemove() {
         var a=0;
         for (a = 0; a < clean_data.length; a++) {
-            var x0 = xScale.invert(d3.mouse(this)[0]-(MARGINS.left)).toFixed(0);
-            var y = yScale.invert(d3.mouse(this)[1]).toFixed(0),
-                i = bisectDate(clean_data, x0, a),
-
-                d0 = clean_data[i - 1],
-                d1 = clean_data[i + a],
-                d = x0 - d0 > d1 - x0 ? d1 : d0;
-            var x2 = Math.round(xScale(x0));
-            var y2 = Math.ceil(y / 10) * 10;
+            var x0 = xScale.invert(d3.mouse(this)[0]).toFixed(0);
+            var y = yScale.invert(d3.mouse(this)[1]).toFixed(0);
             div.transition()
                 .duration(10)
                 .style("opacity",0.9);
             div.html(yLabel+"<b/>" +": " + y+  "<br/>"  + xLabel +": " +x0)
-
                 .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
 
         }
     }
 
     //Check that labels for the dataset exist and then add them
-    if(typeof datasetLabels !== 'undefined' || datasetLabels !=null){
+    if(typeof datasetLabels !== undefined || datasetLabels !== null){
         add_legend(elemID,vis,clean_data,colours,datasetLabels,MARGINS);
     }
     add_axis_labels(vis,xLabel,yLabel,WIDTH,HEIGHT,MARGINS);
@@ -425,6 +423,5 @@ function add_axis_labels(vis,xLabel,yLabel,WIDTH,HEIGHT,MARGINS){
         .attr("transform", "translate("+ (WIDTH/2) +","+((HEIGHT))+")")  // centre below axis
         .text(xLabel);
 }
-
 
 reload();
