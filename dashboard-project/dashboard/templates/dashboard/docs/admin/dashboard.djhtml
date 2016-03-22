@@ -262,4 +262,272 @@ will both redirect you to the page displaying the Saved Configs in detail</p>
      </li>
 </ul>
 
+<h2> Saved Graphs: </h2>
+<p>The "<a Class = "addlink"></a>Add" button redirects the admin to a page where a new Saved Graph can be added.
+the following table provides information on how a new Saved Graph is added.</p>
+
+<ul>
+    <li>
+        <h3>
+           An explanation of all the fields is in the table below.
+        </h3>
+        <table>
+          <tr>
+            <th>Field Name</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>Visualisation</td>
+            <td>This field specifies the visualisation the graph is connected to.</td>
+            <td>Crime</td>
+          </tr>
+          <tr>
+            <td> isTrendWidget:</td>
+            <td>This shows if the graph is a trend Widget.</td>
+            <td>ticked</td>
+          </tr>
+          <tr>
+            <td> SavedConfig:</td>
+            <td>This specifies the saved configuration the graph is attributed to.</td>
+            <td>test</td>
+          </tr>
+          <tr>
+            <td> XPosition:</td>
+            <td>Specify the position of the X.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td> YPosition:</td>
+            <td>Specify the position of the Y.</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td> SizeX:</td>
+            <td>This specifies the size of the X.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td> SizeY:</td>
+            <td>This specifies the size of the Y.</td>
+            <td>2</td>
+          </tr>
+         </table>
+     </li>
+</ul>
+
+<p> Pressing on "<a class = "changelink" ></a>Change" or on "Saved Config"
+will both redirect you to the page displaying the Saved Graph in detail</p>
+
+<ul>
+    <li>
+        <h3>
+             An explanation of all the fields is in the table below.
+        </h3>
+        <table>
+        <tr>
+            <th>Field Name</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td> XPosition:</td>
+            <td>Specify the position of the X.</td>
+            <td>2</td>
+          </tr>
+           <tr>
+            <td> YPosition:</td>
+            <td>Specify the position of the Y.</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td> SizeY:</td>
+            <td>This specifies the size of the Y.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td> SizeX:</td>
+            <td>This specifies the size of the X.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Visualisation</td>
+            <td>This field specifies the visualisation the graph is connected to.</td>
+            <td>Crime</td>
+          </tr>
+          <tr>
+            <td> isTrendWidget:</td>
+            <td>This shows if the graph is a trend Widget.</td>
+            <td>ticked</td>
+          </tr>
+           <tr>
+            <td>Visualisation</td>
+            <td>This field specifies the visualisation the graph is connected to.</td>
+            <td>Crime</td>
+          </tr>
+          <tr>
+            <td> SavedConfig:</td>
+            <td>This specifies the saved configuration the graph is attributed to.</td>
+            <td>test</td>
+          </tr>
+          <tr>
+            <td> SavedConfig:</td>
+            <td>This specifies the saved configuration the graph is attributed to.</td>
+            <td>test</td>
+          </tr>
+          <tr>
+            <td> ID:</td>
+            <td>This specifies the ID of the saved graph automatically generated on creation.</td>
+            <td>14</td>
+          </tr>
+          <tr>
+            <td> SavedConfig:</td>
+            <td>This specifies the saved configuration the graph is attributed to.</td>
+            <td>test</td>
+          </tr>
+         </table>
+     </li>
+</ul>
+
+<h2> Visualisation: </h2>
+<p>The "<a Class = "addlink"></a>Add" button redirects the admin to a page where a new Visualisation can be added.
+the following table provides information on how a new Visualisation is added.</p>
+
+<ul>
+    <li>
+        <h3>
+         An explanation of all the fields is in the table below.
+        </h3>
+        <table>
+          <tr>
+            <th>Field Name</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>Datasource</td>
+            <td>This field specifies the datasource for the visualisation.</td>
+            <td>Bar Graph datasource</td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>This field specifies the name of the Visualisation.</td>
+            <td>testVisual</td>
+          </tr>
+          <tr>
+            <td> Description:</td>
+            <td>A brief description of the visualisation.</td>
+            <td>This is a graph for unemployment rates in 2016</td>
+          </tr>
+          <tr>
+            <td>Category</th>
+            <td>This field specifies the category underwich the visualisation will fall.</th>
+            <td>Crime</th>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>This field specifies the type of the graph.</td>
+            <td>line</td>
+          </tr>
+          <tr>
+            <td> SizeY:</td>
+            <td>This specifies the size of the Y.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td> SizeX:</td>
+            <td>This specifies the size of the X.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>XLabel</th>
+            <td>The label of the X axis</th>
+            <td>Year</th>
+          </tr>
+          <tr>
+            <td>YLabel</td>
+            <td>The label of the Y axis.</td>
+            <td>Dumfries and Galloway</td>
+          </tr>
+         </table>
+     </li>
+</ul>
+
+<p> Pressing on "<a class = "changelink" ></a>Change" or on "Visualisation"
+will both redirect you to the page displaying the Visualisation in detail</p>
+
+<ul>
+    <li>
+        <h3>
+         An explanation of all the fields is in the table below.
+        </h3>
+        <table>
+          <tr>
+            <th>Field Name</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>This field specifies the name of the Visualisation.</td>
+            <td>testVisual</td>
+          </tr>
+          <tr>
+            <td>Category</th>
+            <td>This field specifies the category underwich the visualisation will fall.</th>
+            <td>Crime</th>
+          </tr>
+          <tr>
+            <td>Datasource</td>
+            <td>This field specifies the datasource for the visualisation.</td>
+            <td>Bar Graph datasource</td>
+          </tr>
+          <tr>
+            <td>YLabel</td>
+            <td>The label of the Y axis.</td>
+            <td>Dumfries and Galloway</td>
+          </tr>
+          <tr>
+            <td> SizeX:</td>
+            <td>This specifies the size of the X.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td> SizeY:</td>
+            <td>This specifies the size of the Y.</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>XLabel</th>
+            <td>The label of the X axis</th>
+            <td>Year</th>
+          </tr>
+          <tr>
+            <td>Datasource</td>
+            <td>This field specifies the datasource for the visualisation.</td>
+            <td>Bar Graph datasource</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>This field specifies the type of the graph.</td>
+            <td>line</td>
+          </tr>
+           <tr>
+            <td>Category</th>
+            <td>This field specifies the category underwich the visualisation will fall.</th>
+            <td>Crime</th>
+          </tr>
+          <tr>
+            <td> Description:</td>
+            <td>A brief description of the visualisation.</td>
+            <td>This is a graph for unemployment rates in 2016</td>
+          </tr>
+          <tr>
+            <td> ID:</td>
+            <td>The ID of the visualisation which is automatically created on creation.</td>
+            <td>12</td>
+          </tr>
+         </table>
+     </li>
+</ul>
 {% endblock content %}
