@@ -305,8 +305,8 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     var xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin, xMax]);
     var yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([yMin, yMax]);
     
-    console.log(xMin);
-    console.log(xMax);
+    //console.log(xMin);
+    //console.log(xMax);
 
     if (clean_data[0].length==1) {// In case of 1 element margin domain changes
         xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([xMin-1, xMax+1]);
@@ -389,13 +389,25 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
     //finds and display the current coordinates mouse is on
     function mousemove() {
         var a=0;
+        var y1 = 0;
         for (a = 0; a < clean_data.length; a++) {
             var x0 = xScale.invert(d3.mouse(this)[0]).toFixed(0);
-            var y = yScale.invert(d3.mouse(this)[1]).toFixed(0);
-            div.transition()
+
+
+            var y = yScale.invert(d3.mouse(this)[1]);
+            y = y.toString();
+            var res = y.substring(0, 2);
+if(res == '0.'){
+                var y1 = yScale.invert(d3.mouse(this)[1]).toFixed(2);
+console.log(y1);
+}else{
+                var y1 = yScale.invert(d3.mouse(this)[1]).toFixed(0);
+
+}
+    div.transition()
                 .duration(10)
                 .style("opacity",0.9);
-            div.html(yLabel+"<b/>" +": " + y+  "<br/>"  + xLabel +": " +x0)
+            div.html(yLabel+"<b/>" +": " + y1+  "<br/>"  + xLabel +": " +x0)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px");
 
