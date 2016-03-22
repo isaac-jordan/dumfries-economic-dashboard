@@ -15,11 +15,6 @@ var drawAllGraphs = function() {
     
 };
 
-var showPopover = function(event) {
-    $('[data-toggle="popover"]').popover({html: true});
-    $(event.target).closest('[data-toggle="popover"]').popover("toggle");
-};
-
 app.run(function($rootScope, $templateCache) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if (typeof(current) !== 'undefined') {
@@ -297,8 +292,6 @@ app.controller('draggableGridController', function($scope, $timeout) {
         $scope.widgets.splice(index, 1);
     };
     
-    $scope.showPopover = showPopover;
-    
     $scope.exportToPDF = dashboardToPDF;
     
     function checkAddedGraphs() {
@@ -366,8 +359,6 @@ app.controller('categoryController', function($scope, $timeout) {
 	  drawCategoryGraphs();
 	});
     drawCategoryGraphs();
-    
-    $scope.showPopover = showPopover;
 });
 
 app.controller("searchController", function($scope) {
@@ -378,7 +369,6 @@ app.controller("searchController", function($scope) {
         }
     };
     $('[data-toggle="popover"]').popover({html: true});
-    $scope.showPopover = showPopover;
     drawSearchGraphs();
 });
 

@@ -80,7 +80,7 @@ class CsvFile(Importer):
                             try:
                                 if row[dimension.indexForLabel - 1].lower() == dimension.label.lower():
                                     localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
-                                    break;
+                                    break
                                 else:
                                     index += 1
                             except IndexError:
@@ -96,7 +96,7 @@ class CsvFile(Importer):
                                         continue
                                     
                                     localData = row[dimension.dataStartIndex:dimension.dataEndIndex:]
-                                    break;
+                                    break
                                 else:
                                     index += 1
                 else:

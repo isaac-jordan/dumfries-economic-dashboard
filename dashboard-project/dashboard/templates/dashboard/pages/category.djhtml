@@ -1,4 +1,4 @@
-{% load humanize %}
+{% load humanize util %}
 <div class="padding">
     <div class="full col-sm-9">
         <div class="row">
@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <p>Maximum: {{ widget.trends.maxY.y | intcomma }} at {{ widget.trends.maxY.x | date:"d M Y" }}</p>
-                                <p>Minimum: {{ widget.trends.minY.y | intcomma }} at {{ widget.trends.minY.x | date:"d M Y" }}</p>
+                                <p>Maximum: {{ widget.trends.maxY.y | intcomma }} at {{ widget.trends.maxY.x | convertXValueToString }}</p>
+                                <p>Minimum: {{ widget.trends.minY.y | intcomma }} at {{ widget.trends.minY.x | convertXValueToString }}</p>
                                 {% for analysis in widget.trends.analysis %}
                                 <h3>{{ analysis.name }} Line Statistics</h3>
                                 
