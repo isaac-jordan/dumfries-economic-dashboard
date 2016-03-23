@@ -288,6 +288,15 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
             left: 60
         };
 
+    } else  if(getActiveStyleSheet() === "style2") {
+        WIDTH = $("#" + elemID).parent().parent().width();
+        colours = ['#000000', ' #262626' , '#595959', ' #3399ff', ' #8c8c8c'];
+        MARGINS = {
+            top: 30,
+            right: 25,
+            bottom: data.length * 10 + 10,
+            left: 60
+        };
     }else {
         WIDTH = $("#" + elemID).parent().parent().width();
         colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'];
