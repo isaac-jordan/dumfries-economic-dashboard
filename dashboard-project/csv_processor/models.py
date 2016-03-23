@@ -175,7 +175,7 @@ class CsvFile(Importer):
                                                   sizeX=2,
                                                   sizeY=2,
                                                   xLabel="Date",
-                                                  yLabel="Placeholder")[0]
+                                                  yLabel=self.visualisationName)[0]
         
         # Delete any datasets associated with this visualisation already.
         DashboardDataset.objects.filter(visualisation=vis).delete()
