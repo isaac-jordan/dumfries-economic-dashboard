@@ -195,7 +195,9 @@ app.controller('mainController', function($scope, $location, $timeout) {
                 //console.log(widget);
                 GLOBAL.widgets.unshift(widget);
                 $scope.$apply();
-                $timeout(drawAllGraphs, 500);
+                $scope.$evalAsync(
+                        drawAllGraphs()
+                    );
             },
             error: function(err) {
                 console.log(err);
@@ -270,7 +272,9 @@ app.controller('draggableGridController', function($scope, $timeout) {
             start: function(event, $element, widget) {},
             resize: function(event, $element, widget) {},
             stop: function(event, $element, widget) {
-                $timeout(drawAllGraphs, 500);
+                $scope.$evalAsync(
+                        drawAllGraphs()
+                    );
 		        //console.log("REDRAWING GRAPHS");
             }
         },
@@ -284,7 +288,9 @@ app.controller('draggableGridController', function($scope, $timeout) {
     };
 
     $scope.$on('gridster-resized', function(sizes, gridster) {
-        $timeout(drawAllGraphs, 500);
+        $scope.$evalAsync(
+                        drawAllGraphs()
+                    );
     });
 
     $scope.widgets = GLOBAL.widgets;
@@ -317,7 +323,9 @@ app.controller('draggableGridController', function($scope, $timeout) {
             success: function(response) {
                 GLOBAL.widgets = response.widgets;
                 $scope.widgets = GLOBAL.widgets;
-                $timeout(drawAllGraphs, 500); // TODO - fix this hacky solution to randomly wait 500ms before drawing graphs.
+                $scope.$evalAsync(
+                        drawAllGraphs
+                    );
                 $scope.$watch("widgets", function(newValue, oldValue) {
                     $(".addGraph").each(function(index, element) {
                         var found = false;
@@ -341,7 +349,10 @@ app.controller('draggableGridController', function($scope, $timeout) {
             }
         });
     } else {
-        $timeout(drawAllGraphs, 500); // TODO - Also fix this hacky solution
+
+        $scope.$evalAsync(
+                        drawAllGraphs()
+                    );
         checkAddedGraphs();
     }
 

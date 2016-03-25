@@ -293,7 +293,7 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         colours = ['#000000', ' #262626' , '#595959', ' #3399ff', ' #8c8c8c'];
         MARGINS = {
             top: 30,
-            right: 25,
+            right: 30,
             bottom: data.length * 10 + 10,
             left: 60
         };
@@ -302,7 +302,7 @@ function linegraph(elemID, data,datasetLabels,xLabel,yLabel) {
         colours = ['#1a001a', ' #4d004d' , '#800080', ' #b300b3', ' #fff'];
         MARGINS = {
             top: 30,
-            right: 25,
+            right: 30,
             bottom: data.length * 10 + 10,
             left: 60
         };
