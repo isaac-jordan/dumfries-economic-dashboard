@@ -191,6 +191,19 @@ one would be quarterly, another would be monthly, another yearly) which presente
 being that users want to access the latest available data as well as looking back on previous years. We raised this issue
 with our customers and they were aware of this issue beforehand, this was a relief.
 
+Another major issue we identified was the lack of code testing. As we were working on implementing various features into the website 
+we realized that we have produced a lot of code but if it were to malfunction we would not be certain where the problem has occured.
+Having as high test code coverage as possible beneffits the developers in many ways. Big changes can be made to the code and if 
+the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
+design of the code. Now we had to write unit tests to an already existing code which proved difficult. In order for test cases to
+be written one has tounderstand the code which is being tested. And when several people have contributed to that code it is certain
+that there will be pieces of code which will be inexplicable. Good teamworking and communication helped the team reach high percentage
+of test code coverage. Since we decided to use the 'django' framework for our website, which is based on python we had to look into 
+python junit testing. Unfortunately the documentation on 'django testing' was rather incomplete. We had to carry out an extensive research
+on how to use 'python junit' to test our code. There were not many sources covering that subject and we had to use bits and pieces from
+different sources. By the third iteration we had managed to raise the test code coverage significantly and started working on tests
+while writing the actual code. 
+
 %==============================================================================
 /section{Core Practices}
 /label {Agile Software Development}
@@ -224,7 +237,8 @@ if not the following.
 \section{Process Improvements}
 \label{managing}
 
-We talk about the improvements we've made as a team, such as improvements make to ticket management
+We talk about the improvements we've made as a team, such as improvements make to ticket management.
+
 
 %------------------------------------------------------------------------------
 
