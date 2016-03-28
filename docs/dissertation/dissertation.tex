@@ -1,8 +1,8 @@
 % This example An LaTeX document showing how to use the l3proj class to
-% write your report. Use pdflatex and bibtex to process the file, creating 
+% write your report. Use pdflatex and bibtex to process the file, creating
 % a PDF file as output (there is no need to use dvips when using pdflatex).
 
-% Modified 
+% Modified
 
 \documentclass{l3proj}
 
@@ -44,8 +44,8 @@ reflects on our experiences relating to software engineering practices and princ
 %==============================================================================
 \section{Introduction}
 
-This project report covers a 7 month University of Glasgow third year project. For 
-our team's project, we were asked to create an interactive dashboard of various 
+This project report covers a 7 month University of Glasgow third year project. For
+our team's project, we were asked to create an interactive dashboard of various
 economic indicators that would be integrated into the Crichton Institutes's homepage. The idea behind this project is to provide an easy to access/instant
 visualisation of key economic data that allows businesses, agencies etc, to gain a snapshot of the current state of the
 regional economy without having to trawl through lots of data links. Our project was built using the Python-based Django
@@ -67,7 +67,7 @@ arose during the project...
 %==============================================================================
 \section{Case Study Background} \label{sec:background}
 
-Include details of 
+Include details of
 
 \begin{itemize}
 \item The customer organisation and background.
@@ -100,7 +100,7 @@ The exact details of data that can most usefully be included was open for discus
 
 They were asking about the possibility of using APIs that link to the relevant local data, offer a comparison to the Scotland-wide data and,
 if possible even a UK-wide comparison. If the project time allowed, they wanted functionality to be built in that the user is able to ‘build’ his/her
-own cheat sheet,a summary of the indicators important to him/her, and download this as a printable pdf document."
+own cheat sheet,a summary of the indicators important to him/her, and download this as a printable pdf document.''
 
 Ideally, they wanted the dashboard to look similar to those of the London Dashboard~\cite{LondonDashboard} or the Dublin Dashboard\cite{DublinDashboard}.
 
@@ -111,8 +111,8 @@ or an alternative has been put in place. The only large initially discussed task
 with Eva and Tony during a meeting that this was not necessary anyway and because there were a lot of issues concerning availability of data, it would be
 extremely difficult and we could use the time we would have spent working on that more effectively, improving other, more important parts of the site.
 
-The customers have been consistently happy throughout, and not at any point did they ask us to remove something we had done, except for small details such 
-as shadowing behind text. They made various suggestions during the meetings but even most of those were ideas that we had already thought about but were 
+The customers have been consistently happy throughout, and not at any point did they ask us to remove something we had done, except for small details such
+as shadowing behind text. They made various suggestions during the meetings but even most of those were ideas that we had already thought about but were
 yet to implement.
 
 Overall the final product fits the initial brief almost exactly and the customer is happy that what we have produced meets their requirements. That
@@ -125,7 +125,7 @@ is, afterall, the most important thing.
 \section{Team Dynamics}
 
 We talk about initial individual efforts, how more team members contributed more as the site grew into something functional
-and the importance tof documentation etc, our use of Slack for team communication with integration with SVN/Jenkins
+and the importance of documentation etc, our use of Slack for team communication with integration with SVN/Jenkins
 
 The assignment of members to project teams was randomised and sorted based on degree discipline, with our team being
 Computing Science oriented. Our team was randomised, however two of us were close friends and another two were from the
@@ -133,56 +133,56 @@ same country which helped with initial team cohesion. One of our first tasks was
 team communication, however in addition to this we also used Slack, a cloud-based team collaboration tool. We found this to
 be of much better use than Facebook due to the organisation of discussion groups (e.g. one for general communication, one for
 minutes of meetings). We werearly on in the project life cycle
-but introduced the SVN component approximately half way through the process, e also able to integrate Jenkins and SVN into this tool to monitor the success of project builds,
+but introduced the SVN component approximately half way through the process, we were also able to integrate Jenkins and SVN into this tool to monitor the success of project builds,
 and also to monitor when new commits are made to the repository. We had Jenkins integration in hindsight we wished we had used this from the
-start. At the early stages we also organised team roles: Lewis as Project Manager; Isaac as Tech Lead; Michael as Client Liason;
-Ross as Retrospective Manager and Branko and Takis were Software Engineers. In terms of agreement of these roles they were unanimous
-based on the persoanl traits of each team member and this was consistently adhered to throughout the project.
+start. At the early stages we also organised team roles: Lewis as Project Manager; Isaac as Technical Lead; Michael as Client Liason;
+Ross as Retrospective Manager and Branko and Takis were general Software Development Engineers. In terms of agreement of these roles they were unanimous
+based on the personal traits of each team member and this was consistently adhered to throughout the project.
 
 One particular observation we noticed early on in the process was the commitment of team members to team meetings and also
 to efforts made in developing the project. The university had timetabled one all day lab session per week that was dedicated
 to team project work, and on these days we had the majority of our team members attend. The problems seemed to arise when
-team members did not show up for additional team meetings arranged well in advance, sometimes this was due to mittigating
+team members did not show up for additional team meetings arranged well in advance, sometimes this was due to mitigating
 circumstances such as ill health or part-time job commitments, and whilst this was acceptable the main issue was the fact
 that at this stage team members seemed to give no prior notice that they would not be available and consequently only
 half the team showed up to these meetings on average. As the process continued the consistency of team members attending these
-extra meetings improved albeit if they showed up later than intially arranged.
+extra meetings improved albeit if they showed up later than initially arranged.
 
 In terms of effort put into the project, there seemed to be a pattern where it was only our Tech Lead that was committing the most
 work into the project in the initial stages. This was down to the fact that he has professional web development experience from previous
-years while the rest of the team have limited experience. However once the site was partially functioning as a proof of concept, it 
+years while the rest of the team have limited experience. However once the site was partially functioning as a proof of concept, it
 encouraged more team members to make contributions to the project.
 
 
 %==============================================================================
 
 \section{System Implementation}
-\label{design}
+\label{implementation}
 
 We should talk about the building stages of the site, making the build component based, availability of APIs
 
-In software engineering there are many ways to implement a project but there are certain tools that are more advatageous over
-others. For our team project we were asked to build a web application, so in doing so we had to deicde on a web framework that
+In software engineering there are many ways to implement a project but there are certain tools that are more advantageous over
+others. For our team project we were asked to build a web application, so in doing so we had to decide on a web framework that
 we could use as the basis of our project. We chose the Python-based Django framework as we have all have had previous experience
-in developing web applications using this as part of a unviersity course. There were options where we could have used an alternative
+in developing web applications using this as part of a university course. There were options where we could have used an alternative
 framework such as Java Spring, and whilst we are all proficient as team members in the use of Java, there would be too much time
 wasted on learning the basics of Spring. In choosing Django it allowed us to spend more time on the project itself. Our project
 used a variety of languages such as HTML, CSS, Bootstrap and Javascript, all in which we have had previous experience using.
-We also used new technologies such as Angular JS, d3 for graph visualisation and Grdister for the movement and resizing of graph
+We also used new technologies such as Angular JS, d3 for graph visualisation and Gridster for the movement and resizing of graph
 elements.
 
-The starting point of our project was to create a base template for the site: we found a Boostrap template that was a good starting
+The starting point of our project was to create a base template for the site: we found a Bootstrap template that was a good starting
 point in terms of a colour scheme and layout that was both simplistic yet professional. Next was to decide how to implement the
 graphs: we decided upon using d3 for graph visualisation as this was mentioned by a lecturer in another course we were currently
 taking at university. To begin with the graphs were taken from a demonstration website with hard-coded data as more of a proof
 of concept that we could implement bar and line graphs. After this we wanted a way of making the dashboard customisable, so we
-found Grdister to be very effective in terms of moving and resizing graphs. By the deadline of the first iteration this was
+found Gridster to be very effective in terms of moving and resizing graphs. By the deadline of the second iteration this was
 achieved and was a great starting point to develop our site upon.
 
 The next issue we had to deal with is how we can use real data in these graphs. We started by researching the various websites
-suggested by our customer such as NOMIS Scotland. We found that most of these sites were difficult to use in terms of extracting
-exactly the kind of data that we needed. Eventually we came across Statistics beta which was a site being set up on behalf of
-the Scottish Government to be used as a centralised access point to informatiob. In this, we were able to find data on
+suggested by our customer such as NOMIS Scotland~\ref{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting
+exactly the kind of data that we needed. Eventually we came across Statistics.Gov.Scot Beta~\ref{StatisticsScotBeta} which was a site being set up on behalf of
+the Scottish Government to be used as a centralised access point to information. In this, we were able to find data on
 hundreds of economic indicators in CSV format. We created a script that would process these files, extract only the data collected
 on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on
 our site's database. This was a major step in our project in terms of using real data, however our main issue here was that the
@@ -191,22 +191,23 @@ one would be quarterly, another would be monthly, another yearly) which presente
 being that users want to access the latest available data as well as looking back on previous years. We raised this issue
 with our customers and they were aware of this issue beforehand, this was a relief.
 
-Another major issue we identified was the lack of code testing. As we were working on implementing various features into the website 
-we realized that we have produced a lot of code but if it were to malfunction we would not be certain where the problem has occured.
-Having as high test code coverage as possible beneffits the developers in many ways. Big changes can be made to the code and if 
+Another major issue we identified was the lack of code testing. As we were working on implementing various features into the website
+we realized that we have produced a lot of code but if it were to malfunction we would not be certain where the problem has occurred.
+Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if
 the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
 design of the code. Now we had to write unit tests to an already existing code which proved difficult. In order for test cases to
-be written one has tounderstand the code which is being tested. And when several people have contributed to that code it is certain
-that there will be pieces of code which will be inexplicable. Good teamworking and communication helped the team reach high percentage
-of test code coverage. Since we decided to use the 'django' framework for our website, which is based on python we had to look into 
-python junit testing. Unfortunately the documentation on 'django testing' was rather incomplete. We had to carry out an extensive research
-on how to use 'python junit' to test our code. There were not many sources covering that subject and we had to use bits and pieces from
+be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain
+that there will be pieces of code which will be inexplicable. Good teamworking and communication helped the team reach a high percentage
+of test code coverage. Since we decided to use the "django'' framework for our website, which is based on python we had to look into
+python junit testing. Unfortunately the documentation on "django testing'' was rather incomplete (TODO: Modify this since django documentation
+is actually very complete. Perhaps due to team members infamiliarity with Python unit testing in general?). We had to carry out an extensive research
+on how to use "python junit'' to test our code. There were not many sources covering that subject and we had to use bits and pieces from
 different sources. By the third iteration we had managed to raise the test code coverage significantly and started working on tests
-while writing the actual code. 
+while writing the actual code.
 
 %==============================================================================
-/section{Core Practices}
-/label {Agile Software Development}
+\section{Core Practices}
+\label {Agile Software Development}
 
 Throughout the development of the project we were also following a course named Professional Software Development.
 The course's aim was to introduce the students to modern software development methods and techniques for building and
@@ -216,7 +217,7 @@ which requirements and solutions evolve through collaboration between self-organ
 It promotes adaptive planning, evolutionary development, early delivery, and continuous improvement, and it encourages
 rapid and flexible response to change".
 
-The agile method that was mostly used was Extreme Programming(XP). The benefits of XP are beneficial since it focuses on
+The agile method that was mostly used was Extreme Programming (XP). The benefits of XP are beneficial since it focuses on
 customer satisfaction, enables the continuous elicitation of requirements from the customers and insists on teamwork
 both between the team members and the customers. Also, XP improves the communication, simplicity, feedback, respect and
 courage of the team. It focuses on a number of simple rules that can be easily adhered to.
@@ -229,8 +230,8 @@ requirements of the project and also proposed some ideas to our clients. At the 
 translated into user stories, from where a number of tasks have been created to provide possible solutions to the user stories.
 By the end of this iteration a meeting with the customers was arranged in order to demonstrate the current structure of the
 project, asking it fits their needs and collect new requirements for the following iterations. This process has been followed
-until the end of the project including the final demonstration. It is also fair to say that inbetween each iterations we
-aimed to discover defects which in turn were translated into new user stories and fixed during their repesctive iteration,
+until the end of the project including the final demonstration. It is also fair to say that in between each of the iterations we
+aimed to discover defects which in turn were translated into new user stories and fixed during their respective iteration,
 if not the following.
 
 %==============================================================================
