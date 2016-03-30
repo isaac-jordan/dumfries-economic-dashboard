@@ -43,29 +43,24 @@ reflects on our experiences relating to software engineering practices and princ
 
 %==============================================================================
 \section{Introduction}
+\label{sec:introduction}
 
-This project report covers a 7 month University of Glasgow third year project. For
-our team's project, we were asked to create an interactive dashboard of various
-economic indicators that would be integrated into the Crichton Institutes's homepage. The idea behind this project is to provide an easy to access/instant
-visualisation of key economic data that allows businesses, agencies etc, to gain a snapshot of the current state of the
-regional economy without having to trawl through lots of data links. Our project was built using the Python-based Django
-framework as the team had previous university experience building web applications using this so it was relatively
-straightforward to begin developing the initial components of the back-end of the website. In addition to this we used
-many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, d3~\cite{d3Webpage} and Gridster.
+%% Purpose of the document
+This project report covers a 7 month University of Glasgow third year project. It is a case-study reporting on the aims of the project, the software development process adopted throughout development, the evolution of the software produced, and the evaluation and reflection of the group and project.
 
+%% Very brief outline of the project
+The team was asked to create an interactive dashboard of various economic indicators of the Dumfries and Galloway region. The idea behind this project was to provide an easy-to-access and instant visualisation of key economic data that allows businesses, individuals, and prospective investors to gain a snapshot of the current state of the regional economy without having to trawl through lots of data links.
 
+Several key requirements of the final product that were identified included minimising clicks to get to an overview of information, having more detailed information available for those who needed it, and the dashboard should be viable to be managed by non-technical administration personnel.
 
+The dashboard was built using the Python-based Django~\cite{Django} framework as the team had previous university experience building web applications using this so it was relatively straightforward to begin developing the initial components of the back-end of the website. In addition to this we used many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, d3~\cite{d3Webpage} and Gridster~\cite{AngularGridster}.
 
-%% Final paragraph.
-The rest of the case study is structured as follows.  Section
-\ref{sec:background} presents the background of the case study
-discussed, describing the customer and project context, aims and
-objectives and project state at the time of writing.  Sections
-Bleh through Section Blah discuss issues that
-arose during the project...
+%% Summary of the rest of the document
+The following pages attempt to comprehensively cover all aspects of the development of the dashboard including technical and non-technical issues. Section \ref{sec:background} presents background information on the project, and Section \ref{sec:team-dynamics} to Section \ref{sec:customer-management} cover a range of topics in detail.
 
 %==============================================================================
-\section{Case Study Background} \label{sec:background}
+\section{Case Study Background}
+\label{sec:background}
 
 Include details of
 
@@ -123,6 +118,7 @@ is, afterall, the most important thing.
 
 %==============================================================================
 \section{Team Dynamics}
+\label{sec:team-dynamics}
 
 We talk about initial individual efforts, how more team members contributed more as the site grew into something functional
 and the importance of documentation etc, our use of Slack for team communication with integration with SVN/Jenkins
@@ -157,7 +153,7 @@ encouraged more team members to make contributions to the project.
 %==============================================================================
 
 \section{System Implementation}
-\label{implementation}
+\label{sec:system-implementation}
 
 We should talk about the building stages of the site, making the build component based, availability of APIs
 
@@ -180,8 +176,8 @@ found Gridster to be very effective in terms of moving and resizing graphs. By t
 achieved and was a great starting point to develop our site upon.
 
 The next issue we had to deal with is how we can use real data in these graphs. We started by researching the various websites
-suggested by our customer such as NOMIS Scotland~\ref{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting
-exactly the kind of data that we needed. Eventually we came across Statistics.Gov.Scot Beta~\ref{StatisticsScotBeta} which was a site being set up on behalf of
+suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting
+exactly the kind of data that we needed. Eventually we came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of
 the Scottish Government to be used as a centralised access point to information. In this, we were able to find data on
 hundreds of economic indicators in CSV format. We created a script that would process these files, extract only the data collected
 on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on
@@ -207,7 +203,7 @@ while writing the actual code.
 
 %==============================================================================
 \section{Core Practices}
-\label {Agile Software Development}
+\label {sec:core-practices}
 
 Throughout the development of the project we were also following a course named Professional Software Development.
 The course's aim was to introduce the students to modern software development methods and techniques for building and
@@ -236,7 +232,7 @@ if not the following.
 
 %==============================================================================
 \section{Process Improvements}
-\label{managing}
+\label{sec:process-improvements}
 
 We talk about the improvements we've made as a team, such as improvements make to ticket management.
 
@@ -244,7 +240,7 @@ We talk about the improvements we've made as a team, such as improvements make t
 %------------------------------------------------------------------------------
 
 \section{Customer Management}
-\label{sec:managing}
+\label{sec:customer-management}
 
 We talk about how we appointed a customer liason to communicate with and receive feedback from our customer, how we dealt with
 demonstrations, how we dealt with change of expectations and changes to customer requirements. We also should talk about the
@@ -253,6 +249,7 @@ introduction of requirements from other teams in terms of integration into the C
 
 %------------------------------------------------------------------------------
 \section{Conclusions}
+\label{sec:conclusions}
 
 Explain the wider lessons that you learned about software engineering,
 based on the specific issues discussed in previous sections.  Reflect
