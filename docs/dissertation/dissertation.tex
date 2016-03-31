@@ -62,42 +62,27 @@ The following pages attempt to comprehensively cover all aspects of the developm
 \section{Case Study Background}
 \label{sec:background}
 
-Include details of
+For the first time the Level 3 Team Projects have real life customers, with real problems and requirements. In this first year of the scheme the Crichton Institute~\cite{CrichtonInstitute} has played a major role by offering 6 separate projects for teams to work on, including the dashboard project our team took on.
 
-\begin{itemize}
-\item The customer organisation and background.
-\item The rationale and initial objectives for the project.
-\item The final software was delivered for the customer.
-\end{itemize}
+% Background on the Crichton Institute, Regional Observatory, and our contacts
 
-% This is the background I obtained from Trac - Lewis
+The Crichton Institute was launched by the Cabinet Secretary for Education and Lifelong Learning, Michael Russel MSP in January 2013~\cite{CrichtonInsituteFounded}, with the aim of bringing together academic and business parters, local government, and regional development bodies in a joint effort in several key areas including: "the rural economy and skills development, community development and placemaking, the impacts of demographic change and influencing policy and practice''~\cite{CrichtonInsituteCoreAims}. The institute aims to drive overall development of the region and improve it's ability to attract resources and inward investment~\cite{CrichtonInstituteAboutUs}.
 
-Crichton Institute (CI)~\cite{CrichtonInstitute} was launched in January 2013. It is a unique collaborative venture between the Crichton Campus academic
-institutions and wider partners in the business, local government, health and voluntary sectors.
+In June 2014 the Crichton Institute launched a Regional Observatory~\cite{CrichtonInstituteRegionalObservatory}. The Regional Observatory is a "web-based information and knowledge portal that acts as a one-stop open-access service for public data, information and intelligence about a wide range of social, economic, and environmental factors across Dumfries and Galloway and the South of Scotland''~\cite{ScotGovOpenDataResourcePack}. This aims to improve the resources of rural areas such as Dumfries and Galloway in terms of data gathering, access, and usage. The Regional Observatory also aims to provide a collaborative base of data and information from a variety of sources which is accessible to all~\cite{ScotGovOpenDataResourcePack}.
 
-CI is a focal point for all aspects of research and development relating to south-west Scotland with the view to understanding the
-issues that constrain the region, to develop an evidence base for its economic, social and cultural development and to raise its
-national and international profile. Crichton Institute works through a series of inter-related activities: Research,
-Business Intelligence, Policy development, and a Regional Observatory (RO).
-
-RO is a web-based information and knowledge portal that acts as a one-stop open-access service for public data, information and
-intelligence about a wide range of social, economic and environmental factors across Dumfries and Galloway and the South of Scotland.
-
-Our customers representing the Crichton Institute were Development Officer Eva Milroy and Director Tony Fitzpatrick, who were the key
-focal points in terms of our team demonstrating progress at the end of each iteration and reporting feedback from their shareholders.
+The client contacts we interacted with were Development Officer Eva Milroy~\cite{EvaMilroyLinkedIn}, and Director Tony Fitzpatrick~\cite{TonyFitzpatrickLinkedIn}. Eva Milroy is a key member in setting up and continued running of the Crichton Institute Regional Observatory, as well as providing business intelligence, and developing employer engagement with the Crichton Institute. Tony Fitzpatrick has been director of the Crichton Institute Regional Observatory since it's inception. These two representatives were the team's main contact within the Crichton Institute, and they provided invaluable feedback and insight into the project and problem domain.
 
 % Their problem description
 
-"We were asked to provide quick, virtually instant access to headline information on the current key economic indicators that are of
-importance to Dumfries and Galloway. Information on current regional unemployment/employment figures, GVA, house prices, business start-ups,
-population etc, should be available via the home page of RO, as well as the CI website, with links to the relevant sources.
-The exact details of data that can most usefully be included was open for discussion.
+The Regional Observatory provides open access to a large amount of data and reports on a variety of key economic indicators including population, housing, education, and crime. This information is summarised on the Regional Observatory site in text form~\cite{PopulationHealthReport}, however, there are no consistent visualisations of the data, nor the ability to get an overview of the region as a whole without consulting a considerable amount of specific data. This is the problem domain that the team took on to solve.
 
-They were asking about the possibility of using APIs that link to the relevant local data, offer a comparison to the Scotland-wide data and,
-if possible even a UK-wide comparison. If the project time allowed, they wanted functionality to be built in that the user is able to ‘build’ his/her
-own cheat sheet,a summary of the indicators important to him/her, and download this as a printable pdf document.''
+The team was presented with the idea of creating a regional dashboard which would provide quick access to an intuitive overview of the socioeconomic situation of the Dumfries and Galloway region. This dashboard would be publicly available to any and all interested parties looking for information on the region. The dashboard would contain visualisations of data relevant to Dumfries and Galloway, and comparisons to significant regions such as Scotland-wide. It would also contain links to the relevant sources of the data, so that users can "drill down'' into the data they are most interested in.
 
-Ideally, they wanted the dashboard to look similar to those of the London Dashboard~\cite{LondonDashboard} or the Dublin Dashboard\cite{DublinDashboard}.
+The project also consisted of implementing a "cheat sheet'' system. The customers wanted their users to be able to create a summary of the economic indicators most important to that specific user, and download it as a PDF document.
+
+The customers provided examples of similar socioeconomic dashboards for other regions. One such dashboard was the London Datastore Dashboard~\cite{LondonDashboard} which provides constantly updated information and data on the London area. The key features of the London Dashboard is that a large variety of datasets (over 640 separate datasets) are available, and on the homepage it provides easy to understand line charts on all aspects of the region. Users can view further information by clicking on a specific data category which presents more detailed graphs.
+
+Another dashboard used as an example was the Dublin Dashboard~\cite{DublinDashboard}. This dashboard provides a wide variety of information and distinct visualisations on the Dublin area, but the customers commented on how many clicks are required for a user to reach any actual information as the Dublin Dashboard homepage contains no information or visualisations, simply a list of links to other parts of the site. We immediately recognised a lack of immediately-accessible information as a potential pitfall of our own dashboard, and were careful to note this as an important non-functional requirement.
 
 % What we initially agreed compared to what we delivered at the end
 
@@ -247,6 +232,20 @@ which the virtual environment is created in the build script. Further into the p
 coverage, and this was extremely helpful in terms of the depth of existing code coverage and what areas were still to be tested.
 
 % to be continued
+
+
+%------------------------------------------------------------------------------
+
+\section{Continuous Integration}
+\label{sec:continuous-integration}
+
+
+
+%------------------------------------------------------------------------------
+
+\section{Project Planning and Estimation}
+\label{sec:planning}
+
 
 
 %------------------------------------------------------------------------------
