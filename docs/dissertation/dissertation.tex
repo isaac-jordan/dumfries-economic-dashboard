@@ -120,9 +120,6 @@ is, afterall, the most important thing.
 \section{Team Dynamics}
 \label{sec:team-dynamics}
 
-We talk about initial individual efforts, how more team members contributed more as the site grew into something functional
-and the importance of documentation etc, our use of Slack for team communication with integration with SVN/Jenkins
-
 The assignment of members to project teams was randomised and sorted based on degree discipline, with our team being
 Computing Science oriented. Our team was randomised, however two of us were close friends and another two were from the
 same country which helped with initial team cohesion. One of our first tasks was to add one another on Facebook as a means of
@@ -149,13 +146,13 @@ work into the project in the initial stages. This was down to the fact that he h
 years while the rest of the team have limited experience. However once the site was partially functioning as a proof of concept, it
 encouraged more team members to make contributions to the project.
 
+% to be continued
+
 
 %==============================================================================
 
 \section{System Implementation}
 \label{sec:system-implementation}
-
-We should talk about the building stages of the site, making the build component based, availability of APIs
 
 In software engineering there are many ways to implement a project but there are certain tools that are more advantageous over
 others. For our team project we were asked to build a web application, so in doing so we had to decide on a web framework that
@@ -218,7 +215,7 @@ customer satisfaction, enables the continuous elicitation of requirements from t
 both between the team members and the customers. Also, XP improves the communication, simplicity, feedback, respect and
 courage of the team. It focuses on a number of simple rules that can be easily adhered to.
 
-Following the guidelines of XP we concluded in the following scheme. Since the project was set to finish at a specific date
+Following the guidelines of XP we conducted our project with these principles in mind. Since the project was set to finish at a specific date
 we set a number of task deadlines which were due at the end of each iteration. In total five iterations
 (including the final demonstration) have been set by the university. The first iteration was our initial meeting with
 the customers. From this point we have understood the concept of the project, gathered initial functional and non-functional
@@ -234,7 +231,22 @@ if not the following.
 \section{Process Improvements}
 \label{sec:process-improvements}
 
-We talk about the improvements we've made as a team, such as improvements make to ticket management.
+% We talk about the improvements we've made as a team, such as improvements make to ticket management.
+
+As part of the project, the university wanted us to use three tools throughout the process: Subversion (SVN) for our version control
+repository, Trac as our ticket management system, and Jenkins for project builds. Before the start of the project we had been
+shown using tutorials how to set these up which was helpful for the long run. We found SVN relatively straightforward to use
+in terms of making commits to the repository, however we agreed as a team we would have preferred using Git as we have all
+had previous experience using this and in general seems much more of a user-friendly experience. Trac was very helpful in
+terms of monitoring existing tasks that required work upon, and also the use of Wiki pages allowed for better team organisation
+such as project information and summarising retrospectives. To begin with Jenkins was mostly used for ensuring that builds of
+the project after commits were successful, however at this point we did not have much testing on our site. We also had an issue
+whereby each time a commit was made to the repository, it would take just over three minutes to build each time as the virtual
+environment had to be re created every single time. Thankfully we were able to reduce the build time by changing the point at
+which the virtual environment is created in the build script. Further into the project we also integrated Cobertura for code
+coverage, and this was extremely helpful in terms of the depth of existing code coverage and what areas were still to be tested.
+
+% to be continued
 
 
 %------------------------------------------------------------------------------
@@ -256,6 +268,9 @@ based on the specific issues discussed in previous sections.  Reflect
 on the extent to which these lessons could be generalised to other
 types of software project.  Relate the wider lessons to others
 reported in case studies in the software engineering literature.
+
+% Some possible lessons: software development is an iterative process, a project is never fully finished, requirements
+% will have to be reconsidered, it takes time for a team to be fully cohesive
 
 %==============================================================================
 \bibliographystyle{plain}
