@@ -222,11 +222,11 @@ During every iteration the team followed a planning method. Since the first meet
 user stories. Those user stories have been carefully examined and graded by the team and have been assigned into specific milestones, i.e.
 end dates, based on their grade. In addition to that, the clients were informed about these dates and they were informed of what would be finished in the next iteration. Although the user stories were graded and set to specific milestone, they were not fixed, instead they were dynamically changed based on the work done so far, random implications that have risen and the addition of new user stories. Furthermore, every user story had its respective owner/s which was/were resposible for the research and development of the story. In relation to the planning methods , it is good to mention that every requirment's milestone set, was after research of the estimated time that can take including external factors such as sickness/assignments/travelling abroad.
 
-Leaving user stories aside, the team had a specific plan during the iterations. At the end of every iteration the team always assembled
-and participated in a retrospective. In the retrospective the team followed  the four L's scheme , where every team member was given a set
-of sticky notes with the titles of either Liked, Learned, Lacked and Longed for, on top of it . Then every team member would fill the sticky notes with their respective personal opinions and statements which were later sticked to a whiteboard and pictured. The whole process was
-saved and presented to our tracking system Trac . After the end of every iteration and therefore retrospective our team would start the new iteration the following week with a brand new plan meeting where we would discuss the previous iteration, make a plan of the new iteration
-assign the new user stories to the appropriate members and get a heads up of what needs to be done for the following weeks.
+%Leaving user stories aside, the team had a specific plan during the iterations. At the end of every iteration the team always assembled
+%and participated in a retrospective. In the retrospective the team followed  the four L's scheme , where every team member was given a set
+%of sticky notes with the titles of either Liked, Learned, Lacked and Longed for, on top of it . Then every team member would fill the sticky notes with their respective personal opinions and statements which were later sticked to a whiteboard and pictured. The whole process was
+%saved and presented to our tracking system Trac . After the end of every iteration and therefore retrospective our team would start the new iteration the following week with a brand new plan meeting where we would discuss the previous iteration, make a plan of the new iteration
+%assign the new user stories to the appropriate members and get a heads up of what needs to be done for the following weeks.
 
 %==============================================================================
 \section{Process Improvements}
@@ -257,7 +257,8 @@ what they said for each category by placing their post-it note on a wall or boar
 the team is able to find commmon opinions whilst also finding thoughts that other team members previously did not
 consider. To conclude a retrospective, the team summarises the points made i.e. how much have we progressed as a team
 and where are the problem areas. From this, the team is able to establish new goals and objectives for the next iteration
-which may involve creating new tickets on Trac.
+which may involve creating new tickets on Trac. At the next team meeting, the team clarifies what tasks need done over
+the next few weeks before the next customer meeting.
 
 Retrospectives were great for the team in terms of finding process improvements. In the first iteration it was more to
 do with indivdual efforts such as showing up to team meetings on time, more commits to the repository and clarification
@@ -265,9 +266,6 @@ of who is working on which tickets. Later iterations had more productive changes
 documentation and better ticket management. The most useful improvement the team has made in the scope of the project
 is referencing tickets in commits to the repository: whilst this happened later on in the process, it enabled team members
 to identify clearly who is working on which tasks and the progress made towards it.
-
-% to be continued
-
 
 %------------------------------------------------------------------------------
 
@@ -290,9 +288,47 @@ to identify clearly who is working on which tasks and the progress made towards 
 \section{Customer Management}
 \label{sec:customer-management}
 
-We talk about how the team appointed a customer liason to communicate with and receive feedback from our customer, how the team dealt with
-demonstrations, how the team dealt with change of expectations and changes to customer requirements. We also should talk about the
-introduction of requirements from other teams in terms of integration into the Crichton site.
+%We talk about how the team appointed a customer liason to communicate with and receive feedback from our customer, how the team dealt with
+%demonstrations, how the team dealt with change of expectations and changes to customer requirements. We also should talk about the
+%introduction of requirements from other teams in terms of integration into the Crichton site.
+
+One of, if not, the most important aspect of a successful software devlopment process is the interaction and relationship
+between the customer and the developers. The best way to ensure this is possible is by ensuring good communications
+both in person and otherwise, in this instance the team appointed a Customer Liason (Michael) to be the link between the
+team and the customer. Ideally we would have liked to meet the customer more but given the distance they had to travel
+for each customer meeting from Dumfries and Galloway, this was not feasible, so the team regularly emailed the customer
+to make them aware of any queries or issues relating to the project.
+
+The team's face-to-face interaction with the customer took place in five meetings: the first was to meet the customer
+for the first time and gather requirements, the following meetings were to demonstrate the progress made in each
+iteration. From requirements gathering, the team were elaborated on the project description in order to create user stories,
+and agreed that over the 7 month period it would be feasible to implement most (if not all) the desired features into the
+dashboard. One of the team's initial challenges was how to convey our requirements over to the customer who was not particularly
+technologically literate, but the team did well to come to a mutual understanding over what was expected from both parties.
+Over the next few meetings, the customer seemed very pelased by the progress made from each iteration. What was extrememly
+pleasing was how the team identified possible extra features that the customer never initally though about whilst at the
+same time the customer pointed out areas of our project the team had not previously considered. Generally, meetings
+were conducted in stages: the first involved the team demonstrating the progress made using the live deployment of the
+dashboard (this was also useful for them to be able tocheck our progress outside of meetings and also for their
+stakeholders to see the progress the team has made); clarify any issues the team was currently facing (i.e. a feature
+that may not be an ideal solution or is not feasible to implement within the time frame); agree on what is expected
+for the next iteration/meeting and finally ask the customer for any further feedback/questions they may have.
+
+An issue that arose when interacting with the customer was that despite previously agreeing to implement data access
+via an API, the team realised half way through the process this may not be feasible due to inconsistent and outdated
+data; and the lack of helpful documentation provided by relevant government sources. Thankfully the customer recognised
+this and got the team in touch with the owner of the website we had previously acquired CSV files from for the graphs on
+the dashboard. Whilst this was positive to begin with (we were told data would be updated within 24 hours), this was
+never carried out by the site owner and thus could not be used for our project. The site's developers did not offer much
+assistance either and did not get in touch with the team until the customer intervened. Thankfully the team agreed with
+the customer that using the CSV importer was a practical alternative given the fact that most exisitng dashboards use
+CSV files as well, as opposed to dynamically through an API.
+
+A key aspect of the project was the fact that the team not only had to communicate with the customer but also with
+other project teams. The team was contacted by other teams regarding the possibility of integrating their projects into
+our dashboard, this was initally agreed however we agreed with most teams that each project would be as standalone as
+possible. The team were in regular contact with the project team involved in moving the Crichton's website over to a
+new platform who would be able to integrate the dashboard into their homepage.
 
 
 %------------------------------------------------------------------------------
