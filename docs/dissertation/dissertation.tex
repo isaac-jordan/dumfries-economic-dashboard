@@ -1,4 +1,4 @@
-% This example An LaTeX document showing how to use the l3proj class to
+﻿% This example An LaTeX document showing how to use the l3proj class to
 % write your report. Use pdflatex and bibtex to process the file, creating
 % a PDF file as output (there is no need to use dvips when using pdflatex).
 
@@ -163,11 +163,12 @@ exactly the kind of data that the team needed. Eventually the team came across S
 the Scottish Government to be used as a centralised access point to information. In this, the team were able to find data on
 hundreds of economic indicators in CSV format. We created a script that would process these files, extract only the data collected
 on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on
-our site's database. This was a major step in our project in terms of using real data, however our main issue here was that the
+our site's database. This data extracting script was implemented into the project by creating a simple population script which used the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real data, however our main issue here was that the
 data was static, and at the time of download was outdated. In addition to this the files all used inconsistent date formats (e.g.
 one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement
 being that users want to access the latest available data as well as looking back on previous years. We raised this issue
-with our customers and they were aware of this issue beforehand, this was a relief.
+with our customers and they were aware of this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the data extracting script which was initially created. At first the script was only capable of extracting data from CSV formatted files which strictly modified to fit the same structure. Although this was working at first the team decided to improve the script to be able to extract data from all CSV files regardless of the inner format and structure. The team decided to keep the old converter script for demonstration purposes while the new one was being developed. The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively simple process. This process is thoroughly described in the admin panel with examples for quick and easy understanding.
+Once the new script was fully developed and tested the team implemented it fully into the project thus removing the obsolete old version.
 
 Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website
 the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred.
