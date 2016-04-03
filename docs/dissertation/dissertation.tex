@@ -1,4 +1,4 @@
-% This example An LaTeX document showing how to use the l3proj class to
+﻿% This example An LaTeX document showing how to use the l3proj class to
 % write your report. Use pdflatex and bibtex to process the file, creating
 % a PDF file as output (there is no need to use dvips when using pdflatex).
 
@@ -266,6 +266,37 @@ to identify clearly who is working on which tasks and the progress made towards 
 \section{Continuous Integration}
 \label{sec:continuous-integration}
 
+Continuous Integration (CI) is a development practice that requires software developers to integrate code into a shared
+repository (e.g. using GIT or subversion) several times a day. Each check-in is then verified by an automated build,
+allowing teams to detect problems early.By integrating regularly, you can detect errors quickly,locate them more easily
+and solve the problems faster. CI has been adopted as part of extreme Programming (XP).Since the team has adopted the XP
+methods it was only natural for the team to follow the CI practices.
+
+The first practice of the CI is about using a shared code repository. As stated in the previous sections the team has
+used subversion (a revision control system) that helped the team to share and manage their code very easily. Every team
+member could update to the latest version of the project, then work on their own versions of code changing it as
+necessary and then were able to commit their changes in order for everyone to be up to date.
+
+The second practice of CI rests upon automating the build, have it build fast, be self tested and automate its
+deployment. The team has used anautomation server called Jenkins and a test server to host the web application of the
+project. By using Jenkins it has resolved the issues of automating the build process (with the help of a python build
+population script). It has also provided a way of self testing, since as the project was growing tests have been
+implemented to test our code, and Jenkins made sure the tests passed before building and updating the live test site.
+When Jenkins finishes the build and its testing it deployed to a live test server so everyone (both the team members and
+the clients) could see and evaluate the results.
+
+Furthermore , CI specifies that the developers of the project should commit at least once a day and that commit should
+be built as soon as is commited. That is a practice that was not followed. Since the team was composed by students
+such a practice was difficult to follow. As a professional developer it is fairly easy to commit every single day
+since you have the time required to do so. In the case of a student, even if he split his working time to every single
+day, the job done would be minimal or even incomplete,causing the the servers to fail. Also, because of the nature of
+our project a big amount of time was spent on researching for methods or libraries to counter some problems, and that is
+not a commit material. For these reasons, the commits were inconsistent and every commit would contain a lot of new
+code from its previous version, which sometimes resulted into merge conflicts which were very difficult to resolve. In
+order to counter or limit the frequency of conflicts the team managers has suggested the team to be meeting twice a week
+and also work on the weekends while everyone would inform on what they were working and their commit messages would tell
+what and which files were changed. The ideas were indeed beneficial and have reduced substantially the counters of
+conflicts and defects.
 % Feel free to cut sections from my work into here
 
 
