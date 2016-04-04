@@ -1,8 +1,3 @@
-﻿% This example An LaTeX document showing how to use the l3proj class to
-% write your report. Use pdflatex and bibtex to process the file, creating
-% a PDF file as output (there is no need to use dvips when using pdflatex).
-
-% Modified
 
 \documentclass{l3proj}
 
@@ -39,7 +34,7 @@ reflects on our experiences relating to software engineering practices and princ
 
 %% Comment out this line if you do not wish to give consent for your
 %% work to be distributed in electronic format.
-%% \educationalconsent
+\educationalconsent
 
 \newpage
 
@@ -267,26 +262,26 @@ to identify clearly who is working on which tasks and the progress made towards 
 \label{sec:continuous-integration}
 
 Continuous Integration (CI) is a development practice that requires software developers to integrate code into a shared
-repository (e.g. using GIT or subversion) several times a day. Each check-in is then verified by an automated build,
-allowing teams to detect problems early.By integrating regularly, you can detect errors quickly,locate them more easily
-and solve the problems faster. CI has been adopted as part of extreme Programming (XP).Since the team has adopted the XP
-methods it was only natural for the team to follow the CI practices.
+repository (e.g. using GIT or subversion) several times a day. Every check-in is then verified by an automated build,
+allowing teams to detect problems early. By integrating regularly, you can detect errors quickly, locate them more easily
+and solve the problems faster. CI has been adopted as part of the Extreme Programming (XP) development methodology.
+Since the team adopted the XP method for the project it was only natural for the team to follow the CI practices.
 
-The first practice of the CI is about using a shared code repository. As stated in the previous sections the team has
-used subversion (a revision control system) that helped the team to share and manage their code very easily. Every team
+The first practice of CI is about using a shared code repository. As stated in the previous sections the team has
+used Apache Subversion (a version control system) that helped the team to share and manage their code very easily. Every team
 member could update to the latest version of the project, then work on their own versions of code changing it as
 necessary and then were able to commit their changes in order for everyone to be up to date.
 
-The second practice of CI rests upon automating the build, have it build fast, be self tested and automate its
-deployment. The team has used anautomation server called Jenkins and a test server to host the web application of the
-project. By using Jenkins it has resolved the issues of automating the build process (with the help of a python build
+Another facet of CI rests upon automating the build, have it build fast, be self tested and automate its
+deployment. The team has used an automation server called Jenkins and a test server to host the web application of the
+project. By using Jenkins the team has resolved the issues of automating the build process (with the help of a Python build
 population script). It has also provided a way of self testing, since as the project was growing tests have been
-implemented to test our code, and Jenkins made sure the tests passed before building and updating the live test site.
+implemented to test the project code, and Jenkins made sure the tests passed before building and updating the live test site.
 When Jenkins finishes the build and its testing it deployed to a live test server so everyone (both the team members and
 the clients) could see and evaluate the results.
 
-Furthermore , CI specifies that the developers of the project should commit at least once a day and that commit should
-be built as soon as is commited. That is a practice that was not followed. Since the team was composed by students
+Furthermore, CI specifies that the developers of the project should commit at least once a day and that commit should
+be built as soon as is committed. That is a practice that was not followed. Since the team was composed by students
 such a practice was difficult to follow. As a professional developer it is fairly easy to commit every single day
 since you have the time required to do so. In the case of a student, even if he split his working time to every single
 day, the job done would be minimal or even incomplete,causing the the servers to fail. Also, because of the nature of
@@ -297,8 +292,8 @@ order to counter or limit the frequency of conflicts the team managers has sugge
 and also work on the weekends while everyone would inform on what they were working and their commit messages would tell
 what and which files were changed. The ideas were indeed beneficial and have reduced substantially the counters of
 conflicts and defects.
-% Feel free to cut sections from my work into here
 
+% Feel free to cut sections from my work into here
 
 %------------------------------------------------------------------------------
 
@@ -317,18 +312,13 @@ Why we had to drop certain features, how we dealt with ``feature creep'' (the in
 
 % same here
 
-The next issue the team had to deal with is how the team can use real data in these graphs. We started by researching the various websites
-suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting
-exactly the kind of data that the team needed. Eventually the team came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of
-the Scottish Government to be used as a centralised access point to information. In this, the team were able to find data on
-hundreds of economic indicators in CSV format. We created a script that would process these files, extract only the data collected
-on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on
-our site's database. This data extracting script was implemented into the project by creating a simple population script which used the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real data, however our main issue here was that the
-data was static, and at the time of download was outdated. In addition to this the files all used inconsistent date formats (e.g.
-one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement
-being that users want to access the latest available data as well as looking back on previous years. We raised this issue
-with our customers and they were aware of this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the data extracting script which was initially created. At first the script was only capable of extracting data from CSV formatted files which strictly modified to fit the same structure. Although this was working at first the team decided to improve the script to be able to extract data from all CSV files regardless of the inner format and structure. The team decided to keep the old converter script for demonstration purposes while the new one was being developed. The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively simple process. This process is thoroughly described in the admin panel with examples for quick and easy understanding.
-Once the new script was fully developed and tested the team implemented it fully into the project thus removing the obsolete old version.
+The next issue the team had to deal with is how the team can use real data in these graphs. We started by researching the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish Government to be used as a centralised access point to information. In this, the team were able to find data on hundreds of economic indicators in CSV format.
+
+We created a script that would process these files, extract only the data collected on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on our site's database. This data extracting script was implemented into the project by creating a simple population script which used the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real data, however our main issue here was that the data was static, and at the time of download was outdated.
+
+In addition to this the files all used inconsistent date formats (e.g. one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement being that users want to access the latest available data as well as looking back on previous years. We raised this issue with our customers and they were aware of this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the data extracting script which was initially created. At first the script was only capable of extracting data from CSV formatted files which strictly modified to fit the same structure. Although this was working at first the team decided to improve the script to be able to extract data from all CSV files regardless of the inner format and structure.
+
+The team decided to keep the old converter script for demonstration purposes while the new one was being developed. The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively simple process. This process is thoroughly described in the administration panel with examples for quick and easy understanding. Once the new script was fully developed and tested the team implemented it fully into the project thus removing the obsolete old version.
 
 
 %------------------------------------------------------------------------------
