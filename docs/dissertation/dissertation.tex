@@ -157,6 +157,11 @@ Angular-Gridster~\cite{AngularGridster} is an open-source project which allows f
 \label{sec:system-implementation:development}
 
 The starting point of our project was to create a base template for the site: the team found a Bootstrap template that was a good starting point in terms of a colour scheme and layout that was both simplistic yet professional. Next was to decide how to implement the graphs: the team decided upon using d3 for graph visualisation as this was mentioned by a lecturer in another course the team were currently taking at university. To begin with the graphs were taken from a demonstration website with hard-coded data as more of a proof of concept that the team could implement bar and line graphs. After this the team wanted a way of making the dashboard customisable, so the team found Gridster to be very effective in terms of moving and resizing graphs. By the deadline of the second iteration this was achieved and was a great starting point to develop our site upon.
+Initially the plan was to have a number of different types of graphs, however, the data which was acquired was mainly timeline based. Therefore the team decided to mainly implement line graphs since they display that type of data most effectively. A few sample bar graphs were added later on for demonstration purposes. Potentially many more types of graphs could have been added, however, the team decided to invest that time on higher priority issues.
+
+One major issue raised by the client was the ease of use of the website. Since this website was meant to be used by people with different skillsets the team decided to add helpful guiding documentation for both the users and the administrators. On the left bar on the main page of the website a “Help/Documentation” link was added which redirects the user to a clear and easy to understand tutorial explaining all the features of the website and how to use them. Analogically on the admin panel two link were added to guide the administrators if they wanted to change something on the dashboard or add a new CSV file through the CSV processor.
+
+While discussing the progress of the project with the client at one of the later meetings it was pointed out that people with visual impairments such as colour blindness or problematic eyesight may have trouble using the website, however, the client made it clear that the team should look into that only if time allows it and to mark it as a low priority. The team decided to invest some time into researching and experimenting with different colour styles and word formats. Two different styles were added that changed the overall colour and the overall word size, however, due to time restrains and more urgent issues at hand, this feature was left semi-completed. 
 
 \subsection{Testing}
 \label{sec:system-implementation:testing}
@@ -164,7 +169,7 @@ The starting point of our project was to create a base template for the site: th
 Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred. Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
 design of the code. Now the team had to write unit tests to an already existing code which proved difficult. In order for test cases to be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain that there will be pieces of code which will be inexplicable.
 
-Good teamworking and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the ``django'' framework for our website, which is based on Python the team had to look into Python junit testing. Unfortunately the documentation on ``django testing'' was rather incomplete (TODO: Modify this since django documentation is actually very complete. Perhaps due to team members infamiliarity with Python unit testing in general?). We had to carry out an extensive research on how to use ``python junit'' to test our code. There were not many sources covering that subject and the team had to use bits and pieces from different sources. By the third iteration the team had managed to raise the test code coverage significantly and started working on tests while writing the actual code.
+Good teamworking and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the ``django'' framework for our website, which is based on Python the team had to look into Python junit testing. Unfortunately the majority of the team did not have a lot of prior experience with junit testing in django. Therefore more time had to be invested in developing the needed skills. The team shared online tutorials with one another thus maximising the results as quickly and as efficiently as possible.
 
 %==============================================================================
 \section{Core Practices}
@@ -238,19 +243,19 @@ coverage, and this was extremely helpful in terms of the depth of existing code 
 
 As part of agile development, the team undertook a retrospective at the end of each iteration. The goals of retrospectives are
 to establish where the team has done well and identify process improvements for future iterations. A retrospective is started
-by asking each team member to write their thoughts on how they've felt about the previous iterationon post-it notes.
+by asking each team member to write their thoughts on how they've felt about the previous iteration on post-it notes.
 The team divided these into four categories: Liked (things the team liked); Learned (things the team have learned);
 Lacked (things the team have been doing but could be done better) and Longed For (something that's desired or wished for).
 Once each team member has written their thoughts down, the Retrospective Manager(Ross) asks each team member in turn
 what they said for each category by placing their post-it note on a wall or board in order to collate them. By doing this,
-the team is able to find commmon opinions whilst also finding thoughts that other team members previously did not
+the team is able to find common opinions whilst also finding thoughts that other team members previously did not
 consider. To conclude a retrospective, the team summarises the points made i.e. how much have we progressed as a team
 and where are the problem areas. From this, the team is able to establish new goals and objectives for the next iteration
 which may involve creating new tickets on Trac. At the next team meeting, the team clarifies what tasks need done over
 the next few weeks before the next customer meeting.
 
 Retrospectives were great for the team in terms of finding process improvements. In the first iteration it was more to
-do with indivdual efforts such as showing up to team meetings on time, more commits to the repository and clarification
+do with individual efforts such as showing up to team meetings on time, more commits to the repository and clarification
 of who is working on which tickets. Later iterations had more productive changes due such as more test cases, code
 documentation and better ticket management. The most useful improvement the team has made in the scope of the project
 is referencing tickets in commits to the repository: whilst this happened later on in the process, it enabled team members
@@ -311,9 +316,9 @@ Why we had to drop certain features, how we dealt with ``feature creep'' (the in
 \label{sec:data-acquisition}
 
 % same here
-In order for this project to work the team had to acquire real data to populate the graphs with. The information required was non-personal and non-commercially sensitive. In February 2015 the Scottish Government launched its Open Data Strategy which seeks to make exactly that type of information available for use by all. This strategy adopts the G8 Open Data Principles: Open Data by Default, Quality and Quantity, Useable by All, Releasing Data for improved Governance and Releasing Data for innovation. 
+In order for this project to work the team had to acquire real data to populate the graphs with. The information required was non-personal and non-commercially sensitive. In February 2015 the Scottish Government launched its Open Data Strategy which seeks to make exactly that type of information available for use by all. This strategy adopts the G8 Open Data Principles: Open Data by Default, Quality and Quantity, Usable by All, Releasing Data for improved Governance and Releasing Data for innovation. That means that the team did not have to get specific permission to post any acquired data which was to be used in the website.
 
-The next issue the team had to deal with is how the team can use real data in these graphs. We started by researching
+The team started by researching
 the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these
 sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team
 came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish
@@ -347,11 +352,11 @@ removing the obsolete old version.
 \section{Customer Management}
 \label{sec:customer-management}
 
-%We talk about how the team appointed a customer liason to communicate with and receive feedback from our customer, how the team dealt with
+%We talk about how the team appointed a customer liaison to communicate with and receive feedback from our customer, how the team dealt with
 %demonstrations, how the team dealt with change of expectations and changes to customer requirements. We also should talk about the
 %introduction of requirements from other teams in terms of integration into the Crichton site.
 
-One of, if not, the most important aspect of a successful software devlopment process is the interaction and relationship
+One of, if not, the most important aspect of a successful software development process is the interaction and relationship
 between the customer and the developers. The best way to ensure this is possible is by ensuring good communications
 both in person and otherwise, in this instance the team appointed a Customer Liason (Michael) to be the link between the
 team and the customer. Ideally we would have liked to meet the customer more but given the distance they had to travel
@@ -364,11 +369,11 @@ iteration. From requirements gathering, the team were elaborated on the project 
 and agreed that over the 7 month period it would be feasible to implement most (if not all) the desired features into the
 dashboard. One of the team's initial challenges was how to convey our requirements over to the customer who was not particularly
 technologically literate, but the team did well to come to a mutual understanding over what was expected from both parties.
-Over the next few meetings, the customer seemed very pelased by the progress made from each iteration. What was extrememly
-pleasing was how the team identified possible extra features that the customer never initally though about whilst at the
+Over the next few meetings, the customer seemed very pleased by the progress made from each iteration. What was extremely
+pleasing was how the team identified possible extra features that the customer never initially though about whilst at the
 same time the customer pointed out areas of our project the team had not previously considered. Generally, meetings
 were conducted in stages: the first involved the team demonstrating the progress made using the live deployment of the
-dashboard (this was also useful for them to be able tocheck our progress outside of meetings and also for their
+dashboard (this was also useful for them to be able to check our progress outside of meetings and also for their
 stakeholders to see the progress the team has made); clarify any issues the team was currently facing (i.e. a feature
 that may not be an ideal solution or is not feasible to implement within the time frame); agree on what is expected
 for the next iteration/meeting and finally ask the customer for any further feedback/questions they may have.
@@ -380,12 +385,12 @@ this and got the team in touch with the owner of the website we had previously a
 the dashboard. Whilst this was positive to begin with (we were told data would be updated within 24 hours), this was
 never carried out by the site owner and thus could not be used for our project. The site's developers did not offer much
 assistance either and did not get in touch with the team until the customer intervened. Thankfully the team agreed with
-the customer that using the CSV importer was a practical alternative given the fact that most exisitng dashboards use
+the customer that using the CSV importer was a practical alternative given the fact that most existing dashboards use
 CSV files as well, as opposed to dynamically through an API.
 
 A key aspect of the project was the fact that the team not only had to communicate with the customer but also with
 other project teams. The team was contacted by other teams regarding the possibility of integrating their projects into
-our dashboard, this was initally agreed however we agreed with most teams that each project would be as standalone as
+our dashboard, this was initially agreed however we agreed with most teams that each project would be as standalone as
 possible. The team were in regular contact with the project team involved in moving the Crichton's website over to a
 new platform who would be able to integrate the dashboard into their homepage.
 
