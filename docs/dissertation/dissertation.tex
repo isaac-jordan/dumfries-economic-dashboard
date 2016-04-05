@@ -312,13 +312,33 @@ Why we had to drop certain features, how we dealt with ``feature creep'' (the in
 
 % same here
 
-The next issue the team had to deal with is how the team can use real data in these graphs. We started by researching the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish Government to be used as a centralised access point to information. In this, the team were able to find data on hundreds of economic indicators in CSV format.
+The next issue the team had to deal with is how the team can use real data in these graphs. We started by researching
+the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. We found that most of these
+sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team
+came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish
+Government to be used as a centralised access point to information. In this, the team were able to find data on hundreds
+of economic indicators in CSV format.
 
-We created a script that would process these files, extract only the data collected on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on our site's database. This data extracting script was implemented into the project by creating a simple population script which used the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real data, however our main issue here was that the data was static, and at the time of download was outdated.
+We created a script that would process these files, extract only the data collected on Dumfries and Galloway and
+Scotland and format this to be rendered by the d3 code that visualises the data before storing it on our site's
+database. This data extracting script was implemented into the project by creating a simple population script which used
+the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for
+testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real
+data, however our main issue here was that the data was static, and at the time of download was outdated.
 
-In addition to this the files all used inconsistent date formats (e.g. one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement being that users want to access the latest available data as well as looking back on previous years. We raised this issue with our customers and they were aware of this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the data extracting script which was initially created. At first the script was only capable of extracting data from CSV formatted files which strictly modified to fit the same structure. Although this was working at first the team decided to improve the script to be able to extract data from all CSV files regardless of the inner format and structure.
+In addition to this the files all used inconsistent date formats (e.g. one would be quarterly, another would be monthly,
+another yearly) which presented a major issue in terms of a key requirement being that users want to access the latest
+available data as well as looking back on previous years. We raised this issue with our customers and they were aware of
+this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the
+data extracting script which was initially created. At first the script was only capable of extracting data from CSV
+formatted files which strictly modified to fit the same structure. Although this was working at first the team decided
+to improve the script to be able to extract data from all CSV files regardless of the inner format and structure.
 
-The team decided to keep the old converter script for demonstration purposes while the new one was being developed. The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively simple process. This process is thoroughly described in the administration panel with examples for quick and easy understanding. Once the new script was fully developed and tested the team implemented it fully into the project thus removing the obsolete old version.
+The team decided to keep the old converter script for demonstration purposes while the new one was being developed.
+The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively
+simple process. This process is thoroughly described in the administration panel with examples for quick and easy
+understanding. Once the new script was fully developed and tested the team implemented it fully into the project thus
+removing the obsolete old version.
 
 
 %------------------------------------------------------------------------------
@@ -373,11 +393,39 @@ new platform who would be able to integrate the dashboard into their homepage.
 \section{Conclusions}
 \label{sec:conclusions}
 
-Explain the wider lessons that you learned about software engineering,
-based on the specific issues discussed in previous sections.  Reflect
-on the extent to which these lessons could be generalised to other
-types of software project.  Relate the wider lessons to others
-reported in case studies in the software engineering literature.
+%Explain the wider lessons that you learned about software engineering,
+%based on the specific issues discussed in previous sections.  Reflect
+%on the extent to which these lessons could be generalised to other
+%types of software project.  Relate the wider lessons to others
+%reported in case studies in the software engineering literature.
+
+Crichton Institute has provided the team a great way to expand our knowledge to software development. The project has
+provided the team with the chance to work on a complex but satisfying problem. Indeed that project was not simple,
+it had a lot of requirements from which a great amount of time has been taken for research regarding what implementation
+choices we could take, frameworks that had to be discarded and replaced and more problems regarding APIs.
+
+Even though the project was challenging, its postive impact should not be underestimated. Software development is a hard
+concept to grasp on, due to its  nature that makes it need to be done in specific parts, which if ignored could prove
+disastrous to the end project.
+
+Software development is an iterative process. The iteration consists of planning, implementation, testing and evaluation.
+Following this phases a software developer  starts by acquiring new requirements for its program, it analyses those
+requirements and provides and provides a design and implementation for them. Then, those implementations are tested and
+evaluated which will most probably give new requirements for the project. This iterative methods could prove most
+beneficial for a developer,since they can significantly cut down the costs ,avoids misunderstandings, finds defects
+faster, it encourages feedback (both for clients and team members) and proves the credibility of the program or
+application to its stakeholders.
+
+The iterative design has taught the team some valuables lessons. Firstly, software development never ends, there are
+always more defects,requirements or better solutions(based on cost or performance) for every code. This lifecycle goes
+on as long as technologies evolve and this by nature does not end. This proved true for the team since our project was
+not fully complete even at the end. Things that could be improved consist of adding an API importer which would allow
+automatic data updates. Also,involving more datasets to the application instead of just Dumfries and Galloway and
+Scotland wide(e.g. having UK wide data). Furthermore, we could implement more data visualisations such as pie charts
+or overlaying graphs, or even some more graphical updates to improve the user epxerience. In addition to that, we could
+improve certain parts such as the PDF exporter(by enabling it to project different graph sizes and bar cahrts) or the
+search results(e.g. enabling sorting). Lastly we could deploy the application to a real production servers such as NGINX.
+
 
 % Some possible lessons: software development is an iterative process, a project is never fully finished, requirements
 % will have to be reconsidered, it takes time for a team to be fully cohesive
