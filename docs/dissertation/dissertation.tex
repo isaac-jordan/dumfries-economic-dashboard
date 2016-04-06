@@ -1,4 +1,4 @@
-﻿
+
 \documentclass{l3proj}
 
 \usepackage{wrapfig}
@@ -153,33 +153,55 @@ Several other tools were used during development of the project. These included 
 
 Angular-Gridster~\cite{AngularGridster} is an open-source project which allows for extremely easy integration of Gridster-like features into an AngularJS-based project. Gridster~\cite{Gridster} is a jQuery plugin that allows for an intuitive drag-and-drop multi-column grid experience. Angular-Gridster allowed us to incorporate this functionality into the dashboard with minimal code using Angular directives (keyword shortcuts to add functionality to HTML elements). This drag-and-drop experience became a core feature of our dashboard as it allowed for a very high degree of customisation from a user point-of-view since users could resize, move, delete, and add widgets containing graphs and information to the dashboard.
 
-\subsection{Development}
-\label{sec:system-implementation:development}
+\section{Development}
+\label{sec:development}
 
-The starting point of our project was to create a base template for the site: the team found a Bootstrap template that was a good starting point in terms of a colour scheme and layout that was both simplistic yet professional. Next was to decide how to implement the graphs: the team decided upon using d3 for graph visualisation as this was mentioned by a lecturer in another course the team were currently taking at university. To begin with the graphs were taken from a demonstration website with hard-coded data as more of a proof of concept that the team could implement bar and line graphs. After this the team wanted a way of making the dashboard customisable, so the team found Gridster to be very effective in terms of moving and resizing graphs. By the deadline of the second iteration this was achieved and was a great starting point to develop our site upon.
-Initially the plan was to have a number of different types of graphs, however, the data which was acquired was mainly timeline based. Therefore the team decided to mainly implement line graphs since they display that type of data most effectively. A few sample bar graphs were added later on for demonstration purposes. Potentially many more types of graphs could have been added, however, the team decided to invest that time on higher priority issues.
+The starting point of our project was to create a base template for the site: the team started from an initial Bootstrap template that was a good starting point in terms of colour scheme and layout that was both simplistic yet professional. It provided a simple but functional sidebar that was similar to our initial wireframe designs, and was also mobile responsive - something that wasn't an explicit requirement of the project, but was kept in mind throughout the development process.
 
-One major issue raised by the client was the ease of use of the website. Since this website was meant to be used by people with different skillsets the team decided to add helpful guiding documentation for both the users and the administrators. On the left bar on the main page of the website a “Help/Documentation” link was added which redirects the user to a clear and easy to understand tutorial explaining all the features of the website and how to use them. Analogically on the admin panel two link were added to guide the administrators if they wanted to change something on the dashboard or add a new CSV file through the CSV processor.
+\subsection{Iteration One}
+\label{sec:development:iteration-one}
 
-One of the last major issues, addressed by the team ,was the visualization of the
-Dashboard. The progress of the project reached to a point where the dashboard
-provided almost all the required functionalities, the team decided to give an emphasis
-on the visualisation in order to make the dashboard easy to use and user friendly.
-D3 is a framework that provides many different functions to the developer , it allows
-to work on the flexibility of the graphs and the visualisation on the same time. A
-tooltip was created to show the exact coordinates their value and their label as long
-as the mouse cursor pass over a line of the graph. For the bar graphs, due to the
-reason that they were used for demonstration , a simple change of colour , each time cursor was passing over a bar. was implemented. It was ensured also in case of 1 element a large circle to be created with text (X axis label).
+The first iteration contained four main tasks that the team wanted to accomplish by the first customer demonstration. These were all major tasks that we wished to have roughly implemented to demonstrate the direction we wanted to take the project. The first was to set up some basic version of the customisable dashboard by having what we called at this stage ``draggable modules'', which are square sections that the user could drag-and-drop around to customise the dashboard. This task was initially created using ng-sortable~\cite{NGSortable}, but this library was found to be unsuitable for the level of customisation we desired, further research revealed Angular-Gridster to be an ideal choice for the project. The second task was to create some initial D3 graphs to display inside of the draggable modules.
 
-While discussing the progress of the project with the client at one of the later meetings it was pointed out that people with visual impairments such as colour blindness or problematic eyesight may have trouble using the website, however, the client made it clear that the team should look into that only if time allows it and to mark it as a low priority. The team decided to invest some time into researching and experimenting with different colour styles and word formats. Two different styles were added that changed the overall colour and the overall word size, however, due to time restrains and more urgent issues at hand, this feature was left semi-completed. 
+These two tasks were critical to investigate and implement early on, as if the technologies we had chosen to use did not support this functionality we would have to investigate new software libraries, or redesign our site. The third task was to build a basic form of what we wanted the architecture of the project to be like - this involved setting up the Django back-end, and interfacing with an AngularJS client-side. This was important to execute early on to reduce the amount of refactoring that would need to done in later iterations.
 
-\subsection{Testing}
-\label{sec:system-implementation:testing}
+The fourth task was to research useful sources of data for our dashboard. This involved an email conversation with our customer, as well as significant amount of online research. This task was never really finished as this process continued on throughout all iterations.
 
-Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred. Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
-design of the code. Now the team had to write unit tests to an already existing code which proved difficult. In order for test cases to be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain that there will be pieces of code which will be inexplicable.
+\subsection{Iteration Two}
+\label{sec:development:iteration-Two}
 
-Good teamworking and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the ``django'' framework for our website, which is based on Python the team had to look into Python junit testing. Unfortunately the majority of the team did not have a lot of prior experience with junit testing in django. Therefore more time had to be invested in developing the needed skills. The team shared online tutorials with one another thus maximising the results as quickly and as efficiently as possible.
+The main goal of the second iteration was to add saved configurations. As the customisability of our dashboard was paramount to the design we had created, it was critical that users could save the layout they had created across multiple sessions. This effectively involved serialising all information pertaining to the layout of the dashboard (e.g. which graph does this module contain, what is it's position, how large is it). This task involved implementing user authentication in the form of a register and login system, as well as creating pages to list a user's saved configuration with matching AJAX calls to load in requested configurations and save new ones.
+
+Another goal of this iteration was to create a script to parse CSV files, create a JSON structure, and store it in the SQL database via Django's ORM (Object Relational Mapping)~\cite{DjangoORM}. This initially small task helped drive design in later iterations to make CSV parsing a major aspect of our project. Several bugs introduced in the previous iteration were also resolved, for example large modules could obscure small ones as the small modules did not automatically move out of the way on the dashboard.
+
+\subsection{Iteration Three}
+\label{sec:development:iteration-three}
+
+The third iteration contained a wide variety of tasks. One major concern at this point was the performance of the dashboard. In order to keep the graphs updated, they must be redrawn when the modules change size. Initially this was accomplished by attaching the graph redraw function to the module's on-resize event handler. This was causing hundreds of redraws every second that modules were being manipulated, causing the dashboard to be near unusable when it contained many graphs (or graphs that involved a large number of data points). This issue was resolved this iteration by only redrawing the graphs when the user has finished resizing a module, resulting in only one redraw of the graphs. After making this modification, there were no more performance related problems.
+
+A major task this iteration was the implementation of a CSV Import software module. This would allow administrators to upload CSV files in any format, specify what data they want extracted, and create the relevant database entries to display the data as a graph on the dashboard. This system would greatly improve the versatility of our project since a non-technical administrator could keep the data and graphs up to date. The task was split in several sections in order to be more manageable: allow administrators to upload CSV files, allow administrators to define what data to be extracted, actually process the CSV file and create necessary database entries. This allowed progress to be monitored easier over several weeks.
+
+Another task this iteration was a major refactoring of the back-end system. The initial Django project did not follow Django conventions in terms of project structure, it contained no Django applications. This was resolved at this stage by splitting the project into 4 separate Django apps. The ``dashboard'' app contained all the JavaScript code, as well as views and templates. It contained models which were directly applicable the dashboard such as saved configurations, and layout information. The ``dataset\_importer'' app contained abstract models to be used by the three other apps, such as the definition of a ``Dataset'' and an ``Importer''. The other two apps were designed to cover the two different types of data importer our application would use: CSV files, and API endpoints. An initial implementation of the CSV Importer was finished during this iteration, but the API Importer proved much harder than expected due to data acquisition problems, this issue is discussed more thoroughly in Section \ref{sec:data-acquisition}.
+
+Several other tasks were involved in this iteration including the creation of a population script for continuous integration as discussed in Section \ref{sec:continuous-integration}, and creation of a ``Data Categories'' list page.
+
+\subsection{Iteration Four}
+\label{sec:development:iteration-four}
+
+The fourth iteration contained a large number of tickets (20 in total). Several major tasks were undertaken this iteration such as the implementation of a search bar, improving test code coverage from ~50\% to ~100\%, fixing labels on the dashboard's graphs, adding removed graphs back into the dashboard, improving the usability of the administration interface, adding functionality to export the dashboard to PDF, finishing the Data Categories pages started in the previous iteration, and implementing a CSS style switcher in an attempt to improve the dashboard's visual accessibility (larger text, colour-blind friendly colours). Only this last task was not fully accomplished during the iteration. Overall this iteration was extremely successful as many tickets were resolved, and goals met.
+
+\subsection{Iteration Five}
+\label{sec:development:iteration-five}
+
+The fifth iteration contained the largest number of tickets of any iteration (31 including the generation of this report). Many of these tickets were small features that were carried from iteration to iteration. One such example is the generation of saved configurations from the results of a search, this feature was not critical but created as a ``if we have time'' user story. For this particular example, we did not have time to complete it by the end of the development time.
+
+Our customer was extremely happy with the progress of our project so far, and requested we not implement any new major features - as a result, the biggest goal for this iteration was to improve stability of the dashboard, add documentation, and attempt to improve code quality. An example of this was to remove several arbitrary timeout values in the JavaScript code. These were added in previous iterations as work-arounds for rare race conditions in the AJAX requests. This iteration these timeouts were removed by properly waiting for these asynchronous events to occur before continuing.
+
+One major issue raised by the client was the ease of use of the website. Since this website was meant to be used by people with different skill sets the team decided to add helpful guides and documentation for both the users and the administrators. On the left bar on the main page of the website a ``Help/Documentation'' link was added which redirects the user to a clear and easy to understand tutorial explaining all of the key features of the website and how to use them. Correspondingly, on the administration panel two links were added to guide the administrators through general management of the dashboard as well as a guide on the specifics of importing CSV data.
+
+Initially the plan was to have a number of different types of graphs, however, the data which was acquired was mainly time series (meaning it monitored a particular value as it changed over time). Therefore the team decided to mainly implement line graphs since they display that type of data most effectively. A few sample bar graphs were added later on for demonstration purposes. Potentially many more types of graphs could have been added, however, the team decided to invest that time on higher priority issues.
+
+One of the last major issues addressed by the team was the graphical visualisation of data on the dashboard. The progress of the project reached to a point where the dashboard provided almost all the required functionalities, so the team decided to give an emphasis on the data visualisation in order to make the dashboard easy to use and user friendly. D3 is a framework that provides many different functions to the developer, it allows to work on the flexibility of the graphs and the visualisation on the same time. Tooltip functionality was added to show the exact values (x and y coordinates) when a user passed their mouse over a particular data point. Bar graphs had particular bars highlighted when the user passed their mouse over a specific bar, this was designed to make longer bars easier to follow horizontally. Care was also given to cases where there might only be a single data point available for the user's chosen date range - in this case, a single large point is shown on the graph that shows the particular value.
 
 %==============================================================================
 \section{Core Practices}
@@ -198,7 +220,7 @@ customer satisfaction, enables the continuous elicitation of requirements from t
 both between the team members and the customers. Also, XP improves the communication, simplicity, feedback, respect and
 courage of the team. It focuses on a number of simple rules that can be easily adhered to.
 
-\begin{wrapfigure}{l}{0.5\textwidth}
+\begin{wrapfigure}{L}{0.5\textwidth}
 \includegraphics[width=1.1\linewidth]{figures/Extreme_Programming}
 \caption{Time span of tasks in Extreme Programming.}
 \label{fig:extreme-programming}
@@ -273,7 +295,7 @@ to identify clearly who is working on which tasks and the progress made towards 
 
 %------------------------------------------------------------------------------
 
-\section{Continuous Integration}
+\section{Continuous Integration and Testing}
 \label{sec:continuous-integration}
 
 Continuous Integration (CI) is a development practice that requires software developers to integrate code into a shared
@@ -308,6 +330,13 @@ and also work on the weekends while everyone would inform on what they were work
 what and which files were changed. The ideas were indeed beneficial and have reduced substantially the counters of
 conflicts and defects.
 
+% Below is cut-paste from elsewhere and needs modification to fit.
+
+Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred. Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
+design of the code. Now the team had to write unit tests to an already existing code which proved difficult. In order for test cases to be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain that there will be pieces of code which will be inexplicable.
+
+Good teamworking and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the Django framework for our website, which is based on Python the team had to look into Python junit testing. Unfortunately the majority of the team did not have a lot of prior experience with junit testing in django. Therefore more time had to be invested in developing the needed skills. The team shared online tutorials with one another thus maximising the results as quickly and as efficiently as possible.
+
 % Feel free to cut sections from my work into here
 
 %------------------------------------------------------------------------------
@@ -315,9 +344,19 @@ conflicts and defects.
 \section{Project Planning and Estimation}
 \label{sec:planning}
 
-% same here
+Over the course of a software project, the functional and non-functional requirements identified at the start of the project are liable to change. This can be in the form of modifications to existing requirements, introduction of new requirements, and removal of existing requirements.
 
-Why we had to drop certain features, how we dealt with ``feature creep'' (the introduction of previously unidentified features), and how we dealt with work estimations.
+In this project only the first two cases occurred - there was no removal of identified requirements at any stage. This was likely due to very thorough discussions with the customer at regular intervals. At the end of each iteration a customer meeting was arranged. This meeting aimed to cover the previous iteration's progress, identify issues, and suggest the direction of the next iteration. At all 5 customer meetings these aims were taken very seriously, as missing any of them could mean weeks of development work in the wrong direction.
+
+At these customer meetings the team attempted to provide estimations of how much progress could be completed by the next meeting. The team believed this was very useful for the customer, as we could set their expectations well in advance of beginning that iteration's development. These estimations were useful for the team as even the generation of estimations helped to define the goals of the coming weeks. Team members could bring up in advance any issues such as too much work for a specific iteration. In the later iterations this practice became less rigid, and we identified with the customer was the most critical features were and work on those first. When these critical features were completed team members could move on to less urgent work.
+
+Initially the team attempted to assign story points to each user story. Story points are a standard method of estimating how much time a particular feature may take to implement. However, the team found that initial story point estimations could easily be wildly invalid. With longer iteration cycles of around 1 month, and many team members working on features they had no experience implementing before, the story point method was dropped. This was not a problem for most iterations as constant communication meant all team members were aware of the stage of each ticket, but later iterations were somewhat hectic as many tickets of unknown size had piled up over time.
+
+Several user stories were left uncompleted at the end of the project, but the team had anticipated this early on so it was not unexpected. A major user story that was dropped was the implementation of the API Importer module. This module would automatically retrieve new data at regular intervals from a given external API endpoint. This was not implemented due to two major reasons, the first was issues with finding relevant data that was available via an API endpoint that was also regularly updated as dicussed more in Section \ref{sec:data-acquisition}. The second reason was the complexity of the API structures we came across. It was anticipated that there would be many APIs using JSON-formatted results, however many actually used technologies such as SPARQL (SPARQL Protocol and RDF Query Language)~\cite{W3SPARQL} which was unexpectedly complex to work with.
+
+Another feature which was not fully completed due to technical limitations was PDF exporting of the dashboard. This feature was working in Iteration Four, but due to the way the graphs were extracted from the webpage the quality of the graphs was rather low. This feature simply required too much time investment to be fully completed by the end of the project.
+
+Other features identified as not being fully finished were not completed as they were too low priority, and did not receive required development time. One such feature was improved accessibility for the visually impaired: much investigative and experimental work was done on this feature, but it was not usable by the end of the project. This is partly due to a lack of initial research into existing solutions to the problem which likely would have reduced the time investment the user story required. In the end, a CSS-style switcher was implemented that could change text size and colour scheme on the dashboard - however due to time constraints the feature was left semi-completed.
 
 
 %------------------------------------------------------------------------------
@@ -420,7 +459,7 @@ provided the team with the chance to work on a complex but satisfying problem. I
 it had a lot of requirements from which a great amount of time has been taken for research regarding what implementation
 choices we could take, frameworks that had to be discarded and replaced and more problems regarding APIs.
 
-Even though the project was challenging, its postive impact should not be underestimated. Software development is a hard
+Even though the project was challenging, its positive impact should not be underestimated. Software development is a hard
 concept to grasp on, due to its  nature that makes it need to be done in specific parts, which if ignored could prove
 disastrous to the end project.
 
@@ -433,14 +472,15 @@ faster, it encourages feedback (both for clients and team members) and proves th
 application to its stakeholders.
 
 The iterative design has taught the team some valuables lessons. Firstly, software development never ends, there are
-always more defects,requirements or better solutions(based on cost or performance) for every code. This lifecycle goes
+always more defects, requirements or better solutions (based on cost or performance) for every project. This lifecycle goes
 on as long as technologies evolve and this by nature does not end. This proved true for the team since our project was
 not fully complete even at the end. Things that could be improved consist of adding an API importer which would allow
-automatic data updates. Also,involving more datasets to the application instead of just Dumfries and Galloway and
-Scotland wide(e.g. having UK wide data). Furthermore, we could implement more data visualisations such as pie charts
-or overlaying graphs, or even some more graphical updates to improve the user epxerience. In addition to that, we could
-improve certain parts such as the PDF exporter(by enabling it to project different graph sizes and bar cahrts) or the
-search results(e.g. enabling sorting). Lastly we could deploy the application to a real production servers such as NGINX.
+automatic data updates. Also, involving more datasets to the application instead of just Dumfries and Galloway and
+Scotland wide (e.g. having UK wide data). Furthermore, we could implement more data visualisations such as pie charts
+or overlaying graphs, or even some more graphical updates to improve the user experience. In addition to that, we could
+improve certain parts such as the PDF exporter (by enabling it to project different graph sizes and bar charts) or the
+search results (e.g. enabling sorting, or creation of a saved configuration). Lastly we could deploy the application to a
+real production server such as NGINX.
 
 
 % Some possible lessons: software development is an iterative process, a project is never fully finished, requirements
