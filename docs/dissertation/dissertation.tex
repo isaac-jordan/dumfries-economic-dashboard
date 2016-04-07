@@ -43,27 +43,27 @@ reflects on our experiences relating to software engineering practices and princ
 \label{sec:introduction}
 
 %% Purpose of the document
-This project report covers a 7 month University of Glasgow third year project. It is a case-study reporting on the aims of the project, the software development process adopted throughout development, the evolution of the software produced, and the evaluation and reflection of the group and project.
+This project report covers a 7 month University of Glasgow third year project. It is a case study reporting on the aims of the project, the software development process adopted throughout development, the evolution of the software produced, and the evaluation and reflection of the group and project.
 
 %% Very brief outline of the project
-The team was asked to create an interactive dashboard of various economic indicators of the Dumfries and Galloway region. The idea behind this project was to provide an easy-to-access and instant visualisation of key economic data that allows businesses, individuals, and prospective investors to gain a snapshot of the current state of the regional economy without having to trawl through lots of data links.
+The team was asked to create an interactive dashboard of various economic indicators of the Dumfries and Galloway region. The idea behind this project was to provide an easy-to-access and instant visualisation of key economic data that allows businesses, individuals, and prospective investors to gain a snapshot of the current state of the regional economy very easily, without hours of research tracking down potentially obscure documents.
 
-Several key requirements of the final product that were identified included minimising clicks to get to an overview of information, having more detailed information available for those who needed it, and the dashboard should be viable to be managed by non-technical administration personnel.
+Several key requirements of the final product that were identified included minimising clicks to get to an overview of information, having more detailed information available for those who needed it, and the dashboard should be viable to be managed by non-technical administrative personnel.
 
-The dashboard was built using the Python-based Django~\cite{Django} framework as the team had previous university experience building web applications using this so it was relatively straightforward to begin developing the initial components of the back-end of the website. In addition to this the team used many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, d3~\cite{d3Webpage} and Gridster~\cite{AngularGridster}.
+The dashboard was built using the Python-based Django~\cite{Django} framework as the team had previous university experience building web applications using this so it was relatively straightforward to begin developing the initial components of the back-end of the website. In addition to this the team used many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, d3~\cite{d3Webpage} and Gridster~\cite{AngularGridster}. The system architecture is discussed in more detail in Section \ref{sec:system-implementation}.
 
 %% Summary of the rest of the document
-The following pages attempt to comprehensively cover all aspects of the development of the dashboard including technical and non-technical issues. Section \ref{sec:background} presents background information on the project, and Section \ref{sec:team-dynamics} to Section \ref{sec:customer-management} cover a range of topics in detail.
+The following pages attempt to comprehensively cover all aspects of the development of the dashboard including technical and non-technical issues. Section \ref{sec:background} presents background information on the project, and Section \ref{sec:team-dynamics} to Section \ref{sec:customer-management} cover a range of topics in detail. Finally, some key conclusions are drawn regarding the experience in Section \ref{sec:conclusions}.
 
 %==============================================================================
 \section{Case Study Background}
 \label{sec:background}
 
-For the first time the Level 3 Team Projects have real life customers, with real problems and requirements. In this first year of the scheme the Crichton Institute~\cite{CrichtonInstitute} has played a major role by offering 6 separate projects for teams to work on, including the dashboard project our team took on.
+For the first time the Level 3 Team Projects have been commissioned by real life customers, with real problems and requirements. In this first year of the scheme the Crichton Institute~\cite{CrichtonInstitute} has played a major role by offering 6 separate projects for teams to work on, including the dashboard project that our team took on.
 
 % Background on the Crichton Institute, Regional Observatory, and our contacts
 
-The Crichton Institute was launched by the Cabinet Secretary for Education and Lifelong Learning, Michael Russel MSP in January 2013~\cite{CrichtonInsituteFounded}, with the aim of bringing together academic and business parters, local government, and regional development bodies in a joint effort in several key areas including: ``the rural economy and skills development, community development and placemaking, the impacts of demographic change and influencing policy and practice''~\cite{CrichtonInsituteCoreAims}. The institute aims to drive overall development of the region and improve it's ability to attract resources and inward investment~\cite{CrichtonInstituteAboutUs}.
+The Crichton Institute was launched by the Cabinet Secretary for Education and Lifelong Learning, Michael Russel MSP in January 2013~\cite{CrichtonInsituteFounded} with the aim of bringing together academic and business parters, local government, and regional development bodies in a joint effort to improve southern Scotland in several key areas including: ``the rural economy and skills development, community development and placemaking, the impacts of demographic change and influencing policy and practice''~\cite{CrichtonInsituteCoreAims}. The institute aims to drive overall development of the region and improve it's ability to attract resources and inward investment~\cite{CrichtonInstituteAboutUs}.
 
 In June 2014 the Crichton Institute launched a Regional Observatory~\cite{CrichtonInstituteRegionalObservatory}. The Regional Observatory is a ``web-based information and knowledge portal that acts as a one-stop open-access service for public data, information and intelligence about a wide range of social, economic, and environmental factors across Dumfries and Galloway and the South of Scotland''~\cite{ScotGovOpenDataResourcePack}. This aims to improve the resources of rural areas such as Dumfries and Galloway in terms of data gathering, access, and usage. The Regional Observatory also aims to provide a collaborative base of data and information from a variety of sources which is accessible to all~\cite{ScotGovOpenDataResourcePack}.
 
@@ -75,75 +75,47 @@ The Regional Observatory provides open access to a large amount of data and repo
 
 The team was presented with the idea of creating a regional dashboard which would provide quick access to an intuitive overview of the socioeconomic situation of the Dumfries and Galloway region. This dashboard would be publicly available to any and all interested parties looking for information on the region. The dashboard would contain visualisations of data relevant to Dumfries and Galloway, and comparisons to significant regions such as Scotland-wide. It would also contain links to the relevant sources of the data, so that users can ``drill down'' into the data they are most interested in.
 
-The project also consisted of implementing a ``cheat sheet'' system. The customers wanted their users to be able to create a summary of the economic indicators most important to that specific user, and download it as a PDF document.
+The project also consisted of implementing a ``cheat sheet'' system. The customers wanted their users to be able to create a summary of the economic indicators most important to that specific user, and download it as a PDF document. The exact nature of this system was open to discussion between the developers and the customers.
 
 The customers provided examples of similar socioeconomic dashboards for other regions. One such dashboard was the London Datastore Dashboard~\cite{LondonDashboard} which provides constantly updated information and data on the London area. The key features of the London Dashboard is that a large variety of datasets (over 640 separate datasets) are available, and on the homepage it provides easy to understand line charts on all aspects of the region. Users can view further information by clicking on a specific data category which presents more detailed graphs.
 
-Another dashboard used as an example was the Dublin Dashboard~\cite{DublinDashboard}. This dashboard provides a wide variety of information and distinct visualisations on the Dublin area, but the customers commented on how many clicks are required for a user to reach any actual information as the Dublin Dashboard homepage contains no information or visualisations, simply a list of links to other parts of the site. The team immediately recognised a lack of immediately-accessible information as a potential pitfall of our own dashboard, and were careful to note this as an important non-functional requirement.
+Another dashboard used as an example was the Dublin Dashboard~\cite{DublinDashboard}. This dashboard provides a wide variety of information and distinct visualisations on the Dublin area, but the customers commented on how many clicks are required for a user to reach any actual information as the Dublin Dashboard homepage contains no information or visualisations, simply a list of links to other parts of the site. The team quickly recognised a lack of immediately-accessible information as a potential pitfall of our own dashboard, and were careful to note this as an important non-functional requirement.
 
 % What the team initially agreed compared to what the team delivered at the end
 
-Of all the requirements the team initially agreed upon with the customers, the majority of them have been addressed and either completed as initially suggested
-or an alternative has been put in place. The only large initially discussed task the team will not be completing is building our own API but it was concluded
-with Eva and Tony during a meeting that this was not necessary anyway and because there were a lot of issues concerning availability of data, it would be
-extremely difficult and the team could use the time the team would have spent working on that more effectively, improving other, more important parts of the site.
+Of all the requirements the team initially agreed upon with the customers, the vast majority of them were addressed and either completed as initially suggested or an alternative has been put in place by the end of the development period. The only large initially discussed task the team did not complete is building our own API, but it was concluded with Eva and Tony during a meeting that this was not necessary anyway and because there were a lot of issues concerning availability of data, it would be extremely difficult and the team could use the time the team would have spent working on that more effectively, improving other more important parts of the site.
 
-The customers have been consistently happy throughout, and not at any point did they ask us to remove something the team had done, except for small details such
-as shadowing behind text. They made various suggestions during the meetings but even most of those were ideas that the team had already thought about but were
-yet to implement.
+The customers have been consistently happy throughout, and they did not ask us at any point to remove something the team had done, except for aesthetic details such as shadowing behind text. They made various suggestions during the meetings but even most of those were ideas that the team had already thought about but were yet to implement.
 
-Overall the final product fits the initial brief almost exactly and the customer is happy that what the team have produced meets their requirements. That
-is, afterall, the most important thing.
-
-
-% (Under Construction)
+Overall the final product fits the initial brief almost exactly and the customer is happy that what the team have produced meets their requirements. That is, after all, the most important thing.
 
 %==============================================================================
 \section{Team Dynamics}
 \label{sec:team-dynamics}
 
-The assignment of members to project teams was randomised and sorted based on degree discipline, with our team being
-Computing Science oriented. Our team was randomised, however two of us were close friends and another two were from the
-same country which helped with initial team cohesion. One of our first tasks was to add one another on Facebook as a means of
-team communication, however in addition to this the team also used Slack, a cloud-based team collaboration tool. The team found this to
-be of much better use than Facebook due to the organisation of discussion groups (e.g. one for general communication, one for
-minutes of meetings). The team was at the early stages in the project life cycle but introduced the SVN component approximately half way
-through the process, the team was also able to integrate Jenkins and SVN into this tool to monitor the success of project builds,
-and also to monitor when new commits are made to the repository. The team had Jenkins integration in hindsight the team wished the team had used this from the
-start. At the early stages the team also organised team roles: Lewis as Project Manager; Isaac as Technical Lead; Michael as Client Liason;
-Ross as Retrospective Manager and Branko and Takis were general Software Development Engineers. In terms of agreement of these roles they were unanimous
-based on the personal traits of each team member and this was consistently adhered to throughout the project.
+The assignment of members to project teams was randomised and sorted based on degree discipline, with our team being Computing Science oriented. Our team members were randomly assigned, however two of us were existing friends and two other members were from the same foreign country which helped with initial team cohesion. One of our first tasks was to add one another on Facebook as a means of team communication, however in addition to this the team also used Slack, a cloud-based team collaboration tool.
 
-One particular observation the team noticed early on in the process was the commitment of team members to team meetings and also
-to efforts made in developing the project. The university had timetabled one all day lab session per week that was dedicated
-to team project work, and on these days the team had the majority of our team members attend. The problems seemed to arise when
-team members did not show up for additional team meetings arranged well in advance, sometimes this was due to mitigating
-circumstances such as ill health or part-time job commitments, and whilst this was acceptable the main issue was the fact
-that at this stage team members seemed to give no prior notice that they would not be available and consequently only
-half the team showed up to these meetings on average. As the process continued the consistency of team members attending these
-extra meetings improved albeit if they showed up later than initially arranged.
+The team found Slack to be a much better communication tool than Facebook due to the organisation of discussion groups (e.g. one for general communication, one for minutes of meetings). A version control system was introduced and set up before any development began, so the team was also able to integrate Jenkins and SVN into Slack in order to monitor the success of project builds and also to monitor when new commits are made to the repository. This was very beneficial as it provided a very convenient way for all team members to stay up to date on the latest project progress. This notification system was only introduced several months after initial development started - in hindsight, the team wished that this build notification integration system was known about earlier as it helped drive discussion around each commit.
 
-In terms of effort put into the project, there seemed to be a pattern where it was only our Tech Lead that was committing the most
-work into the project in the initial stages. This was down to the fact that he has professional web development experience from previous
-years while the rest of the team have limited experience. However once the site was partially functioning as a proof of concept, it
-encouraged more team members to make contributions to the project.
+At the early stages the team also organised team roles: Lewis as Project Manager; Isaac as Technical Lead; Michael as Client Liason; Ross as Retrospective Manager and Branko and Takis were general Software Development Engineers. In terms of agreement of these roles they were unanimous based on the personal traits of each team member and this was consistently adhered to throughout the project. All members were expected to be involved in development, even if their team role did not explicitly include ``software development''.
 
-% to be continued
+One particular observation the team noticed early on in the process was the commitment of team members to team meetings and also to efforts made in developing the project. The university had timetabled one all day lab session per week that was dedicated to team project work, and on these days the team had the majority of our team members attend. The problems seemed to arise when team members did not show up for additional team meetings arranged well in advance, sometimes this was due to mitigating circumstances such as ill health or part-time job commitments, and whilst this was acceptable the main issue was the fact that at this stage team members seemed to give no prior notice that they would not be available and consequently only half the team showed up to these meetings on average. As the process continued the consistency of team members attending these extra meetings improved albeit if they showed up later than initially arranged.
 
+In terms of effort put into the project, there seemed to be a pattern where it was only our Tech Lead that was committing the most work into the project in the initial stages. This was down to the fact that he has professional web development experience from previous years while the rest of the team have limited experience. However once the site was partially functioning as a proof of concept, it encouraged more team members to make contributions to the project. Another identified cause of this trend was that in the early stages of the project, much of the work was setting up the overall system architecture (such as the interactions between Django and AngularJS mentioned in Section \ref{sec:system-implementation:system-architecture}). In later iterations there were many tasks that could be developed concurrently - this improved overall team contributions towards the end. However, there was still major issues with uneven contribution levels.
 
 %==============================================================================
 
 \section{System Implementation}
 \label{sec:system-implementation}
 
-In software engineering there are many ways to implement a project but there are certain tools that are more advantageous over others. Some tools will allow faster iteration cycles by increasing automation, reducing boilerplate code, or faster prototyping. Other types of tools can help drive code quality improvements by providing code quality metrics such as code coverage analysis in testing, documentation coverage analysis, and warning of unused code. These tools are invaluable in modern software development and will be covered throughout the experience report. This section focuses on the specific system implementation, and the tools used throughout.
+In software engineering there are many ways to implement a project but there are certain tools that are more advantageous than others. Some tools will allow faster iteration cycles by increasing automation, reducing boilerplate code, or faster prototyping. Other types of tools can help drive code quality improvements by providing code quality metrics such as code coverage analysis in testing, documentation coverage analysis, and warning of unused code. These tools are invaluable in modern software development and were used in this software project. This section focuses on the specific system implementation, and the tools used throughout.
 
 \subsection{System Architecture}
 \label{sec:system-implementation:system-architecture}
 
-For this project the team were asked to build a web application, so in order to begin development the team had to decide on a web framework that could be used as the basis of our project. The team chose the Python-based Django framework~\cite{Django} as every member of the team had previous experience in developing web applications using this as part of a previous university course. There were discussions around using an alternative framework such as Java Spring and whilst the team were all proficient in the use of Java, there was a unanimous agreement that using a more familiar framework would result in faster development of a system where the requirements could change week-to-week - although not all team members were equally familiar with Django which resulted in some issues as discussed in Section \ref{sec:team-dynamics}.
+For this project the team were asked to build a web application, so in order to begin development the team had to decide on a web framework that could be used as the basis of our project. The team chose the Python-based Django web framework~\cite{Django}, as every member of the team had previous experience in developing web applications using this as part of a previous university course. There were discussions around using an alternative framework such as Java Spring and whilst the team were all proficient in the use of Java, there was a unanimous agreement that using a more familiar framework would result in faster development of a system where the requirements could change week-to-week - although not all team members were equally familiar with Django, potentially resulting in an exacerbation of the contribution problem mentioned in Section \ref{sec:team-dynamics}.
 
-Django was not the only Model-View-Controller (MVC) style framework used in the project though - the team wanted to learn new skills as well as refining existing ones. It was decided to be appropriate to introduce AngularJS~\cite{AngularWebpage} (a JavaScript MVC framework) into the project. Use of a front-end framework such as AngularJS gave us much greater control over the flow of data in our application while reducing the amount of boilerplate (repeated, menial) code in our JavaScript files. This was also a good learning experience for the team as no team members had any previous experience in using the framework.
+Django was not the only Model-View-Controller (MVC) framework used in the project though - the team wanted to learn new skills as well as refining existing ones. It was decided to be appropriate to introduce AngularJS~\cite{AngularWebpage} (a JavaScript MVC framework) into the project. Use of a front-end framework such as AngularJS gave us much greater control over the flow of data in our application while reducing the amount of boilerplate (repeated, menial) code in our JavaScript files. This was also a good learning experience for the team as no team members had any previous experience in using the framework.
 
 The resulting architecture was very interesting to work with. The server-side Django code worked to supply necessary static files to clients (such as the JavaScript code files and images) as well as managing the flow of data to and from the persistent SQL database. The Django middleware worked to mediate the relationship between the AngularJS code running on client machines, and the SQL database on the server.
 
@@ -204,21 +176,12 @@ Initially the plan was to have a number of different types of graphs, however, t
 One of the last major issues addressed by the team was the graphical visualisation of data on the dashboard. The progress of the project reached to a point where the dashboard provided almost all the required functionalities, so the team decided to give an emphasis on the data visualisation in order to make the dashboard easy to use and user friendly. D3 is a framework that provides many different functions to the developer, it allows to work on the flexibility of the graphs and the visualisation on the same time. Tooltip functionality was added to show the exact values (x and y coordinates) when a user passed their mouse over a particular data point. Bar graphs had particular bars highlighted when the user passed their mouse over a specific bar, this was designed to make longer bars easier to follow horizontally. Care was also given to cases where there might only be a single data point available for the user's chosen date range - in this case, a single large point is shown on the graph that shows the particular value.
 
 %==============================================================================
-\section{Core Practices}
+\section{Agile Software Development Engineering}
 \label {sec:core-practices}
 
-Throughout the development of the project the team were also following a course named Professional Software Development.
-The course's aim was to introduce the students to modern software development methods and techniques for building and
-maintaining large systems and apply those techniques in a project. One of the methods that were taught
-was the agile practice. Agile software development ``is a set of principles for software development in
-which requirements and solutions evolve through collaboration between self-organizing, cross-functional teams.
-It promotes adaptive planning, evolutionary development, early delivery, and continuous improvement, and it encourages
-rapid and flexible response to change~\cite{AgileMethods}.
+Throughout the development of the project the team were also following a course named Professional Software Development. The course's aim was to introduce the students to modern software development methods and techniques for building and maintaining large systems and apply those techniques in a project. One of the methods that was taught was the agile practice. Agile software development ``is a set of principles for software development in which requirements and solutions evolve through collaboration between self-organizing, cross-functional teams. It promotes adaptive planning, evolutionary development, early delivery, and continuous improvement, and it encourages rapid and flexible response to change''~\cite{AgileMethods}.
 
-The agile method that was mostly used was Extreme Programming (XP). The benefits of XP are beneficial since it focuses on
-customer satisfaction, enables the continuous elicitation of requirements from the customers and insists on teamwork
-both between the team members and the customers. Also, XP improves the communication, simplicity, feedback, respect and
-courage of the team. It focuses on a number of simple rules that can be easily adhered to~\cite{ExtremeProgramming}.
+The agile method that was mostly used was Extreme Programming (XP). The benefits of XP are that it focuses on customer satisfaction, enables the continuous elicitation of requirements from the customers and insists on teamwork both between the team members and the customers. Also, XP improves the communication, simplicity, feedback, respect and courage of the team. It focuses on a number of simple rules that can be easily adhered to~\cite{ExtremeProgramming}.
 
 \begin{wrapfigure}{L}{0.5\textwidth}
 \includegraphics[width=1.1\linewidth]{figures/Extreme_Programming}
@@ -226,31 +189,11 @@ courage of the team. It focuses on a number of simple rules that can be easily a
 \label{fig:extreme-programming}
 \end{wrapfigure}
 
-Following the guidelines of XP the team conducted the project with these principles in mind. Since the project was set to finish at a specific date
-the team set a number of task deadlines which were due at the end of each iteration. In total five iterations
-(including the final demonstration) have been set by the university. The first iteration was our initial meeting with
-the customers. From this point the team have understood the concept of the project, gathered initial functional and non-functional
-requirements of the project and also proposed some ideas to our clients. At the end of the meeting the requirements were
-translated into user stories, from where a number of tasks have been created to provide possible solutions to the user stories.
-By the end of this iteration a meeting with the customers was arranged in order to demonstrate the current structure of the
-project, asking it fits their needs and collect new requirements for the following iterations. This process has been followed
-until the end of the project including the final demonstration. It is also fair to say that in between each of the iterations the team
-aimed to discover defects which in turn were translated into new user stories and fixed during their respective iteration,
-if not the following.
+Following the guidelines of XP the team conducted the project with these principles in mind. Since the project was set to finish at a specific date the team set a number of task deadlines which were due at the end of each iteration. In total five iterations (including the final demonstration) have been set by the university. The first iteration was our initial meeting with the customers. From this point the team have understood the concept of the project, gathered initial functional and non-functional requirements of the project and also proposed some ideas to our clients. At the end of the meeting the requirements were translated into user stories, from where a number of tasks have been created to provide possible solutions to the user stories. By the end of this iteration a meeting with the customers was arranged in order to demonstrate the current structure of the project, asking it fits their needs and collect new requirements for the following iterations. This process has been followed until the end of the project including the final demonstration. It is also fair to say that in between each of the iterations the team aimed to discover defects which in turn were translated into new user stories and fixed during their respective iteration, if not the following.
 
-The first step the team took was to maintain a good relationship with their customers. During the meetings and iterations, the relationship
-between the customer and the team was very close, friendly and completely understanding. The two parties kept in touch at least once or twice during the
-iterations and the team have always asked for their customers' opinion whenever something had to be done that could affect the agreed requirements.
-The customers were not just sources of information and guidance, instead they were an active member in the team and have very
-efficiently helped in the development of the project.
+The first step the team took was to maintain a good relationship with their customers. During the meetings and iterations, the relationship between the customer and the team was very close, friendly and completely understanding. The two parties kept in touch at least once or twice during each of the iterations and the team have always asked for their customers' opinion whenever something had to be done that could affect the agreed requirements. The customers were not just sources of information and guidance, instead they were an active member in the team and have very efficiently helped in the development of the project.
 
-During every iteration the team followed a planning method. Since the first meeting has been concluded there have been generated a series of
-user stories. Those user stories have been carefully examined and graded by the team and have been assigned into specific milestones, i.e.
-end dates, based on their grade. In addition to that, the clients were informed about these dates and they were informed of what would be finished in the next 
-iteration. Although the user stories were graded and set to specific milestone, they were not fixed, instead they were dynamically changed based on the work done 
-so far, random implications that have risen and the addition of new user stories. Furthermore, every user story had its respective owner(s) who were 
-resposible for the research and development of the story. In relation to the planning methods, every requirement's milestone set, was 
-after research of the estimated time that can take including external factors such as sickness/assignments/travelling abroad.
+During every iteration the team followed a planning method. Since the first meeting has been concluded there have been generated a series of user stories. Those user stories have been carefully examined and graded by the team and have been assigned into specific milestones, i.e. end dates, based on their grade. In addition to that, the clients were informed about these dates and they were informed of what would be finished in the next iteration. Although the user stories were graded and set to specific milestone, they were not fixed, instead they were dynamically changed based on the work done so far, random implications that have risen and the addition of new user stories. Furthermore, every user story had its respective owner(s) who were responsible for the research and development of the story. In relation to the planning methods, every requirement's milestone set, was after research of the estimated time that can take including external factors such as sickness/assignments/travelling abroad.
 
 
 %==============================================================================
@@ -259,82 +202,28 @@ after research of the estimated time that can take including external factors su
 
 % the team talk about the improvements the team has made, such as improvements make to ticket management.
 
-As part of the project, the university wanted the team to use three tools throughout the process: Subversion (SVN) for our version control
-repository, Trac as our ticket management system, and Jenkins for project builds. Before the start of the project the team had been
-shown using tutorials how to set these up which was helpful for the long run. The team found SVN relatively straightforward to use
-in terms of making commits to the repository, however the team would have preferred using Git as the team have all
-had previous experience using this and in general seems much more of a user-friendly experience. Trac was very helpful in
-terms of monitoring existing tasks that required work upon, and also the use of Wiki pages allowed for better team organisation
-such as project information and summarising retrospectives. To begin with Jenkins was mostly used for ensuring that builds of
-the project after commits were successful, however at this point the team did not have much testing on our site. The team also had an issue
-whereby each time a commit was made to the repository, it would take just over three minutes to build each time as the virtual
-environment had to be re created every single time. Thankfully the team were able to reduce the build time by changing the point at
-which the virtual environment is created in the build script. Further into the project the team also integrated Cobertura for code
-coverage, and this was extremely helpful in terms of the depth of existing code coverage and what areas were still to be tested.
+As part of the project, the university wanted the team to use three tools throughout the process: Subversion (SVN) for our version control repository, Trac as our ticket management system, and Jenkins for project builds. Before the start of the project the team had been shown using tutorials how to set these up which was helpful for the long run. The team found SVN relatively straightforward to use in terms of making commits to the repository, however the team would have preferred using Git as the team have all had previous experience using this and in general seems much more of a user-friendly experience. Trac was very helpful in terms of monitoring existing tasks that required work upon, and also the use of Wiki pages allowed for better team organisation such as project information and summarising retrospectives. To begin with Jenkins was mostly used for ensuring that builds of the project after commits were successful, however at this point the team did not have much testing on our site. The team also had an issue whereby each time a commit was made to the repository, it would take just over three minutes to build each time as the virtual environment had to be re created every single time. Thankfully the team were able to reduce the build time by changing the point at which the virtual environment is created in the build script. Further into the project the team also integrated Django-Jenkins, a small Django application that runs Python unit tests and generates Jenkins-friendly test results using Junit XML files for test results and Cobertura for code coverage. This was extremely helpful in terms of the depth of existing code coverage and what areas were still to be tested.
 
-As part of agile development, the team undertook a retrospective at the end of each iteration. The goals of retrospectives are
-to establish where the team has done well and identify process improvements for future iterations. A retrospective is started
-by asking each team member to write their thoughts on how they've felt about the previous iteration on post-it notes.
-The team divided these into four categories: Liked (things the team liked); Learned (things the team have learned);
-Lacked (things the team have been doing but could be done better) and Longed For (something that's desired or wished for).
-Once each team member has written their thoughts down, the Retrospective Manager(Ross) asks each team member in turn
-what they said for each category by placing their post-it note on a wall or board in order to collate them. By doing this,
-the team is able to find common opinions whilst also finding thoughts that other team members previously did not
-consider. To conclude a retrospective, the team summarises the points made i.e. how much have the team progressed as a team
-and where are the problem areas. From this, the team is able to establish new goals and objectives for the next iteration
-which may involve creating new tickets on Trac. At the next team meeting, the team clarifies what tasks need done over
-the next few weeks before the next customer meeting.
+As part of agile development, the team undertook a retrospective at the end of each iteration. The goals of retrospectives are to establish where the team has done well and identify process improvements for future iterations. A retrospective is started by asking each team member to write their thoughts on how they've felt about the previous iteration on post-it notes. The team divided these into four categories: Liked (things the team liked); Learned (things the team have learned); Lacked (things the team have been doing but could be done better) and Longed For (something that's desired or wished for). Once each team member has written their thoughts down, the Retrospective Manager (Ross) asks each team member in turn what they said for each category by placing their post-it note on a wall or board in order to collate them. By doing this, the team is able to find common opinions whilst also finding thoughts that other team members previously did not consider. To conclude a retrospective, the team summarises the points made i.e. how much have the team progressed as a team and where are the problem areas. From this, the team is able to establish new goals and objectives for the next iteration which may involve creating new tickets on Trac. At the next team meeting, the team clarifies what tasks need done over the next few weeks before the next customer meeting.
 
-Retrospectives were great for the team in terms of finding process improvements. In the first iteration it was more to
-do with individual efforts such as showing up to team meetings on time, more commits to the repository and clarification
-of who is working on which tickets. Later iterations had more productive changes due such as more test cases, code
-documentation and better ticket management. The most useful improvement the team has made in the scope of the project
-is referencing tickets in commits to the repository: whilst this happened later on in the process, it enabled team members
-to identify clearly who is working on which tasks and the progress made towards it.
+Retrospectives were great for the team in terms of finding process improvements. In the first iteration it was more to do with individual efforts such as showing up to team meetings on time, more commits to the repository and clarification of who is working on which tickets. Later iterations had more productive changes due such as more test cases, code documentation and better ticket management. The most useful improvement the team has made in the scope of the project is referencing tickets in commits to the repository: whilst this happened later on in the process, it enabled team members to identify clearly who is working on which tasks and the progress made towards it.
 
 %------------------------------------------------------------------------------
 
 \section{Continuous Integration and Testing}
 \label{sec:continuous-integration}
 
-Continuous Integration (CI) is a development practice that requires software developers to integrate code into a shared
-repository (e.g. using GIT or subversion) several times a day. Every check-in is then verified by an automated build,
-allowing teams to detect problems early. By integrating regularly, you can detect errors quickly, locate them more easily
-and solve the problems faster. CI has been adopted as part of the Extreme Programming (XP) development methodology~\cite{ContinuousIntegration}.
-Since the team adopted the XP method for the project it was only natural for the team to follow the CI practices.
+Continuous Integration (CI) is a development practice that requires software developers to integrate code into a shared repository (e.g. using GIT or subversion) several times a day. Every check-in is then verified by an automated build, allowing teams to detect problems early. By integrating regularly, you can detect errors quickly, locate them more easily and solve the problems faster. CI has been adopted as part of the Extreme Programming (XP) development methodology~\cite{ContinuousIntegration}. Since the team adopted the XP method for the project it was only natural for the team to follow the CI practices.
 
-The first practice of CI is about using a shared code repository. As stated in the previous sections the team has
-used Apache Subversion (a version control system) that helped the team to share and manage their code very easily. Every team
-member could update to the latest version of the project, then work on their own versions of code changing it as
-necessary and then were able to commit their changes in order for everyone to be up to date.
+The first practice of CI is about using a shared code repository. As stated in the previous sections the team has used Apache Subversion (a version control system) that helped the team to share and manage their code very easily. Every team member could update to the latest version of the project, then work on their own versions of code changing it as necessary and then were able to commit their changes in order for everyone to be up to date.
 
-Another facet of CI rests upon automating the build, have it build fast, be self tested and automate its
-deployment. The team has used an automation server called Jenkins and a test server to host the web application of the
-project. By using Jenkins the team has resolved the issues of automating the build process (with the help of a Python build
-population script). It has also provided a way of self testing, since as the project was growing tests have been
-implemented to test the project code, and Jenkins made sure the tests passed before building and updating the live test site.
-When Jenkins finishes the build and its testing it deployed to a live test server so everyone (both the team members and
-the clients) could see and evaluate the results.
+Another facet of CI rests upon automating the build, have it build fast, be self tested and automate its deployment. The team has used an automation server called Jenkins and a test server to host the web application of the project. By using Jenkins the team has resolved the issues of automating the build process (with the help of a Python build population script). It has also provided a way of self testing, since as the project was growing tests have been implemented to test the project code, and Jenkins made sure the tests passed before building and updating the live test site. When Jenkins finishes the build and its testing it deployed to a live test server so everyone (both the team members and the clients) could see and evaluate the results.
 
-Furthermore, CI specifies that the developers of the project should commit at least once a day and that commit should
-be built as soon as is committed. That is a practice that was not followed. Since the team was composed by students
-such a practice was difficult to follow. As a professional developer it is fairly easy to commit every single day
-since you have the time required to do so. In the case of a student, even if he split his working time to every single
-day, the job done would be minimal or even incomplete,causing the the servers to fail. Also, because of the nature of
-our project a big amount of time was spent on researching for methods or libraries to counter some problems, and that is
-not a commit material. For these reasons, the commits were inconsistent and every commit would contain a lot of new
-code from its previous version, which sometimes resulted into merge conflicts which were very difficult to resolve. In
-order to counter or limit the frequency of conflicts the team managers has suggested the team to be meeting twice a week
-and also work on the weekends while everyone would inform on what they were working and their commit messages would tell
-what and which files were changed. The ideas were indeed beneficial and have reduced substantially the counters of
-conflicts and defects.
+Furthermore, CI specifies that the developers of the project should commit at least once a day and that commit should be built as soon as is committed. That is a practice that was not followed. Since the team was composed by students such a practice was difficult to follow. As a professional developer it is fairly easy to commit every single day since you have the time required to do so. In the case of a student, even if he split his working time to every single day, the job done would be minimal or even incomplete,causing the the servers to fail. Also, because of the nature of our project a big amount of time was spent on researching for methods or libraries to counter some problems, and that is not a commit material. For these reasons, the commits were inconsistent and every commit would contain a lot of new code from its previous version, which sometimes resulted into merge conflicts which were very difficult to resolve. In order to counter or limit the frequency of conflicts the team managers has suggested the team to be meeting twice a week and also work on the weekends while everyone would inform on what they were working and their commit messages would tell what and which files were changed. The ideas were indeed beneficial and have reduced substantially the counters of conflicts and defects.
 
-% Below is cut-paste from elsewhere and needs modification to fit.
+Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred. Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of design of the code. Now the team had to write unit tests to an already existing code which proved difficult. In order for test cases to be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain that there will be pieces of code which will be inexplicable.
 
-Another major issue the team identified was the lack of code testing. As the team were working on implementing various features into the website the team realized that the team have produced a lot of code but if it were to malfunction the team would not be certain where the problem has occurred. Having as high test code coverage as possible benefits the developers in many ways. Big changes can be made to the code and if the test cases still work that indicates that everything is still working properly. Testing code gives you further understanding of
-design of the code. Now the team had to write unit tests to an already existing code which proved difficult. In order for test cases to be written one has to understand the code which is being tested. And when several people have contributed to that code it is certain that there will be pieces of code which will be inexplicable.
-
-Good teamworking and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the Django framework for our website, which is based on Python the team had to look into Python junit testing. Unfortunately the majority of the team did not have a lot of prior experience with junit testing in django. Therefore more time had to be invested in developing the needed skills. The team shared online tutorials with one another thus maximising the results as quickly and as efficiently as possible.
+Good teamwork and communication helped the team reach a high percentage of test code coverage. Since the team decided to use the Django framework for our website, which is based on Python the team had to look into Python unit testing. Unfortunately the majority of the team did not have a lot of prior experience with unit testing in Django. Therefore more time had to be invested in developing the needed skills. The team shared online tutorials with one another thus maximising the results as quickly and as efficiently as possible.
 
 %------------------------------------------------------------------------------
 
@@ -361,80 +250,30 @@ Other features identified as not being fully finished were not completed as they
 \section{Data Acquisition}
 \label{sec:data-acquisition}
 
-In order for this project to work the team had to acquire real data to populate the graphs with. The information required was non-personal and non-commercially sensitive. In February 2015 the Scottish Government launched its Open Data Strategy which seeks to make exactly that type of information available for use by all. This strategy adopts the G8 Open Data Principles: Open Data by Default, Quality and Quantity, Usable by All, Releasing Data for improved Governance and Releasing Data for innovation. That means that the team did not have to get specific permission to post any acquired data which was to be used in the website.
+In order for this project to work the team had to acquire real data to populate the graphs with. The information required was non-personal and non-commercially sensitive. In February 2015 the Scottish Government launched its Open Data Strategy which seeks to make exactly that type of information available for use by all~\cite{ScotGovOpenDataResourcePack}. This strategy adopts the G8 Open Data Principles: Open Data by Default, Quality and Quantity, Usable by All, Releasing Data for improved Governance and Releasing Data for innovation. That means that the team did not have to get specific permission to post any acquired data which was to be used in the website.
 
-The team started by researching
-the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. The team found that most of these
-sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team
-came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish
-Government to be used as a centralised access point to information. In this, the team were able to find data on hundreds
-of economic indicators in CSV format.
+The team started by researching the various websites suggested by our customer such as NOMIS Scotland~\cite{NOMISScot}. The team found that most of these sites were difficult to use in terms of extracting exactly the kind of data that the team needed. Eventually the team came across Statistics.Gov.Scot Beta~\cite{StatisticsScotBeta} which was a site being set up on behalf of the Scottish Government to be used as a centralised access point to information. In this, the team were able to find data on many economic indicators in CSV format.
 
-The team created a script that would process these files, extract only the data collected on Dumfries and Galloway and
-Scotland and format this to be rendered by the d3 code that visualises the data before storing it on our site's
-database. This data extracting script was implemented into the project by creating a simple population script which used
-the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for
-testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real
-data, however our main issue here was that the data was static, and at the time of download was outdated.
+The team created a script that would process these files, extract only the data collected on Dumfries and Galloway and Scotland and format this to be rendered by the d3 code that visualises the data before storing it on our site's database. This data extracting script was implemented into the project by creating a simple population script which used the data extraction method to provide the project with the real data and in parallel to that created fake dummy data for testing purposes (I need help rephrasing this sentence).This was a major step in our project in terms of using real data, however our main issue here was that the data was static, and at the time of download was outdated.
 
-In addition to this the files all used inconsistent date formats (e.g. one would be quarterly, another would be monthly,
-another yearly) which presented a major issue in terms of a key requirement being that users want to access the latest
-available data as well as looking back on previous years. The team raised this issue with our customers and they were aware of
-this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the
-data extracting script which was initially created. At first the script was only capable of extracting data from CSV
-formatted files which strictly modified to fit the same structure. Although this was working at first the team decided
-to improve the script to be able to extract data from all CSV files regardless of the inner format and structure.
+In addition to this the files all used inconsistent date formats (e.g. one would be quarterly, another would be monthly, another yearly) which presented a major issue in terms of a key requirement being that users want to access the latest available data as well as looking back on previous years. The team raised this issue with our customers and they were aware of this issue beforehand, this was a relief. Later on in the development process the team decided to make changes to the data extracting script which was initially created. At first the script was only capable of extracting data from CSV formatted files which strictly modified to fit the same structure. Although this was working at first the team decided to improve the script to be able to extract data from all CSV files regardless of the inner format and structure.
 
-The team decided to keep the old converter script for demonstration purposes while the new one was being developed.
-The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively
-simple process. This process is thoroughly described in the administration panel with examples for quick and easy
-understanding. Once the new script was fully developed and tested the team implemented it fully into the project thus
-removing the obsolete old version.
-
+The team decided to keep the old converter script for demonstration purposes while the new one was being developed. The idea behind the new script was to allow administrators to add more CSV files as data sources through a relatively simple process. This process is thoroughly described in the administration panel with examples for quick and easy understanding. Once the new script was fully developed and tested the team implemented it fully into the project thus removing the obsolete old version.
 
 %------------------------------------------------------------------------------
 
 \section{Customer Management}
 \label{sec:customer-management}
 
-One of, if not, the most important aspect of a successful software development process is the interaction and relationship
-between the customer and the developers. The best way to ensure this is possible is by ensuring good communications
-both in person and otherwise, in this instance the team appointed a Customer Liason (Michael) to be the link between the
-team and the customer. Ideally the team would have liked to meet the customer more but given the distance they had to travel
-for each customer meeting from Dumfries and Galloway, this was not feasible, so the team regularly emailed the customer
-to make them aware of any queries or issues relating to the project.
+One of, if not the most important aspect of a successful software development process is the interaction and relationship between the customer and the developers. The best way to ensure this is possible is by ensuring good communications both in person and otherwise, in this instance the team appointed a Customer Liason (Michael) to be the link between the team and the customer. Ideally the team would have liked to meet the customer more but given the distance they had to travel for each customer meeting from Dumfries and Galloway, this was not feasible, so the team regularly emailed the customer to make them aware of any queries or issues relating to the project.
 
-The team's face-to-face interaction with the customer took place in five meetings: the first was to meet the customer
-for the first time and gather requirements, the following meetings were to demonstrate the progress made in each
-iteration. From requirements gathering, the team were elaborated on the project description in order to create user stories,
-and agreed that over the 7 month period it would be feasible to implement most (if not all) the desired features into the
-dashboard. One of the team's initial challenges was how to convey our requirements over to the customer who was not particularly
-technologically literate, but the team did well to come to a mutual understanding over what was expected from both parties.
-Over the next few meetings, the customer seemed very pleased by the progress made from each iteration. What was extremely
-pleasing was how the team identified possible extra features that the customer never initially though about whilst at the
-same time the customer pointed out areas of our project the team had not previously considered. Generally, meetings
-were conducted in stages: the first involved the team demonstrating the progress made using the live deployment of the
-dashboard (this was also useful for them to be able to check our progress outside of meetings and also for their
-stakeholders to see the progress the team has made); clarify any issues the team was currently facing (i.e. a feature
-that may not be an ideal solution or is not feasible to implement within the time frame); agree on what is expected
-for the next iteration/meeting and finally ask the customer for any further feedback/questions they may have.
+The team's face-to-face interaction with the customer took place in five meetings: the first was to meet the customer for the first time and gather requirements, the following meetings were to demonstrate the progress made in each iteration. From requirements gathering, the team were elaborated on the project description in order to create user stories, and agreed that over the 7 month period it would be feasible to implement most (if not all) the desired features into the dashboard. One of the team's initial challenges was how to convey our requirements over to the customer who was not particularly technologically literate, but the team did well to come to a mutual understanding over what was expected from both parties.
 
-An issue that arose when interacting with the customer was that despite previously agreeing to implement data access
-via an API, the team realised half way through the process this may not be feasible due to inconsistent and outdated
-data; and the lack of helpful documentation provided by relevant government sources. Thankfully the customer recognised
-this and got the team in touch with the owner of the website the team had previously acquired CSV files from for the graphs on
-the dashboard. Whilst this was positive to begin with (the team were told data would be updated within 24 hours), this was
-never carried out by the site owner and thus could not be used for our project. The site's developers did not offer much
-assistance either and did not get in touch with the team until the customer intervened. Thankfully the team agreed with
-the customer that using the CSV importer was a practical alternative given the fact that most existing dashboards use
-CSV files as well, as opposed to dynamically through an API.
+Over the next few meetings, the customer seemed very pleased by the progress made from each iteration. What was extremely pleasing was how the team identified possible extra features that the customer never initially though about whilst at the same time the customer pointed out areas of our project the team had not previously considered. Generally, meetings were conducted in stages: the first involved the team demonstrating the progress made using the live deployment of the dashboard (this was also useful for them to be able to check our progress outside of meetings and also for their stakeholders to see the progress the team has made); clarify any issues the team was currently facing (i.e. a feature that may not be an ideal solution or is not feasible to implement within the time frame); agree on what is expected for the next iteration/meeting and finally ask the customer for any further feedback/questions they may have.
 
-A key aspect of the project was the fact that the team not only had to communicate with the customer but also with
-other project teams. The team was contacted by other teams regarding the possibility of integrating their projects into
-our dashboard, this was initially agreed however the team agreed with most teams that each project would be as standalone as
-possible. The team were in regular contact with the project team involved in moving the Crichton's website over to a
-new platform who would be able to integrate the dashboard into their homepage.
+An issue that arose when interacting with the customer was that despite previously agreeing to implement data access via an API, the team realised half way through the process this may not be feasible due to inconsistent and outdated data; and the lack of helpful documentation provided by relevant government sources. Thankfully the customer recognised this and got the team in touch with the owner of the website the team had previously acquired CSV files from for the graphs on the dashboard. Whilst this was positive to begin with (the team were told data would be updated within 24 hours), this was never carried out by the site owner and thus could not be used for our project. The site's developers did not offer much assistance either and did not get in touch with the team until the customer intervened. Thankfully the team agreed with the customer that using the CSV importer was a practical alternative given the fact that most existing dashboards use CSV files as well, as opposed to dynamically through an API.
 
+A key aspect of the project was the fact that the team not only had to communicate with the customer but also with other project teams. The team was contacted by other teams regarding the possibility of integrating their projects into our dashboard, this was initially agreed however the team agreed with most teams that each project would be as standalone as possible. The team were in regular contact with the project team involved in moving the Crichton's website over to a new platform who would be able to integrate the dashboard into their homepage.
 
 %------------------------------------------------------------------------------
 \section{Conclusions}
@@ -446,33 +285,13 @@ new platform who would be able to integrate the dashboard into their homepage.
 %types of software project.  Relate the wider lessons to others
 %reported in case studies in the software engineering literature.
 
-Crichton Institute has provided the team a great way to expand our knowledge to software development. The project has
-provided the team with the chance to work on a complex but satisfying problem. Indeed that project was not simple,
-it had a lot of requirements from which a great amount of time has been taken for research regarding what implementation
-choices the team could take, frameworks that had to be discarded and replaced and more problems regarding APIs.
+The Crichton Institute has provided the team a great way to expand our knowledge to software development. The project has provided the team with the chance to work on a complex but satisfying problem. Indeed that project was not simple, it had a lot of requirements from which a great amount of time has been taken for research regarding what implementation choices the team could take, frameworks that had to be discarded and replaced and more problems regarding APIs.
 
-Even though the project was challenging, its positive impact should not be underestimated. Software development is a hard
-concept to grasp on, due to its  nature that makes it need to be done in specific parts, which if ignored could prove
-disastrous to the end project.
+Even though the project was challenging, its positive impact should not be underestimated. Software development is a hard concept to grasp on, due to its nature that makes it need to be done in specific parts, which if ignored could prove disastrous to the end project.
 
-Software development is an iterative process. The iteration consists of planning, implementation, testing and evaluation.
-Following this phases a software developer  starts by acquiring new requirements for its program, it analyses those
-requirements and provides and provides a design and implementation for them. Then, those implementations are tested and
-evaluated which will most probably give new requirements for the project. This iterative methods could prove most
-beneficial for a developer,since they can significantly cut down the costs ,avoids misunderstandings, finds defects
-faster, it encourages feedback (both for clients and team members) and proves the credibility of the program or
-application to its stakeholders.
+Software development is an iterative process. The iteration consists of planning, implementation, testing and evaluation. Following this phases a software developer  starts by acquiring new requirements for its program, it analyses those requirements and provides and provides a design and implementation for them. Then, those implementations are tested and evaluated which will most probably give new requirements for the project. This iterative methods could prove most beneficial for a developer,since they can significantly cut down the costs ,avoids misunderstandings, finds defects faster, it encourages feedback (both for clients and team members) and proves the credibility of the program or application to its stakeholders.
 
-The iterative design has taught the team some valuables lessons. Firstly, software development never ends, there are
-always more defects, requirements or better solutions (based on cost or performance) for every project. This lifecycle goes
-on as long as technologies evolve and this by nature does not end. This proved true for the team since our project was
-not fully complete even at the end. Things that could be improved consist of adding an API importer which would allow
-automatic data updates. Also, involving more datasets to the application instead of just Dumfries and Galloway and
-Scotland wide (e.g. having UK wide data). Furthermore, the team could implement more data visualisations such as pie charts
-or overlaying graphs, or even some more graphical updates to improve the user experience. In addition to that, the team could
-improve certain parts such as the PDF exporter (by enabling it to project different graph sizes and bar charts) or the
-search results (e.g. enabling sorting, or creation of a saved configuration). Lastly the team could deploy the application to a
-real production server such as NGINX.
+The iterative design has taught the team some valuables lessons. Firstly, software development never ends, there are always more defects, requirements or better solutions (based on cost or performance) for every project. This lifecycle goes on as long as technologies evolve and this by nature does not end. This proved true for the team since our project was not fully complete even at the end. Things that could be improved consist of adding an API importer which would allow automatic data updates. Also, involving more datasets to the application instead of just Dumfries and Galloway and Scotland wide (e.g. having UK wide data). Furthermore, the team could implement more data visualisations such as pie charts or overlaying graphs, or even some more graphical updates to improve the user experience. In addition to that, the team could improve certain parts such as the PDF exporter (by enabling it to project different graph sizes and bar charts) or the search results (e.g. enabling sorting, or creation of a saved configuration). Lastly the team could deploy the application to a real production server such as NGINX.
 
 %==============================================================================
 \bibliographystyle{plain}
