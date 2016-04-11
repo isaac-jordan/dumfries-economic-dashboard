@@ -21,9 +21,9 @@
 \begin{abstract}
 %Should contain purpose, methods, scope, results, conclusions, and recommendations.
 
-For the first time at the University of Glasgow, the team project undertaken in the third year of a Computing Science degree involves a real life customer. This experience report covers the software development period of a project to create an interactive dashboard of various economic indicators of the Dumfries and Galloway region, on behalf of the Crichton Institute.
+For the first time at the University of Glasgow, the team project undertaken in the third year of a Computing Science degree involves a real life customer. This experience report covers the software development period of a project to create an interactive dashboard of various economic indicators concerning the Dumfries and Galloway region, on behalf of the Crichton Institute.
 
-The software development process and methods are prominent discussion points in this case study, covering aspects of the project concerning team interactions, system architecture, Agile software development, and planning with respect to the economic dashboard. The study aims to reflect on key aspects of the development process, and presents ideas on improving the process were it to be completed again - such as having initial discussions regarding team member's prior technical expertise and areas of interest.
+The software development process and methods used are prominent discussion points in this case study, covering aspects of the project including team interactions, system architecture, Agile software development, and planning with respect to the economic dashboard. The study aims to reflect on key aspects of the development process, and presents ideas on improving the process were it to be completed again - such as having initial discussions regarding team member's prior technical expertise and areas of interest.
 
 \end{abstract}
 
@@ -45,7 +45,7 @@ The team was asked to create an interactive dashboard of various economic indica
 
 Several key requirements of the final product that were identified included minimising clicks to get to an overview of information, having more detailed information available for those who needed it, and the dashboard should be viable to be managed by non-technical administrative personnel.
 
-The dashboard was built using the Python-based Django~\cite{Django} framework as the team had previous university experience building web applications using this so it was relatively straightforward to begin developing the initial components of the back-end of the website. In addition to this the team used many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, d3~\cite{d3Webpage} and Gridster~\cite{AngularGridster}. The system architecture is discussed in more detail in Section \ref{sec:system-implementation}.
+The dashboard was built using the Python-based Django~\cite{Django} framework as the team had previous university experience building web applications using this so it was relatively straightforward to begin developing the initial components of the back-end of the website. In addition to this the team used many JavaScript-based front end technologies such as Angular JS~\cite{AngularWebpage}, D3.js~\cite{d3Webpage} and Angular-Gridster~\cite{AngularGridster}. The system architecture is discussed in more detail in Section \ref{sec:system-implementation}.
 
 %% Summary of the rest of the document
 The following pages attempt to comprehensively cover all aspects of the development of the dashboard including technical and non-technical issues. Section \ref{sec:background} presents background information on the project, and Section \ref{sec:team-dynamics} to Section \ref{sec:customer-management} cover a range of topics in detail. Finally, some key conclusions are drawn regarding the experience in Section \ref{sec:conclusions}.
@@ -62,7 +62,7 @@ The Crichton Institute was launched by the Cabinet Secretary for Education and L
 
 In June 2014 the Crichton Institute launched a Regional Observatory~\cite{CrichtonInstituteRegionalObservatory}. The Regional Observatory is a ``web-based information and knowledge portal that acts as a one-stop open-access service for public data, information and intelligence about a wide range of social, economic, and environmental factors across Dumfries and Galloway and the South of Scotland''~\cite{ScotGovOpenDataResourcePack}. This aims to improve the resources of rural areas such as Dumfries and Galloway in terms of data gathering, access, and usage. The Regional Observatory also aims to provide a collaborative base of data and information from a variety of sources which is accessible to all~\cite{ScotGovOpenDataResourcePack}.
 
-The client contacts the team interacted with were Development Officer Eva Milroy~\cite{EvaMilroyLinkedIn}, and Director Tony Fitzpatrick~\cite{TonyFitzpatrickLinkedIn}. Eva Milroy is a key member in setting up and continued running of the Crichton Institute Regional Observatory, as well as providing business intelligence, and developing employer engagement with the Crichton Institute. Tony Fitzpatrick has been director of the Crichton Institute Regional Observatory since it's inception. These two representatives were the team's main contact within the Crichton Institute, and they provided invaluable feedback and insight into the project and problem domain.
+The client contacts the team interacted with were Development Officer Eva Milroy~\cite{EvaMilroyLinkedIn}, and Director Tony Fitzpatrick~\cite{TonyFitzpatrickLinkedIn}. Eva Milroy is a key member in the setting up and continued running of the Crichton Institute Regional Observatory, as well as providing business intelligence, and developing employer engagement with the Crichton Institute. Tony Fitzpatrick has been director of the Crichton Institute Regional Observatory since it's inception. These two representatives were the team's main contact within the Crichton Institute, and they provided invaluable feedback and insight into the project and problem domain.
 
 % Their problem description
 
@@ -81,8 +81,6 @@ Another dashboard used as an example was the Dublin Dashboard~\cite{DublinDashbo
 Of all the requirements the team initially agreed upon with the customers, the vast majority of them were addressed and either completed as initially suggested or an alternative has been put in place by the end of the development period. The only large initially discussed task the team did not complete is building our own API, but it was concluded with Eva and Tony during a meeting that this was not necessary anyway and because there were a lot of issues concerning availability of data, it would be extremely difficult and the team could use the time the team would have spent working on that more effectively, improving other more important parts of the site.
 
 The customers have been consistently happy throughout, and they did not ask us at any point to remove something the team had done, except for aesthetic details such as shadowing behind text. They made various suggestions during the meetings but even most of those were ideas that the team had already thought about but were yet to implement.
-
-Overall the final product fits the initial brief almost exactly and the customer is happy that what the team have produced meets their requirements. That is, after all, the most important thing.
 
 %==============================================================================
 \section{Team Dynamics}
