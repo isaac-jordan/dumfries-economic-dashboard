@@ -1,0 +1,30 @@
+
+# /
+/.pydevproject
+/.project
+/.settings
+/.metadata
+/*.pyc
+/reports
+/dashboard-project/dashboard/db.sqlite3
+/db.sqlite3
+/dashboard/media
+/dashboard/settings/media
+
+# /dashboard-project/
+/dashboard-project/db.sqlite3
+
+# /dashboard-project/dashboard/
+/dashboard-project/dashboard/db.sqlite3
+/dashboard-project/dashboard/media
+
+# /dashboard-project/dashboard/settings/
+/dashboard-project/dashboard/settings/media
+
+# /docs/dissertation/
+/docs/dissertation/*.pdf
+/docs/dissertation/*.aux
+/docs/dissertation/*.log
+/docs/dissertation/*.out
+/docs/dissertation/*.bbl
+/docs/dissertation/*.blg
