@@ -130,26 +130,27 @@ files are as follows:
 
 ## History
 
-01/11/15 - Project Begins
-18/11/15 - First Team Retrospective
-09/12/15 - Retrospective Two
-28/01/16 - Retrospective Three
-03/03/16 - Retrospective Four
-23/03/16 - Demonstration to other teams and customers
-24/03/16 - Final Team Retrospective
-25/03/16 - No more coding as part of Level 3 Team Project course
-11/04/16 - Hand-In of final dissertation
+* 01/11/15 - Project Begins
+* 18/11/15 - First Team Retrospective
+* 09/12/15 - Retrospective Two
+* 28/01/16 - Retrospective Three
+* 03/03/16 - Retrospective Four
+* 23/03/16 - Demonstration to other teams and customers
+* 24/03/16 - Final Team Retrospective
+* 25/03/16 - No more coding as part of Level 3 Team Project course
+* 11/04/16 - Hand-In of final dissertation
+* 27/04/16 - Code moved to GitHub
 
 ## Credits
 
 All development by:
 
-Isaac Jordan - 2080466j - Technical Lead
-Lewis Dicks - 2085749d - Project Manager
-Ross Yordanov - 2074214y - Retrospective Manager and Software Developer
-Branko Kourtellos - 2060408k - Software Developer
-Takis Nicolaides - 2084564n - Software Developer
-Michael Byars - 2028262b - Client Liason and Software Developer
+* Isaac Jordan - 2080466j - Technical Lead
+* Lewis Dicks - 2085749d - Project Manager
+* Ross Yordanov - 2074214y - Retrospective Manager and Software Developer
+* Branko Kourtellos - 2060408k - Software Developer
+* Takis Nicolaides - 2084564n - Software Developer
+* Michael Byars - 2028262b - Client Liason and Software Developer
 
 
 ## License
